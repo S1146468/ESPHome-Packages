@@ -1,4 +1,3 @@
-# climate/pid_from_ha.yaml  (lives only in GitHub)
 substitutions:
   device_name: "pid-bridge"    # may be overridden per node
   climate_name: "Room PID"
