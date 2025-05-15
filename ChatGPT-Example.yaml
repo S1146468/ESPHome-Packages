@@ -9,13 +9,6 @@ substitutions:
 esphome:
   name: ${device_name}
 
-# pull the temperature (and anything else) from Home Assistant
-sensor:
-  - platform: homeassistant            # HA API import:contentReference[oaicite:6]{index=6}
-    id: room_temp
-    entity_id: ${temp_entity}
-    unit_of_measurement: "°C"
-    accuracy_decimals: 1
 
 # float output that just bounces the PID result back to HA
 output:
@@ -44,6 +37,11 @@ climate:
 
 # expose PID internals for debugging
 sensor:
+  - platform: homeassistant            # HA API import:contentReference[oaicite:6]{index=6}
+    id: room_temp
+    entity_id: ${temp_entity}
+    unit_of_measurement: "°C"
+    accuracy_decimals: 1
   - platform: pid                      # RESULT / ERROR etc.:contentReference[oaicite:10]{index=10}
     climate_id: pid_ctrl
     type: RESULT
