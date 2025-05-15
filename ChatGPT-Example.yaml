@@ -42,16 +42,16 @@ sensor:
     unit_of_measurement: "°C"
     accuracy_decimals: 1
       filters: 
-      - heartbeat: 10s  
+      - heartbeat: 1s  
   - platform: pid                      # RESULT / ERROR etc.:contentReference[oaicite:10]{index=10}
     climate_id: pid_ctrl
     type: RESULT
     name: "PID Heat %"
     unit_of_measurement: "%"
-    update_interval: 15s 
+    update_interval: 1s 
     filters: [lambda: return x*100.0;]
   - platform: pid
     climate_id: pid_ctrl
     type: ERROR
     name: "PID Error °C"
-    update_interval: 15s 
+    update_interval: 1s 
