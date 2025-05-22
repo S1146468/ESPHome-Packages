@@ -35,7 +35,7 @@ text_sensor:
 sensor:
   - platform: template 
     name: "${__friendly_name__} Target Temperature"
-    id: ${__device_name__}_temperature
+    id: ${__device_name__}_target_temperature
     unit_of_measurement: "°C"
     device_class: temperature
     state_class: measurement
