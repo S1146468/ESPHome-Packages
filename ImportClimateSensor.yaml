@@ -2,7 +2,7 @@ substitutions:
   __device_name__: climate
   __friendly_name__: "Climate"
   __climate__: climate.name
-  __internal__: true
+  __internal__: "true"
 
 
 
