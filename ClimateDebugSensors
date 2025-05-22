@@ -1,0 +1,47 @@
+substitutions:
+  __device_name__: climate
+  __friendly_name__: "Climate"
+  __climate__: climate.name
+  __internal__: "true"
+
+
+
+
+
+sensor:
+  - platform: pid
+    climate_id: pid_climate
+    id: pid_calculated_error_template
+    type: ERROR  
+    internal: True
+
+  - platform: pid
+    climate_id: pid_climate
+    id: pid_calculated_p_error_template
+    type: PROPORTIONAL  
+    internal: True
+
+  - platform: pid
+    climate_id: pid_climate
+    id: pid_calculated_i_error_template
+    type: INTEGRAL  
+    internal: True
+
+  - platform: pid
+    climate_id: pid_climate
+    id: pid_calculated_d_error_template
+    type: DERIVATIVE  
+    internal: True
+
+  - platform: pid
+    climate_id: pid_climate
+    id: pid_output_power_template
+    type: HEAT  
+    internal: True
+
+    
+binary_sensor:
+  - platform: template
+    name: "${__friendly_name__} Heat State"
+    id: ${__device_name__}_state
+    internal: ${__internal__}
