@@ -46,3 +46,4 @@ binary_sensor:
   - platform: template
     name: "${__friendly_name__} State"
     id: ${__device_name__}_state
+    internal: ${__internal__}
