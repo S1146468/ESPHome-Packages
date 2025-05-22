@@ -31,8 +31,8 @@ interval:
     then:
       - lambda: |-
           // Current PID state
-          float pid_temp = __climate_pid__->target_temperature;
-          bool pid_heat = __climate_pid__->state;
+          float pid_temp = ${__climate_pid__}->target_temperature;
+          bool pid_heat = ${__climate_pid__}->state;
           // HA states
           float sonoff_temp = id(trv_target_temperature).state;
           float generic_temp = id(main_target_temperature).state;
@@ -40,10 +40,10 @@ interval:
           bool generic_heat = id(main_state).state;
           // If PID differs, push to HA
           if (pid_temp != sonoff_temp || pid_temp != generic_temp || pid_heat != sonoff_heat || pid_heat != generic_heat) {
-            auto ha = id(homeassistant);
-            ha.call_service("climate.set_temperature", { {"entity_id", std::vector<std::string>{"${sonoff_entity}", "${generic_entity}"}}, {"temperature", pid_temp} });
-            std::string mode = pid_heat ? "heat" : "off";
-            ha.call_service("climate.set_hvac_mode", { {"entity_id", std::vector<std::string>{"${sonoff_entity}", "${generic_entity}"}}, {"hvac_mode", mode} });
+            id(${__climate_trv__}).control->target_temperature = pid_temp;
+            id(${__climate_generic__}).control->target_temperature = pid_temp;
+            id(${__climate_pid__}).control->mode = pid_heat ? climate::ClimateMode::HEAT : climate::ClimateMode::OFF;
+            id(${__climate_generic__}).control->mode = pid_heat ? climate::ClimateMode::HEAT : climate::ClimateMode::OFF;
             return;
           }
           // Else if HA override, update PID
