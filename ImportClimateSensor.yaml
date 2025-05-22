@@ -8,15 +8,15 @@ substitutions:
 
 text_sensor:
   - platform: homeassistant
-    id: ${__device_name__}_temperature_raw
+    id: ${__device_name__}_target_temperature_raw
     entity_id: ${__climate__}
     attribute: temperature
     internal: true  # hide from HA if you don't need it exposed
     on_value:
       then:
         - lambda: |-
-            float temp = std::stof(id(${__device_name__}_temperature_raw).state);
-            id(${__device_name__}_temperature).publish_state(temp);
+            float temp = std::stof(id(${__device_name__}_target_temperature_raw).state);
+            id(${__device_name__}_target_temperature).publish_state(temp);
 
   - platform: homeassistant
     id: ${__device_name__}_state_raw
