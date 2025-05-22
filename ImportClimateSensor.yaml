@@ -1,0 +1,48 @@
+substitutions:
+  __device_name__: climate
+  __friendly_name__: "Climate"
+  __climate__: climate.name
+  __internal__: true
+
+
+
+text_sensor:
+  - platform: homeassistant
+    id: ${__device_name__}_temperature_raw
+    entity_id: ${climate_trv}
+    attribute: temperature
+    internal: true  # hide from HA if you don't need it exposed
+    on_value:
+      then:
+        - lambda: |-
+            float temp = std::stof(id(climate_trv_temperature_raw).state);
+            id(climate_trv_temperature).publish_state(temp);
+
+  - platform: homeassistant
+    id: ${__device_name__}_state_raw
+    entity_id: ${climate_trv}
+    internal: true
+    on_value:
+      then:
+        - lambda: |-
+            std::string state = id(climate_trv_state_raw).state;
+            if (state == "off") {
+              id(climate_trv_state).publish_state(false);
+            } else {
+              id(climate_trv_state).publish_state(true);
+            }
+
+sensor:
+  - platform: template 
+    name: "${__friendly_name__} Target Temperature"
+    id: ${__device_name__}_temperature
+    unit_of_measurement: "°C"
+    device_class: temperature
+    state_class: measurement
+    update_interval: never
+    internal: ${__internal__}
+    
+binary_sensor:
+  - platform: template
+    name: "${__friendly_name__} State"
+    id: ${__device_name__}_state
