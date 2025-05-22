@@ -1,6 +1,4 @@
 substitutions:
-  __device_name__: climate
-  __friendly_name__: "Climate"
   __climate_pid__: climate.name
   __climate_generic__: climate.name
   __climate_trv__: climate.name
@@ -17,12 +15,12 @@ packages:
         __device_name__: main
         __friendly_name__: "Main"
         __climate__: ${climate_main}
-        __internal__: ${__internal__}
+        __internal__: ${__climate_generic__}
     - path: ImportClimateSensor.yaml
       vars:
         __device_name__: trv
         __friendly_name__: "TRV"
-        __climate__: ${climate_trv}
+        __climate__: ${__climate_trv__}
         __internal__: ${__internal__}
     ref: main
     refresh: 0s
