@@ -1,5 +1,5 @@
 substitutions:
-  __climate_pid__: climate.name
+  __climate_pid__: climate_name
   __climate_generic__: climate.name
   __climate_trv__: climate.name
   __interval__: 5s
@@ -31,8 +31,8 @@ interval:
     then:
       - lambda: |-
           // Current PID state
-          float pid_temp = id(__climate_pid__).target_temperature;
-          bool pid_heat = id(__climate_pid__).mode;
+          float pid_temp = __climate_pid__->target_temperature;
+          bool pid_heat = __climate_pid__->state;
           // HA states
           float sonoff_temp = id(trv_target_temperature).state;
           float generic_temp = id(main_target_temperature).state;
