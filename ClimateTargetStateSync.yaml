@@ -1,0 +1,57 @@
+substitutions:
+  __device_name__: climate
+  __friendly_name__: "Climate"
+  __climate_pid__: climate.name
+  __climate_generic__: climate.name
+  __climate_trv__: climate.name
+  __interval__: 5s
+  __internal__: "true"
+
+
+packages:
+  climate_package:
+    url: https://github.com/S1146468/ESPHome-Packages
+    files:
+    - path: ImportClimateSensor.yaml
+      vars:
+        __device_name__: main
+        __friendly_name__: "Main"
+        __climate__: ${climate_main}
+        __internal__: ${__internal__}
+    - path: ImportClimateSensor.yaml
+      vars:
+        __device_name__: trv
+        __friendly_name__: "TRV"
+        __climate__: ${climate_trv}
+        __internal__: ${__internal__}
+    ref: main
+    refresh: 0s
+
+
+interval:
+  - interval: "${sync_interval}"
+    then:
+      - lambda: |-
+          // Current PID state
+          float pid_temp = id(__climate_pid__).target_temperature;
+          bool pid_heat = id(__climate_pid__).mode;
+          // HA states
+          float sonoff_temp = id(trv_target_temperature).state;
+          float generic_temp = id(main_target_temperature).state;
+          bool sonoff_heat = id(trv_state).state;
+          bool generic_heat = id(main_state).state;
+          // If PID differs, push to HA
+          if (pid_temp != sonoff_temp || pid_temp != generic_temp || pid_heat != sonoff_heat || pid_heat != generic_heat) {
+            auto ha = id(homeassistant);
+            ha.call_service("climate.set_temperature", { {"entity_id", std::vector<std::string>{"${sonoff_entity}", "${generic_entity}"}}, {"temperature", pid_temp} });
+            std::string mode = pid_heat ? "heat" : "off";
+            ha.call_service("climate.set_hvac_mode", { {"entity_id", std::vector<std::string>{"${sonoff_entity}", "${generic_entity}"}}, {"hvac_mode", mode} });
+            return;
+          }
+          // Else if HA override, update PID
+          if (sonoff_temp != pid_temp || sonoff_heat != pid_heat || generic_temp != pid_temp || generic_heat != pid_heat) {
+            float new_temp = (sonoff_temp != pid_temp) ? sonoff_temp : generic_temp;
+            bool new_heat = (sonoff_temp != pid_temp || sonoff_heat != pid_heat) ? sonoff_heat : generic_heat;
+            id(pid_climate).control->target_temperature = new_temp;
+            id(pid_climate).control->mode = new_heat ? climate::ClimateMode::HEAT : climate::ClimateMode::OFF;
+          }
