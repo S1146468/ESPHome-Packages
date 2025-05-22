@@ -14,8 +14,8 @@ packages:
       vars:
         __device_name__: main
         __friendly_name__: "Main"
-        __climate__: ${climate_main}
-        __internal__: ${__climate_generic__}
+        __climate__: ${__climate_generic__}
+        __internal__: ${__internal__}
     - path: ImportClimateSensor.yaml
       vars:
         __device_name__: trv
