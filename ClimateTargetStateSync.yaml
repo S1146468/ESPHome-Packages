@@ -27,7 +27,7 @@ packages:
 
 
 interval:
-  - interval: "${sync_interval}"
+  - interval: "${__interval__}"
     then:
       - lambda: |-
           // Current PID state
