@@ -4,12 +4,6 @@ substitutions:
   __ha_sonoff_trv_1__: climate.name
   __internal__: "true"
 
-# binary_sensor:
-#   - platform: status
-#     id: ha_link          # true = HA (or MQTT) is talking to us
-#     internal: true       # hide from the HA UI; delete if you want to see it
-
-
 api:
   # HA (or any API client) just connected
   on_client_connected:
@@ -88,7 +82,6 @@ text_sensor:
   - platform: homeassistant
     id: generic_thermostat_mode
     entity_id: ${__ha_generic_thermostat__}
-    # attribute: hvac_mode
     internal: ${__internal__}
     on_value:
       lambda: |-
@@ -102,7 +95,6 @@ text_sensor:
   - platform: homeassistant
     id: trv_1_mode
     entity_id: ${__ha_sonoff_trv_1__}
-    # attribute: hvac_mode
     internal: ${__internal__}
     on_value:
       lambda: |-
@@ -127,7 +119,6 @@ script:
 
       # ---------- TRV 1 ----------
       - homeassistant.action:
-          # action: climate.set_temperature
           service: climate.set_temperature
           data:
             entity_id: ${__ha_sonoff_trv_1__}
@@ -139,10 +130,9 @@ script:
 
       # ---------- TRV 2 ----------
       # - homeassistant.action:
-      #     # action: climate.set_temperature
       #     service: climate.set_temperature
       #     data:
-      #       entity_id: ${trv2}
+      #       entity_id: ${__ha_sonoff_trv_2__}
       #     data_template:
       #       temperature: '{{ new_temp }}'
       #     variables:
@@ -151,7 +141,6 @@ script:
 
       # ---------- Generic thermostat ----------
       - homeassistant.action:
-          # action: climate.set_temperature
           service: climate.set_temperature
           data:
             entity_id: ${__ha_generic_thermostat__}
@@ -176,7 +165,6 @@ script:
 
       # ---------- TRV 1 ----------
       - homeassistant.action:
-          # action: climate.set_hvac_mode
           service: climate.set_hvac_mode
           data:
             entity_id: ${__ha_sonoff_trv_1__}
@@ -188,10 +176,9 @@ script:
 
       # ---------- TRV 2 ----------
       # - homeassistant.action:
-      #     # action: climate.set_hvac_mode
       #     service: climate.set_hvac_mode
       #     data:
-      #       entity_id: ${trv2}
+      #       entity_id: ${__ha_sonoff_trv_2__}
       #     data_template:
       #       hvac_mode: '{{ _mode }}'
       #     variables:
@@ -200,7 +187,6 @@ script:
 
       # ---------- Generic thermostat ----------
       - homeassistant.action:
-          # action: climate.set_hvac_mode
           service: climate.set_hvac_mode
           data:
             entity_id: ${__ha_generic_thermostat__}
@@ -209,5 +195,3 @@ script:
           variables:
             _mode: |-
               return mode;
-
-
