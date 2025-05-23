@@ -2,9 +2,9 @@ substitutions:
   __esphome_pid_climate__: climate_name
   __ha_generic_thermostat__: climate.name
   __ha_sonoff_trv_1__: climate.name
-  __internal__: "true"
+  __internal__: true
 
-global:
+globals:
   - id: current_setpoint
     type: float
     restore_value: no
