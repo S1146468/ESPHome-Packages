@@ -1,6 +1,5 @@
 substitutions:
   __device_name__: climate
-  __friendly_name__: "Climate"
   __global_target__: temperature_setpoint
   __climate__: climate.name
   __script__: set_all_targets
