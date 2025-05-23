@@ -4,6 +4,29 @@ substitutions:
   __ha_sonoff_trv_1__: climate.name
   __internal__: "true"
 
+api:
+  on_client_connected:
+    - lambda: 'ESP_LOGI("sync","HA online → resending target + mode");'
+    - script.execute:
+        id: set_all_targets
+        temp: !lambda 'return id(current_setpoint);'
+    - script.execute:
+        id: set_all_modes
+        mode: !lambda 'return id(current_mode);'
+
+  on_client_disconnected:
+    - if:
+        condition:
+          lambda: 'return !id(home_assist_running);'
+        then:
+          - script.execute:
+              id: set_all_modes
+              mode: "off"
+
+binary_sensor:
+  - platform: api_connected
+    id: home_assist_running
+    
 globals:
   - id: current_setpoint
     type: float
@@ -15,6 +38,18 @@ globals:
     restore_value: no
     initial_value: '"heat"'  
 
+
+    
+interval:
+  - interval: 1min          # anything from 1–10 min is fine
+    then:
+      - script.execute:
+          id: set_all_targets
+          temp: !lambda 'return id(current_setpoint);'
+      - script.execute:
+          id: set_all_modes
+          mode: !lambda 'return id(current_mode);'
+          
 sensor:
   - platform: homeassistant
     id: generic_thermostat_temperature
@@ -25,6 +60,7 @@ sensor:
     - delta: 0.1
     on_value:
       lambda: |-
+        if (std::isnan(x)) return;                    // <-- guard
         if (fabsf(id(current_setpoint) - x) > 0.05f) 
         {
           id(current_setpoint) = x;
@@ -40,6 +76,7 @@ sensor:
     - delta: 0.1
     on_value:
       lambda: |-
+        if (std::isnan(x)) return;                    // <-- guard
         if (fabsf(id(current_setpoint) - x) > 0.05f) 
         {
           id(current_setpoint) = x;
@@ -54,6 +91,7 @@ text_sensor:
     internal: ${__internal__}
     on_value:
       lambda: |-
+        if (x == "unavailable" || x == "unknown") return; // guard
         if (id(current_mode) != x) 
         {
           id(current_mode) = x;
@@ -67,6 +105,7 @@ text_sensor:
     internal: ${__internal__}
     on_value:
       lambda: |-
+        if (x == "unavailable" || x == "unknown") return; // guard
         if (id(current_mode) != x) 
         {
           id(current_mode) = x;
