@@ -3,7 +3,8 @@ substitutions:
   __global_target__: temperature_setpoint
   __global_mode__: hvac_mode
   __ha_climate_id__: climate.name
-  __script__: set_all_targets
+  __script_set_all_targets__: set_all_targets
+  __script_set_all_modes__: set_all_targets
   __ha_climate_interval__: 1s
 
 
@@ -19,7 +20,7 @@ sensor:
       lambda: |-
         if (abs(id(${__global_target__}) - x) > 0.05) {
         id(${__global_target__}) = x;
-        id(${__script__}).execute(x);
+        id(${__script_set_all_targets__}).execute(x);
         }
 
 text_sensor:
@@ -31,7 +32,7 @@ text_sensor:
       lambda: |-
         if (id(${__global_mode__}) != x) {
         id(${__global_mode__}) = x;
-        id(${__script__}).execute(x);
+        id(${__script_set_all_modes__}).execute(x);
         }
 
 
