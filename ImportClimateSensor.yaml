@@ -5,7 +5,6 @@ substitutions:
   __climate__: climate.name
   __script__: set_all_targets
   __interval__: 1s
-  __internal__: "true"
 
 
 
