@@ -36,7 +36,6 @@ text_sensor:
 
 
 
-
 # text_sensor:
 #   - platform: homeassistant
 #     id: ${__device_name__}_target_temperature_raw
