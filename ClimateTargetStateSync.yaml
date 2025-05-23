@@ -4,9 +4,16 @@ substitutions:
   __ha_sonoff_trv_1__: climate.name
   __internal__: "true"
 
+# binary_sensor:
+#   - platform: status
+#     id: ha_link          # true = HA (or MQTT) is talking to us
+#     internal: true       # hide from the HA UI; delete if you want to see it
+
+
 api:
+  # HA (or any API client) just connected
   on_client_connected:
-    - lambda: 'ESP_LOGI("sync","HA online → resending target + mode");'
+    - logger.log: "HA online → restoring targets"
     - script.execute:
         id: set_all_targets
         temp: !lambda 'return id(current_setpoint);'
@@ -14,18 +21,12 @@ api:
         id: set_all_modes
         mode: !lambda 'return id(current_mode);'
 
+  # HA went away
   on_client_disconnected:
-    - if:
-        condition:
-          lambda: 'return !id(home_assist_running);'
-        then:
-          - script.execute:
-              id: set_all_modes
-              mode: "off"
-
-binary_sensor:
-  - platform: api_connected
-    id: home_assist_running
+    - logger.log: "HA offline → putting PID in OFF fail-safe"
+    - script.execute:
+        id: set_all_modes
+        mode: "off"
     
 globals:
   - id: current_setpoint
