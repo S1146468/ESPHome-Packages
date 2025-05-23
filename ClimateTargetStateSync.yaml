@@ -2,7 +2,7 @@ substitutions:
   __esphome_pid_climate__: climate_name
   __ha_generic_thermostat__: climate.name
   __ha_sonoff_trv_1__: climate.name
-  __internal__: true
+  __internal__: "true"
 
 globals:
   - id: current_setpoint
@@ -99,7 +99,8 @@ script:
 
       # ---------- TRV 2 ----------
       # - homeassistant.action:
-      #     action: climate.set_temperature
+      #     # action: climate.set_temperature
+      #     service: climate.set_temperature
       #     data:
       #       entity_id: ${trv2}
       #     data_template:
@@ -147,7 +148,8 @@ script:
 
       # ---------- TRV 2 ----------
       # - homeassistant.action:
-      #     action: climate.set_hvac_mode
+      #     # action: climate.set_hvac_mode
+      #     service: climate.set_hvac_mode
       #     data:
       #       entity_id: ${trv2}
       #     data_template:
