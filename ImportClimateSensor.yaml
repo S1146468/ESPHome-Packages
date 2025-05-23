@@ -1,6 +1,7 @@
 substitutions:
   __device_name__: climate
   __global_target__: temperature_setpoint
+  __global_mode__: hvac_mode
   __climate__: climate.name
   __script__: set_all_targets
   __interval__: 1s
@@ -29,8 +30,8 @@ text_sensor:
     attribute: hvac_mode
     on_value:
       lambda: |-
-        if (id(${__global_target__}) != x) {
-        id(${__global_target__}) = x;
+        if (id(${hvac_mode}) != x) {
+        id(${hvac_mode}) = x;
         id(${__script__}).execute(x);
         }
 
