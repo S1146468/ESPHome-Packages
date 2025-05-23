@@ -14,7 +14,7 @@ sensor:
     entity_id: ${__ha_climate_id__}
     attribute: temperature
     filters:
-    - delta: 0.01
+    - delta: 0.1
     on_value:
       lambda: |-
         if (abs(id(${__global_target__}) - x) > 0.05) {
