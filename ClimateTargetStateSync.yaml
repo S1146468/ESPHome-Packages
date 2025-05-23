@@ -1,7 +1,7 @@
 substitutions:
-  __climate_pid__: climate_name
-  __climate_generic__: climate.name
-  __climate_trv__: climate.name
+  __esphome_pid_climate__: climate_name
+  __ha_generic_thermostat__: climate.name
+  __ha_sonoff_trv__: climate.name
   __interval__: 5s
   __internal__: "true"
 
@@ -12,44 +12,12 @@ packages:
     files:
     - path: ImportClimateSensor.yaml
       vars:
-        __device_name__: main
-        __friendly_name__: "Main"
-        __climate__: ${__climate_generic__}
-        __internal__: ${__internal__}
-    - path: ImportClimateSensor.yaml
-      vars:
-        __device_name__: trv
-        __friendly_name__: "TRV"
-        __climate__: ${__climate_trv__}
-        __internal__: ${__internal__}
-    ref: main
-    refresh: 0s
+        __device_name__: ${__ha_generic_thermostat__}
+        __friendly_name__: "Generic Thermostat"
+        __global_target__: temperature_setpoint
+        __climate__: climate.name
+        __script__: set_all_targets
+        __interval__: 1s
+        __internal__: "true"
 
 
-interval:
-  - interval: "${__interval__}"
-    then:
-      - lambda: |-
-          // Current PID state
-          float pid_temp = ${__climate_pid__}->target_temperature;
-          bool pid_heat = ${__climate_pid__}->state;
-          // HA states
-          float sonoff_temp = id(trv_target_temperature).state;
-          float generic_temp = id(main_target_temperature).state;
-          bool sonoff_heat = id(trv_state).state;
-          bool generic_heat = id(main_state).state;
-          // If PID differs, push to HA
-          if (pid_temp != sonoff_temp || pid_temp != generic_temp || pid_heat != sonoff_heat || pid_heat != generic_heat) {
-            id(${__climate_trv__}).control->target_temperature = pid_temp;
-            id(${__climate_generic__}).control->target_temperature = pid_temp;
-            id(${__climate_pid__}).control->mode = pid_heat ? climate::ClimateMode::HEAT : climate::ClimateMode::OFF;
-            id(${__climate_generic__}).control->mode = pid_heat ? climate::ClimateMode::HEAT : climate::ClimateMode::OFF;
-            return;
-          }
-          // Else if HA override, update PID
-          if (sonoff_temp != pid_temp || sonoff_heat != pid_heat || generic_temp != pid_temp || generic_heat != pid_heat) {
-            float new_temp = (sonoff_temp != pid_temp) ? sonoff_temp : generic_temp;
-            bool new_heat = (sonoff_temp != pid_temp || sonoff_heat != pid_heat) ? sonoff_heat : generic_heat;
-            id(pid_climate).control->target_temperature = new_temp;
-            id(pid_climate).control->mode = new_heat ? climate::ClimateMode::HEAT : climate::ClimateMode::OFF;
-          }
