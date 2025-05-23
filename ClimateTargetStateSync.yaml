@@ -1,23 +1,154 @@
 substitutions:
   __esphome_pid_climate__: climate_name
   __ha_generic_thermostat__: climate.name
-  __ha_sonoff_trv__: climate.name
-  __interval__: 5s
-  __internal__: "true"
+  __ha_sonoff_trv_1__: climate.name
+#  __interval__: 1s
+#  __internal__: "true"
 
 
-packages:
-  climate_package:
-    url: https://github.com/S1146468/ESPHome-Packages
-    files:
-    - path: ImportClimateSensor.yaml
-      vars:
-        __device_name__: ${__ha_generic_thermostat__}
-        __friendly_name__: "Generic Thermostat"
-        __global_target__: temperature_setpoint
-        __climate__: climate.name
-        __script__: set_all_targets
-        __interval__: 1s
-        __internal__: "true"
+global:
+  - id: current_setpoint
+    type: float
+    restore_value: no
+    initial_value: '20.0'
+
+  - id: current_mode
+    type: std::string
+    restore_value: no
+    initial_value: "heat"
+
+sensor:
+  - platform: homeassistant
+    id: generic_thermostat_temperature
+    entity_id: ${__ha_generic_thermostat__}
+    attribute: temperature
+    filters:
+    - delta: 0.1
+    on_value:
+      lambda: |-
+        if (abs(id(${current_setpoint}) - x) > 0.05) 
+        {
+          id(${current_setpoint}) = x;
+          id(${set_all_targets}).execute(x);
+        }
+
+  - platform: homeassistant
+    id: trv_1_temperature
+    entity_id: ${__ha_sonoff_trv_1__}
+    attribute: temperature
+    filters:
+    - delta: 0.1
+    on_value:
+      lambda: |-
+        if (abs(id(${current_setpoint}) - x) > 0.05) 
+        {
+          id(${current_setpoint}) = x;
+          id(${set_all_targets}).execute(x);
+        }
+
+text_sensor:
+  - platform: homeassistant
+    id: generic_thermostat_mode
+    entity_id: ${__ha_generic_thermostat__}
+    attribute: hvac_mode
+    on_value:
+      lambda: |-
+        if (id(${current_mode}) != x) 
+        {
+          id(${current_mode}) = x;
+          id(${set_all_modes}).execute(x);
+        }
+
+
+script:
+  ############################################
+  # 1) push a new target temperature everywhere
+  ############################################
+  - id: set_all_targets
+    parameters:
+      temp: float
+    then:
+      - lambda: |-
+          ESP_LOGI("sync", "PID ➜ %.1f °C", temp);
+          id(${__esphome_pid_climate__}).make_call().set_target_temperature(temp).perform();
+
+      # ---------- TRV 1 ----------
+      - homeassistant.action:
+          action: climate.set_temperature
+          data:
+            entity_id: ${trv1}
+          data_template:
+            temperature: '{{ new_temp }}'
+          variables:
+            new_temp: |-
+              return temp;
+
+      # ---------- TRV 2 ----------
+      - homeassistant.action:
+          action: climate.set_temperature
+          data:
+            entity_id: ${trv2}
+          data_template:
+            temperature: '{{ new_temp }}'
+          variables:
+            new_temp: |-
+              return temp;
+
+      # ---------- Generic thermostat ----------
+      - homeassistant.action:
+          action: climate.set_temperature
+          data:
+            entity_id: ${generic_thermostat}
+          data_template:
+            temperature: '{{ new_temp }}'
+          variables:
+            new_temp: |-
+              return temp;
+
+  ############################################
+  # 2) push HVAC mode everywhere (“heat” / “off”)
+  ############################################
+  - id: set_all_modes
+    parameters:
+      mode: string
+    then:
+      - lambda: |-
+          ESP_LOGI("sync", "PID mode ➜ %s", mode.c_str());
+          auto call = id(${__esphome_pid_climate__}).make_call();
+          call.set_mode(mode == "off" ? climate::CLIMATE_MODE_OFF : climate::CLIMATE_MODE_HEAT);
+          call.perform();
+
+      # ---------- TRV 1 ----------
+      - homeassistant.action:
+          action: climate.set_hvac_mode
+          data:
+            entity_id: ${trv1}
+          data_template:
+            hvac_mode: '{{ _mode }}'
+          variables:
+            _mode: |-
+              return mode;
+
+      # ---------- TRV 2 ----------
+      - homeassistant.action:
+          action: climate.set_hvac_mode
+          data:
+            entity_id: ${trv2}
+          data_template:
+            hvac_mode: '{{ _mode }}'
+          variables:
+            _mode: |-
+              return mode;
+
+      # ---------- Generic thermostat ----------
+      - homeassistant.action:
+          action: climate.set_hvac_mode
+          data:
+            entity_id: ${generic_thermostat}
+          data_template:
+            hvac_mode: '{{ _mode }}'
+          variables:
+            _mode: |-
+              return mode;
 
 
