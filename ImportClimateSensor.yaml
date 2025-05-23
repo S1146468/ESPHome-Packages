@@ -1,49 +1,81 @@
 substitutions:
   __device_name__: climate
   __friendly_name__: "Climate"
+  __global_target__: temperature_setpoint
   __climate__: climate.name
+  __script__: set_all_targets
+  __interval__: 1s
   __internal__: "true"
 
 
 
-text_sensor:
+sensor:
   - platform: homeassistant
-    id: ${__device_name__}_target_temperature_raw
+    id: ${__device_name__}_temperature
     entity_id: ${__climate__}
     attribute: temperature
-    internal: true  # hide from HA if you don't need it exposed
+    filters:
+    - delta: 0.1
     on_value:
-      then:
-        - lambda: |-
-            float temp = std::stof(id(${__device_name__}_target_temperature_raw).state);
-            id(${__device_name__}_target_temperature).publish_state(temp);
+      lambda: |-
+        if (abs(id(${__global_target__}) - x) > 0.05) {
+        id(${__global_target__}) = x;
+        id(${__script__}).execute(x);
+        }
 
+text_sensor:
   - platform: homeassistant
-    id: ${__device_name__}_state_raw
+    id: ${__device_name__}_mode
     entity_id: ${__climate__}
-    internal: true
+    attribute: hvac_mode
     on_value:
-      then:
-        - lambda: |-
-            std::string state = id(${__device_name__}_state_raw).state;
-            if (state == "off") {
-              id(${__device_name__}_state).publish_state(false);
-            } else {
-              id(${__device_name__}_state).publish_state(true);
-            }
+      lambda: |-
+        if (id(${__global_target__}) != x) {
+        id(${__global_target__}) = x;
+        id(${__script__}).execute(x);
+        }
 
-sensor:
-  - platform: template 
-    name: "${__friendly_name__} Target Temperature"
-    id: ${__device_name__}_target_temperature
-    unit_of_measurement: "°C"
-    device_class: temperature
-    state_class: measurement
-    update_interval: never
-    internal: ${__internal__}
+
+
+
+# text_sensor:
+#   - platform: homeassistant
+#     id: ${__device_name__}_target_temperature_raw
+#     entity_id: ${__climate__}
+#     attribute: temperature
+#     internal: true  # hide from HA if you don't need it exposed
+#     on_value:
+#       then:
+#         - lambda: |-
+#             float temp = std::stof(id(${__device_name__}_target_temperature_raw).state);
+#             id(${__device_name__}_target_temperature).publish_state(temp);
+
+#   - platform: homeassistant
+#     id: ${__device_name__}_state_raw
+#     entity_id: ${__climate__}
+#     internal: true
+#     on_value:
+#       then:
+#         - lambda: |-
+#             std::string state = id(${__device_name__}_state_raw).state;
+#             if (state == "off") {
+#               id(${__device_name__}_state).publish_state(false);
+#             } else {
+#               id(${__device_name__}_state).publish_state(true);
+#             }
+
+# sensor:
+#   - platform: template 
+#     name: "${__friendly_name__} Target Temperature"
+#     id: ${__device_name__}_target_temperature
+#     unit_of_measurement: "°C"
+#     device_class: temperature
+#     state_class: measurement
+#     update_interval: never
+#     internal: ${__internal__}
     
-binary_sensor:
-  - platform: template
-    name: "${__friendly_name__} Heat State"
-    id: ${__device_name__}_state
-    internal: ${__internal__}
+# binary_sensor:
+#   - platform: template
+#     name: "${__friendly_name__} Heat State"
+#     id: ${__device_name__}_state
+#     internal: ${__internal__}
