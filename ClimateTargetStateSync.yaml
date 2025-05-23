@@ -13,7 +13,7 @@ globals:
   - id: current_mode
     type: std::string
     restore_value: no
-    initial_value: "heat"
+    initial_value: '"heat"'  
 
 sensor:
   - platform: homeassistant
