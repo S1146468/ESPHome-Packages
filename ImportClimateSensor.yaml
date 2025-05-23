@@ -1,80 +1,80 @@
-substitutions:
-  __ha_climate_device_name__: climate
-  __global_target__: temperature_setpoint
-  __global_mode__: hvac_mode
-  __ha_climate_id__: climate.name
-  __script_set_all_targets__: set_all_targets
-  __script_set_all_modes__: set_all_targets
-  __ha_climate_interval__: 1s
+# substitutions:
+#   __ha_climate_device_name__: climate
+#   __global_target__: temperature_setpoint
+#   __global_mode__: hvac_mode
+#   __ha_climate_id__: climate.name
+#   __script_set_all_targets__: set_all_targets
+#   __script_set_all_modes__: set_all_targets
+#   __ha_climate_interval__: 1s
 
 
 
-sensor:
-  - platform: homeassistant
-    id: ${__ha_climate_device_name__}_temperature
-    entity_id: ${__ha_climate_id__}
-    attribute: temperature
-    filters:
-    - delta: 0.1
-    on_value:
-      lambda: |-
-        if (abs(id(${__global_target__}) - x) > 0.05) {
-        id(${__global_target__}) = x;
-        id(${__script_set_all_targets__}).execute(x);
-        }
-
-text_sensor:
-  - platform: homeassistant
-    id: ${__ha_climate_device_name__}_mode
-    entity_id: ${__ha_climate_id__}
-    attribute: hvac_mode
-    on_value:
-      lambda: |-
-        if (id(${__global_mode__}) != x) {
-        id(${__global_mode__}) = x;
-        id(${__script_set_all_modes__}).execute(x);
-        }
-
-
+# sensor:
+#   - platform: homeassistant
+#     id: ${__ha_climate_device_name__}_temperature
+#     entity_id: ${__ha_climate_id__}
+#     attribute: temperature
+#     filters:
+#     - delta: 0.1
+#     on_value:
+#       lambda: |-
+#         if (abs(id(${__global_target__}) - x) > 0.05) {
+#         id(${__global_target__}) = x;
+#         id(${__script_set_all_targets__}).execute(x);
+#         }
 
 # text_sensor:
 #   - platform: homeassistant
-#     id: ${__device_name__}_target_temperature_raw
-#     entity_id: ${__climate__}
-#     attribute: temperature
-#     internal: true  # hide from HA if you don't need it exposed
+#     id: ${__ha_climate_device_name__}_mode
+#     entity_id: ${__ha_climate_id__}
+#     attribute: hvac_mode
 #     on_value:
-#       then:
-#         - lambda: |-
-#             float temp = std::stof(id(${__device_name__}_target_temperature_raw).state);
-#             id(${__device_name__}_target_temperature).publish_state(temp);
+#       lambda: |-
+#         if (id(${__global_mode__}) != x) {
+#         id(${__global_mode__}) = x;
+#         id(${__script_set_all_modes__}).execute(x);
+#         }
 
-#   - platform: homeassistant
-#     id: ${__device_name__}_state_raw
-#     entity_id: ${__climate__}
-#     internal: true
-#     on_value:
-#       then:
-#         - lambda: |-
-#             std::string state = id(${__device_name__}_state_raw).state;
-#             if (state == "off") {
-#               id(${__device_name__}_state).publish_state(false);
-#             } else {
-#               id(${__device_name__}_state).publish_state(true);
-#             }
 
-# sensor:
-#   - platform: template 
-#     name: "${__friendly_name__} Target Temperature"
-#     id: ${__device_name__}_target_temperature
-#     unit_of_measurement: "°C"
-#     device_class: temperature
-#     state_class: measurement
-#     update_interval: never
-#     internal: ${__internal__}
+
+# # text_sensor:
+# #   - platform: homeassistant
+# #     id: ${__device_name__}_target_temperature_raw
+# #     entity_id: ${__climate__}
+# #     attribute: temperature
+# #     internal: true  # hide from HA if you don't need it exposed
+# #     on_value:
+# #       then:
+# #         - lambda: |-
+# #             float temp = std::stof(id(${__device_name__}_target_temperature_raw).state);
+# #             id(${__device_name__}_target_temperature).publish_state(temp);
+
+# #   - platform: homeassistant
+# #     id: ${__device_name__}_state_raw
+# #     entity_id: ${__climate__}
+# #     internal: true
+# #     on_value:
+# #       then:
+# #         - lambda: |-
+# #             std::string state = id(${__device_name__}_state_raw).state;
+# #             if (state == "off") {
+# #               id(${__device_name__}_state).publish_state(false);
+# #             } else {
+# #               id(${__device_name__}_state).publish_state(true);
+# #             }
+
+# # sensor:
+# #   - platform: template 
+# #     name: "${__friendly_name__} Target Temperature"
+# #     id: ${__device_name__}_target_temperature
+# #     unit_of_measurement: "°C"
+# #     device_class: temperature
+# #     state_class: measurement
+# #     update_interval: never
+# #     internal: ${__internal__}
     
-# binary_sensor:
-#   - platform: template
-#     name: "${__friendly_name__} Heat State"
-#     id: ${__device_name__}_state
-#     internal: ${__internal__}
+# # binary_sensor:
+# #   - platform: template
+# #     name: "${__friendly_name__} Heat State"
+# #     id: ${__device_name__}_state
+# #     internal: ${__internal__}
