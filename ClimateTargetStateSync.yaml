@@ -166,18 +166,6 @@ script:
           ESP_LOGI("sync", "PID ➜ %.1f °C", temp);
           id(${__esphome_pid_climate__}).make_call().set_target_temperature(temp).perform();
 
-      # -------------------------- Thermostatic Valve 1 ----------------------------- #
-      - homeassistant.action:
-          service: climate.set_temperature
-          data:
-            entity_id: ${__ha_sonoff_trv_1__}
-          data_template:
-            temperature: '{{ new_temp }}'
-          variables:
-            new_temp: |-
-              return temp;
-      
-      
       # -------------------------- Generic thermostat ------------------------------- #
       - homeassistant.action:
           service: climate.set_temperature
@@ -190,6 +178,18 @@ script:
               return temp;
 
 
+      # -------------------------- Thermostatic Valve 1 ----------------------------- #
+      - homeassistant.action:
+          service: climate.set_temperature
+          data:
+            entity_id: ${__ha_sonoff_trv_1__}
+          data_template:
+            temperature: '{{ new_temp }}'
+          variables:
+            new_temp: |-
+              return temp;
+      
+      
       # -------------------------- Thermostatic Valve 2 ----------------------------- #
       # - homeassistant.action:
       #     service: climate.set_temperature
