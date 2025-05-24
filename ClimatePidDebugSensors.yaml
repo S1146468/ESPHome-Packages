@@ -174,7 +174,7 @@ sensor:
     unit_of_measurement: ""
     icon: "mdi:gauge"
     state_class: measurement
-    accuracy_decimals: 10
+    accuracy_decimals: 5
     filters: 
       - clamp: 
           max_value: 100
@@ -205,7 +205,7 @@ sensor:
     unit_of_measurement: ""
     icon: "mdi:gauge"
     state_class: measurement
-    accuracy_decimals: 10
+    accuracy_decimals: 5
     filters: 
       - clamp: 
           max_value: 100
@@ -236,7 +236,7 @@ sensor:
     unit_of_measurement: ""
     icon: "mdi:gauge"
     state_class: measurement
-    accuracy_decimals: 10
+    accuracy_decimals: 5
     filters: 
       - clamp: 
           max_value: 100
