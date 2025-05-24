@@ -130,6 +130,35 @@ sensor:
 
 
 
+# ------------------------------- PID Heat -------------------------------- #
+  - platform: pid
+    climate_id: ${__esphome_pid_climate__}
+    id: ${__device_name__}_${__esphome_pid_climate__}_heat_raw
+    type: HEAT  
+    internal: True
+
+  - platform: template
+    id: ${__device_name__}_${__esphome_pid_climate__}_heat
+    name: "${__esphome_pid_climate_friendly_name__}: Output Heat" 
+    unit_of_measurement: "%"
+    icon: "mdi:gauge"
+    state_class: measurement
+    filters: 
+      - clamp: 
+          max_value: 100
+          min_value: -100
+          ignore_out_of_range: false
+    lambda: |-
+      return id(${__device_name__}_${__esphome_pid_climate__}_heat_raw).state; 
+    update_interval: ${__diagnostic_interval__} 
+    internal: ${__internal__}
+    entity_category: diagnostic
+
+
+
+
+
+
 
 # ------------------------------- PID Cool -------------------------------- #
   - platform: pid
