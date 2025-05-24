@@ -49,13 +49,13 @@ packages:
         __ha_generic_thermostat__: ${climate_main}
         __ha_sonoff_trv_1__: ${climate_trv}
         __internal__: "false"
-    - path: C:\VScode\EspHome\Test\ESPHome-Packages\ClimatePidDebugSensors.yaml
-      variables:
-        __internal__: "true"
-        __device_name__: device_name
-        __friendly_name__: "Friendly name"
-        __esphome_pid_climate__: climate_name
-        __diagnostic_interval__: 30s
+    # - path: C:\VScode\EspHome\Test\ESPHome-Packages\ClimatePidDebugSensors.yaml
+    #   variables:
+    #     __internal__: "true"
+    #     __device_name__: device_name
+    #     __friendly_name__: "Friendly name"
+    #     __esphome_pid_climate__: climate_name
+    #     __diagnostic_interval__: 30s
     ref: main  # optional
     refresh: 0s  # optional
 
