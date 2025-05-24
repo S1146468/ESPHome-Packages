@@ -1,6 +1,6 @@
 substitutions:
-  name: test-device
-  friendly_name: "Test Device"
+  name: testdevice
+  friendly_name: TestDevice
   climate_main: climate.verwarming_stijn
   climate_trv: climate.fake_radiatorknop_stijn #climate.trvzb_kamer_stijn
   temperature_sensor: sensor.snzb02p_kamer_stijn_temperature
@@ -15,7 +15,29 @@ esphome:
   name_add_mac_suffix: false
   friendly_name: ${friendly_name}
 
-        
+logger:
+  level: WARN
+
+esp32:
+  board: esp32-poe-iso
+  framework:
+    type: arduino
+
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret esphome-testdevice_Key
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+
 
 packages:
   climate_package:
@@ -27,41 +49,15 @@ packages:
         __ha_generic_thermostat__: ${climate_main}
         __ha_sonoff_trv_1__: ${climate_trv}
         __internal__: "false"
+    - path: C:\VScode\EspHome\Test\ESPHome-Packages\ClimatePidDebugSensors.yaml
+      variables:
+        __internal__: "true"
+        __device_name__: device_name
+        __friendly_name__: "Friendly name"
+        __esphome_pid_climate__: climate_name
+        __diagnostic_interval__: 30s
     ref: main  # optional
     refresh: 0s  # optional
-
-
-esp32:
-  board: esp32-poe-iso
-  framework:
-    type: arduino
-
-
-api:
-
-
-logger:
-  level: WARN
-
-# Example configuration entry
-ota:
-  - platform: esphome
-    password: "" #!secret ota_password
-    
-ethernet:
-  type: LAN8720
-  mdc_pin: GPIO23
-  mdio_pin: GPIO18
-  clk_mode: GPIO17_OUT
-  phy_addr: 0
-  power_pin:
-    number: GPIO12
-    ignore_strapping_warning: true
-  
-  # manual_ip:
-  #   static_ip: !secret esp32-stijn_IP
-  #   gateway: !secret gateway_IP
-  #   subnet: !secret subnet
 
 button:
   - platform: restart
@@ -277,35 +273,35 @@ sensor:
           
 
      
-  - platform: pid
-    climate_id: pid_climate
-    id: pid_calculated_error_template
-    type: ERROR  
-    internal: True
+  # - platform: pid
+  #   climate_id: pid_climate
+  #   id: pid_calculated_error_template
+  #   type: ERROR  
+  #   internal: True
 
-  - platform: pid
-    climate_id: pid_climate
-    id: pid_calculated_p_error_template
-    type: PROPORTIONAL  
-    internal: True
+  # - platform: pid
+  #   climate_id: pid_climate
+  #   id: pid_calculated_p_error_template
+  #   type: PROPORTIONAL  
+  #   internal: True
 
-  - platform: pid
-    climate_id: pid_climate
-    id: pid_calculated_i_error_template
-    type: INTEGRAL  
-    internal: True
+  # - platform: pid
+  #   climate_id: pid_climate
+  #   id: pid_calculated_i_error_template
+  #   type: INTEGRAL  
+  #   internal: True
 
-  - platform: pid
-    climate_id: pid_climate
-    id: pid_calculated_d_error_template
-    type: DERIVATIVE  
-    internal: True
+  # - platform: pid
+  #   climate_id: pid_climate
+  #   id: pid_calculated_d_error_template
+  #   type: DERIVATIVE  
+  #   internal: True
 
-  - platform: pid
-    climate_id: pid_climate
-    id: pid_output_power_template
-    type: HEAT  
-    internal: True
+  # - platform: pid
+  #   climate_id: pid_climate
+  #   id: pid_output_power_template
+  #   type: HEAT  
+  #   internal: True
              
 
   - platform: template
@@ -370,90 +366,90 @@ sensor:
   
 
 
-  - platform: template
-    id: pid_calculated_error
-    name: "PID: Error" 
-    icon: "mdi:gauge"
-    unit_of_measurement: "%"
-    state_class: measurement
-    filters: 
-      - clamp: 
-          max_value: 100
-          min_value: -100
-          ignore_out_of_range: false
-    lambda: |-
-      return id(pid_calculated_error_template).state; 
-    update_interval: ${diagnostic_interval_time} 
-    entity_category: diagnostic
+  # - platform: template
+  #   id: pid_calculated_error
+  #   name: "PID: Error" 
+  #   icon: "mdi:gauge"
+  #   unit_of_measurement: "%"
+  #   state_class: measurement
+  #   filters: 
+  #     - clamp: 
+  #         max_value: 100
+  #         min_value: -100
+  #         ignore_out_of_range: false
+  #   lambda: |-
+  #     return id(pid_calculated_error_template).state; 
+  #   update_interval: ${diagnostic_interval_time} 
+  #   entity_category: diagnostic
 
 
-  - platform: template
-    id: pid_calculated_p_error
-    name: "PID: P Error" 
-    icon: "mdi:gauge"
-    unit_of_measurement: "%"
-    state_class: measurement
-    filters: 
-      - clamp: 
-          max_value: 100
-          min_value: -100
-          ignore_out_of_range: false
-    lambda: |-
-      return id(pid_calculated_p_error_template).state; 
-    update_interval: ${diagnostic_interval_time}  
-    entity_category: diagnostic
+  # - platform: template
+  #   id: pid_calculated_p_error
+  #   name: "PID: P Error" 
+  #   icon: "mdi:gauge"
+  #   unit_of_measurement: "%"
+  #   state_class: measurement
+  #   filters: 
+  #     - clamp: 
+  #         max_value: 100
+  #         min_value: -100
+  #         ignore_out_of_range: false
+  #   lambda: |-
+  #     return id(pid_calculated_p_error_template).state; 
+  #   update_interval: ${diagnostic_interval_time}  
+  #   entity_category: diagnostic
 
 
-  - platform: template
-    id: pid_calculated_i_error
-    name: "PID: I Error" 
-    icon: "mdi:gauge"
-    unit_of_measurement: "%"
-    state_class: measurement
-    filters: 
-      - clamp: 
-          max_value: 100
-          min_value: -100
-          ignore_out_of_range: false
-    lambda: |-
-      return id(pid_calculated_i_error_template).state; 
-    update_interval: ${diagnostic_interval_time}
-    entity_category: diagnostic
+  # - platform: template
+  #   id: pid_calculated_i_error
+  #   name: "PID: I Error" 
+  #   icon: "mdi:gauge"
+  #   unit_of_measurement: "%"
+  #   state_class: measurement
+  #   filters: 
+  #     - clamp: 
+  #         max_value: 100
+  #         min_value: -100
+  #         ignore_out_of_range: false
+  #   lambda: |-
+  #     return id(pid_calculated_i_error_template).state; 
+  #   update_interval: ${diagnostic_interval_time}
+  #   entity_category: diagnostic
 
 
-  - platform: template
-    id: pid_calculated_d_error
-    name: "PID: D Error" 
-    icon: "mdi:gauge"
-    unit_of_measurement: "%"
-    state_class: measurement
-    filters: 
-      - clamp: 
-          max_value: 100
-          min_value: -100
-          ignore_out_of_range: false
-    lambda: |-
-      return id(pid_calculated_d_error_template).state; 
-    update_interval: ${diagnostic_interval_time}  
-    entity_category: diagnostic
+  # - platform: template
+  #   id: pid_calculated_d_error
+  #   name: "PID: D Error" 
+  #   icon: "mdi:gauge"
+  #   unit_of_measurement: "%"
+  #   state_class: measurement
+  #   filters: 
+  #     - clamp: 
+  #         max_value: 100
+  #         min_value: -100
+  #         ignore_out_of_range: false
+  #   lambda: |-
+  #     return id(pid_calculated_d_error_template).state; 
+  #   update_interval: ${diagnostic_interval_time}  
+  #   entity_category: diagnostic
 
 
 
-  - platform: template
-    id: pid_output_power
-    name: "PID: Heating Power" 
-    unit_of_measurement: "%"
-    icon: "mdi:gauge"
-    state_class: measurement
-    filters: 
-      - clamp: 
-          max_value: 100
-          min_value: -100
-          ignore_out_of_range: false
-    lambda: |-
-      return id(pid_output_power_template).state; 
-    update_interval: ${diagnostic_interval_time} 
-    entity_category: diagnostic
+  # - platform: template
+  #   id: pid_output_power
+  #   name: "PID: Heating Power" 
+  #   unit_of_measurement: "%"
+  #   icon: "mdi:gauge"
+  #   state_class: measurement
+  #   filters: 
+  #     - clamp: 
+  #         max_value: 100
+  #         min_value: -100
+  #         ignore_out_of_range: false
+  #   lambda: |-
+  #     return id(pid_output_power_template).state; 
+  #   update_interval: ${diagnostic_interval_time} 
+  #   entity_category: diagnostic
 
 
   - platform: template

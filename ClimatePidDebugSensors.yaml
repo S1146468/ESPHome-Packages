@@ -3,7 +3,7 @@ substitutions:
   __device_name__: device_name
   __friendly_name__: "Friendly name"
   __esphome_pid_climate__: climate_name
-
+  __diagnostic_interval__: 30s
 
 
 
@@ -11,50 +11,237 @@ substitutions:
 
 
 sensor:
+    # ------------------------------- PID Error ------------------------------- #
   - platform: pid
     climate_id: ${__esphome_pid_climate__}
-    id: pid_calculated_error_template
+    id: ${device_name}_${__esphome_pid_climate__}_error_raw
     type: ERROR  
     internal: True
 
+  - platform: template
+    id: ${device_name}_${__esphome_pid_climate__}_error
+    name: "${__friendly_name__}: Error" 
+    icon: "mdi:gauge"
+    unit_of_measurement: "%"
+    state_class: measurement
+    filters: 
+      - clamp: 
+          max_value: 100
+          min_value: -100
+          ignore_out_of_range: false
+    lambda: |-
+      return id(${device_name}_${__esphome_pid_climate__}_error_raw).state; 
+    update_interval: ${__diagnostic_interval__} 
+    internal: ${__internal__}
+    entity_category: diagnostic
+
+
+
+
+
+
+
+    # --------------------------- PID Proportional ---------------------------- #
   - platform: pid
     climate_id: ${__esphome_pid_climate__}
-    id: pid_calculated_p_error_template
+    id: ${device_name}_${__esphome_pid_climate__}_proportional_raw
     type: PROPORTIONAL  
     internal: True
 
+  - platform: template
+    id: ${device_name}_${__esphome_pid_climate__}_proportional
+    name: "${__friendly_name__}: Proportional" 
+    icon: "mdi:gauge"
+    unit_of_measurement: "%"
+    state_class: measurement
+    filters: 
+      - clamp: 
+          max_value: 100
+          min_value: -100
+          ignore_out_of_range: false
+    lambda: |-
+      return id(${device_name}_${__esphome_pid_climate__}_proportional_raw).state; 
+    update_interval: ${__diagnostic_interval__}  
+    internal: ${__internal__}
+    entity_category: diagnostic
+
+
+
+
+
+
+
+    # ------------------------------ PID Integral ----------------------------- #
   - platform: pid
     climate_id: ${__esphome_pid_climate__}
-    id: pid_calculated_i_error_template
+    id: ${device_name}_${__esphome_pid_climate__}_integral_raw
     type: INTEGRAL  
     internal: True
 
+  - platform: template
+    id: ${device_name}_${__esphome_pid_climate__}_integral
+    name: "${__friendly_name__}: Integral" 
+    icon: "mdi:gauge"
+    unit_of_measurement: "%"
+    state_class: measurement
+    filters: 
+      - clamp: 
+          max_value: 100
+          min_value: -100
+          ignore_out_of_range: false
+    lambda: |-
+      return id(${device_name}_${__esphome_pid_climate__}_integral).state; 
+    update_interval: ${__diagnostic_interval__}
+    internal: ${__internal__}
+    entity_category: diagnostic
+
+
+
+
+
+
+
+    # ----------------------------- PID Derivative ---------------------------- #
   - platform: pid
     climate_id: ${__esphome_pid_climate__}
-    id: pid_calculated_d_error_template
+    id: ${device_name}_${__esphome_pid_climate__}_derivative_raw
     type: DERIVATIVE  
     internal: True
 
+  - platform: template
+    id: ${device_name}_${__esphome_pid_climate__}_derivative
+    name: "${__friendly_name__}: Derivative" 
+    icon: "mdi:gauge"
+    unit_of_measurement: "%"
+    state_class: measurement
+    filters: 
+      - clamp: 
+          max_value: 100
+          min_value: -100
+          ignore_out_of_range: false
+    lambda: |-
+      return id(${device_name}_${__esphome_pid_climate__}_derivative).state; 
+    update_interval: ${__diagnostic_interval__}  
+    internal: ${__internal__}
+    entity_category: diagnostic
+
+
+
+
+
+
+
+    # ------------------------------- PID Heat -------------------------------- #
   - platform: pid
     climate_id: ${__esphome_pid_climate__}
-    id: pid_output_power_template
+    id: ${device_name}_${__esphome_pid_climate__}_heat_raw
     type: HEAT  
     internal: True
 
+  - platform: template
+    id: ${device_name}_${__esphome_pid_climate__}_heat
+    name: "${__friendly_name__}: Heat" 
+    unit_of_measurement: "%"
+    icon: "mdi:gauge"
+    state_class: measurement
+    filters: 
+      - clamp: 
+          max_value: 100
+          min_value: -100
+          ignore_out_of_range: false
+    lambda: |-
+      return id(${device_name}_${__esphome_pid_climate__}_heat).state; 
+    update_interval: ${__diagnostic_interval__} 
+    internal: ${__internal__}
+    entity_category: diagnostic
+
+
+
+
+
+
+
+    # -------------------------------- PID Kp --------------------------------- #
   - platform: pid
     climate_id: ${__esphome_pid_climate__}
-    id: pid_output_power_template
+    id: ${device_name}_${__esphome_pid_climate__}_kp_raw
     type: KP  
     internal: True
 
+  - platform: template
+    id: ${device_name}_${__esphome_pid_climate__}_kp
+    name: "${__friendly_name__}: Proportional Multiplier (Kp)" 
+    unit_of_measurement: ""
+    icon: "mdi:gauge"
+    state_class: measurement
+    filters: 
+      - clamp: 
+          max_value: 100
+          min_value: -100
+          ignore_out_of_range: false
+    lambda: |-
+      return id(${device_name}_${__esphome_pid_climate__}_kp).state; 
+    update_interval: ${__diagnostic_interval__} 
+    internal: ${__internal__}
+    entity_category: diagnostic
+
+
+
+
+
+
+
+    # -------------------------------- PID Ki --------------------------------- #
   - platform: pid     
     climate_id: ${__esphome_pid_climate__}
-    id: pid_output_power_template
+    id: ${device_name}_${__esphome_pid_climate__}_ki_raw
     type: KI
     internal: True
 
+  - platform: template
+    id: ${device_name}_${__esphome_pid_climate__}_ki
+    name: "${__friendly_name__}: Integral Multiplier (Ki)" 
+    unit_of_measurement: ""
+    icon: "mdi:gauge"
+    state_class: measurement
+    filters: 
+      - clamp: 
+          max_value: 100
+          min_value: -100
+          ignore_out_of_range: false
+    lambda: |-
+      return id(${device_name}_${__esphome_pid_climate__}_ki).state; 
+    update_interval: ${__diagnostic_interval__} 
+    internal: ${__internal__}
+    entity_category: diagnostic
+
+
+
+
+
+
+
+    # -------------------------------- PID Kd --------------------------------- #
   - platform: pid     
     climate_id: ${__esphome_pid_climate__}
-    id: pid_output_power_template
+    id: ${device_name}_${__esphome_pid_climate__}_kd_raw
     type: KD
     internal: True
+
+  - platform: template
+    id: ${device_name}_${__esphome_pid_climate__}_kd
+    name: "${__friendly_name__}: Derivative Multiplier (Kd)" 
+    unit_of_measurement: ""
+    icon: "mdi:gauge"
+    state_class: measurement
+
+    filters: 
+      - clamp: 
+          max_value: 100
+          min_value: -100
+          ignore_out_of_range: false
+    lambda: |-
+      return id(${device_name}_${__esphome_pid_climate__}_kd_raw).state; 
+    update_interval: ${__diagnostic_interval__} 
+    internal: ${__internal__}
+    entity_category: diagnostic
