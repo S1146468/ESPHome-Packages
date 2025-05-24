@@ -1,0 +1,60 @@
+substitutions:
+  __internal__: "true"
+  __device_name__: device_name
+  __friendly_name__: "Friendly name"
+  __esphome_pid_climate__: climate_name
+
+
+
+
+
+
+
+sensor:
+  - platform: pid
+    climate_id: ${__esphome_pid_climate__}
+    id: pid_calculated_error_template
+    type: ERROR  
+    internal: True
+
+  - platform: pid
+    climate_id: ${__esphome_pid_climate__}
+    id: pid_calculated_p_error_template
+    type: PROPORTIONAL  
+    internal: True
+
+  - platform: pid
+    climate_id: ${__esphome_pid_climate__}
+    id: pid_calculated_i_error_template
+    type: INTEGRAL  
+    internal: True
+
+  - platform: pid
+    climate_id: ${__esphome_pid_climate__}
+    id: pid_calculated_d_error_template
+    type: DERIVATIVE  
+    internal: True
+
+  - platform: pid
+    climate_id: ${__esphome_pid_climate__}
+    id: pid_output_power_template
+    type: HEAT  
+    internal: True
+
+  - platform: pid
+    climate_id: ${__esphome_pid_climate__}
+    id: pid_output_power_template
+    type: KP  
+    internal: True
+
+  - platform: pid     
+    climate_id: ${__esphome_pid_climate__}
+    id: pid_output_power_template
+    type: KI
+    internal: True
+
+  - platform: pid     
+    climate_id: ${__esphome_pid_climate__}
+    id: pid_output_power_template
+    type: KD
+    internal: True
