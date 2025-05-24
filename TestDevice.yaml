@@ -50,8 +50,8 @@ packages:
         __ha_generic_thermostat__: climate.verwarming_stijn
         __ha_sonoff_trv_1__: climate.fake_radiatorknop_stijn
         __internal__: "false"
-    - path: C:\VScode\EspHome\Test\ESPHome-Packages\ClimatePidDebugSensors.yaml
-      variables:
+    - path: ClimatePidDebugSensors.yaml
+      vars:
         __internal__: "false"
         __device_name__: testdevice
         __friendly_name__: Pid Climate
