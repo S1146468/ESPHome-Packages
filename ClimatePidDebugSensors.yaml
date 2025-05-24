@@ -175,6 +175,7 @@ sensor:
     icon: "mdi:gauge"
     state_class: measurement
     filters: 
+      - round: 10
       - clamp: 
           max_value: 100
           min_value: -100
@@ -205,6 +206,7 @@ sensor:
     icon: "mdi:gauge"
     state_class: measurement
     filters: 
+      - round: 10
       - clamp: 
           max_value: 100
           min_value: -100
@@ -234,8 +236,8 @@ sensor:
     unit_of_measurement: ""
     icon: "mdi:gauge"
     state_class: measurement
-
     filters: 
+      - round: 10
       - clamp: 
           max_value: 100
           min_value: -100
