@@ -50,7 +50,7 @@ sensor:
 
   - platform: template
     id: ${__device_name__}_${__esphome_pid_climate__}_proportional
-    name: "${__esphome_pid_climate_friendly_name__}: Proportional" 
+    name: "${__esphome_pid_climate_friendly_name__}: Error Proportional" 
     icon: "mdi:gauge"
     unit_of_measurement: "%"
     state_class: measurement
@@ -80,7 +80,7 @@ sensor:
 
   - platform: template
     id: ${__device_name__}_${__esphome_pid_climate__}_integral
-    name: "${__esphome_pid_climate_friendly_name__}: Integral" 
+    name: "${__esphome_pid_climate_friendly_name__}: Error Integral" 
     icon: "mdi:gauge"
     unit_of_measurement: "%"
     state_class: measurement
@@ -110,7 +110,7 @@ sensor:
 
   - platform: template
     id: ${__device_name__}_${__esphome_pid_climate__}_derivative
-    name: "${__esphome_pid_climate_friendly_name__}: Derivative" 
+    name: "${__esphome_pid_climate_friendly_name__}: Error Derivative" 
     icon: "mdi:gauge"
     unit_of_measurement: "%"
     state_class: measurement
@@ -140,7 +140,7 @@ sensor:
 
   - platform: template
     id: ${__device_name__}_${__esphome_pid_climate__}_heat
-    name: "${__esphome_pid_climate_friendly_name__}: Heat" 
+    name: "${__esphome_pid_climate_friendly_name__}: Output Heat" 
     unit_of_measurement: "%"
     icon: "mdi:gauge"
     state_class: measurement
@@ -170,7 +170,7 @@ sensor:
 
   - platform: template
     id: ${__device_name__}_${__esphome_pid_climate__}_kp
-    name: "${__esphome_pid_climate_friendly_name__}: Proportional Multiplier (Kp)" 
+    name: "${__esphome_pid_climate_friendly_name__}: Multiplier Proportional (Kp)" 
     unit_of_measurement: ""
     icon: "mdi:gauge"
     state_class: measurement
@@ -200,7 +200,7 @@ sensor:
 
   - platform: template
     id: ${__device_name__}_${__esphome_pid_climate__}_ki
-    name: "${__esphome_pid_climate_friendly_name__}: Integral Multiplier (Ki)" 
+    name: "${__esphome_pid_climate_friendly_name__}: Multiplier Integral (Ki)" 
     unit_of_measurement: ""
     icon: "mdi:gauge"
     state_class: measurement
@@ -230,7 +230,7 @@ sensor:
 
   - platform: template
     id: ${__device_name__}_${__esphome_pid_climate__}_kd
-    name: "${__esphome_pid_climate_friendly_name__}: Derivative Multiplier (Kd)" 
+    name: "${__esphome_pid_climate_friendly_name__}: Multiplier Derivative (Kd)" 
     unit_of_measurement: ""
     icon: "mdi:gauge"
     state_class: measurement
