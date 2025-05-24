@@ -42,24 +42,24 @@ wifi:
 
 
 packages:
-  ESPHome-Packages:
-    url: https://github.com/S1146468/ESPHome-Packages
-    files:
-    - path: ClimateTargetStateSync.yaml
-      vars:
-        __esphome_pid_climate__: ${climate_pid_name}
-        __ha_generic_thermostat__: ${climate_main}
-        __ha_sonoff_trv_1__: ${climate_trv}
-        __internal__: "false"
-    - path: C:\VScode\EspHome\Test\ESPHome-Packages\ClimatePidDebugSensors.yaml
-      variables:
-        __internal__: "false"
-        __device_name__: ${name}
-        __friendly_name__: ${climate_pid_friendly_name}
-        __esphome_pid_climate__: ${climate_pid_name}
-        __diagnostic_interval__: ${diagnostic_interval_time}
-    ref: main  # optional
-    refresh: 0s  # optional
+  target_state_sync:
+    file: ClimateTargetStateSync.yaml
+    vars:
+      __esphome_pid_climate__: ${climate_pid_name}
+      __ha_generic_thermostat__: ${climate_main}
+      __ha_sonoff_trv_1__: ${climate_trv}
+      __internal__: "false"
+
+  pid_debug_sensors:
+    file: ClimatePidDebugSensors.yaml
+    vars:
+      __internal__: "false"
+      __device_name__: ${name}
+      __friendly_name__: ${climate_pid_friendly_name}
+      __esphome_pid_climate__: ${climate_pid_name}
+      __diagnostic_interval__: ${diagnostic_interval_time}
+    # ref: main  # optional
+    # refresh: 0s  # optional
 
 button:
   - platform: restart
