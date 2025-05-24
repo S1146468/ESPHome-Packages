@@ -11,7 +11,7 @@ substitutions:
 
 
 sensor:
-    # ------------------------------- PID Error ------------------------------- #
+# ------------------------------- PID Error ------------------------------- #
   - platform: pid
     climate_id: ${__esphome_pid_climate__}
     id: ${__device_name__}_${__esphome_pid_climate__}_error_raw
@@ -41,7 +41,7 @@ sensor:
 
 
 
-    # --------------------------- PID Proportional ---------------------------- #
+# --------------------------- PID Proportional ---------------------------- #
   - platform: pid
     climate_id: ${__esphome_pid_climate__}
     id: ${__device_name__}_${__esphome_pid_climate__}_proportional_raw
@@ -71,7 +71,7 @@ sensor:
 
 
 
-    # ------------------------------ PID Integral ----------------------------- #
+# ------------------------------ PID Integral ----------------------------- #
   - platform: pid
     climate_id: ${__esphome_pid_climate__}
     id: ${__device_name__}_${__esphome_pid_climate__}_integral_raw
@@ -101,7 +101,7 @@ sensor:
 
 
 
-    # ----------------------------- PID Derivative ---------------------------- #
+# ----------------------------- PID Derivative ---------------------------- #
   - platform: pid
     climate_id: ${__esphome_pid_climate__}
     id: ${__device_name__}_${__esphome_pid_climate__}_derivative_raw
@@ -131,7 +131,7 @@ sensor:
 
 
 
-    # ------------------------------- PID Cool -------------------------------- #
+# ------------------------------- PID Cool -------------------------------- #
   - platform: pid
     climate_id: ${__esphome_pid_climate__}
     id: ${__device_name__}_${__esphome_pid_climate__}_cool_raw
@@ -161,7 +161,7 @@ sensor:
 
 
 
-    # -------------------------------- PID Kp --------------------------------- #
+# -------------------------------- PID Kp --------------------------------- #
   - platform: pid
     climate_id: ${__esphome_pid_climate__}
     id: ${__device_name__}_${__esphome_pid_climate__}_kp_raw
@@ -192,7 +192,7 @@ sensor:
 
 
 
-    # -------------------------------- PID Ki --------------------------------- #
+# -------------------------------- PID Ki --------------------------------- #
   - platform: pid     
     climate_id: ${__esphome_pid_climate__}
     id: ${__device_name__}_${__esphome_pid_climate__}_ki_raw
@@ -223,7 +223,7 @@ sensor:
 
 
 
-    # -------------------------------- PID Kd --------------------------------- #
+# -------------------------------- PID Kd --------------------------------- #
   - platform: pid     
     climate_id: ${__esphome_pid_climate__}
     id: ${__device_name__}_${__esphome_pid_climate__}_kd_raw
