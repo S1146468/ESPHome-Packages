@@ -54,7 +54,7 @@ packages:
       vars:
         __internal__: "false"
         __device_name__: testdevice
-        __friendly_name__: Pid Climate
+        __esphome_pid_climate_friendly_name__: Pid Climate
         __esphome_pid_climate__: pid_climate
         __diagnostic_interval__: 10s
   ref: main

@@ -1,7 +1,7 @@
 substitutions:
   __internal__: "true"
   __device_name__: device_name
-  __friendly_name__: "Friendly name"
+  __esphome_pid_climate_friendly_name__: "Friendly name"
   __esphome_pid_climate__: climate_name
   __diagnostic_interval__: 30s
 
