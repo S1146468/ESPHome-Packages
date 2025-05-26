@@ -21,7 +21,7 @@ logger:
   level: WARN
 
 esp32:
-  board: esp32-poe-iso
+  board: esp32dev
   framework:
     type: arduino
 
