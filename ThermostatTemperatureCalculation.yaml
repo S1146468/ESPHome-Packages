@@ -1,0 +1,54 @@
+substitutions:
+  min_cv_temp: "30" 
+  max_cv_temp: "80"
+  outside_temp_sensor: sensor.outside_temp
+  heat_demand_room_1: sensor.room_1
+  heat_demand_room_2: sensor.room_1
+# heat_demand_room_3: sensor.room_3
+
+# ----- Heat Demand Sensors -----
+sensor:
+  - platform: homeassistant
+    id: demand_room_1
+    entity_id: ${heat_demand_room_1}
+
+  - platform: homeassistant
+    id: demand_room_2
+    entity_id: ${heat_demand_room_2}
+
+#   - platform: homeassistant
+#     id: demand_room_3
+#     entity_id: ${heat_demand_room_3}
+
+  # Add more rooms here …
+
+##################################
+# Aggregate demand (max function)#
+##################################
+  - platform: group
+    id: max_heat_demand
+    name: "Max Heat Demand"
+    type: max
+    # List every heat_demand_xxx sensor id you created above
+    sensors:
+      - demand_room_1
+      - demand_room_2
+      - demand_room_3
+      # Add more ids here …
+
+##############################################
+# Calculate target water temperature (°C)    #
+##############################################
+  - platform: template
+    id: target_water_temperature
+    name: "Target Water Temperature"
+    unit_of_measurement: "°C"
+    accuracy_decimals: 1
+    update_interval: 1s
+    lambda: |-
+      // Guard against missing data
+      if (isnan(id(max_heat_demand).state) || isnan(id(min_cv_temp).state) || isnan(id(max_cv_temp).state)) {
+        return NAN;
+      }
+      // max_heat_demand is a percentage (0‑100)
+      return (id(max_heat_demand).state / 100.0f) * (id(max_cv_temp).state - id(min_cv_temp).state) + id(min_cv_temp).state;

@@ -31,7 +31,7 @@ api:
   encryption:   
     key: !secret esphome-testdevice_Key
 
-ota:
+ota: 
   - platform: esphome
     password: !secret ota_password
 
@@ -57,6 +57,7 @@ packages:
         __esphome_pid_climate_friendly_name__: Pid Climate
         __esphome_pid_climate__: pid_climate
         __diagnostic_interval__: 10s
+        
   ref: main
   refresh: 0s
 
@@ -65,14 +66,7 @@ button:
     name: "Restart"
     id: button_restart
     entity_category: config
-  
-  - platform: template
-    id: reset_integral
-    on_press:
-      - climate.pid.reset_integral_term: ${climate_pid_name}
-    internal: True
 
-    
   - platform: template
     id: PID_autotune_start
     name: "PID autotune"
@@ -89,8 +83,11 @@ script:
           noiseband: 0.25
           positive_output: 1.0
           negative_output: 0.0
-      
 
+  - id: run_integral_reset
+    then: 
+      - climate.pid.reset_integral_term: ${climate_pid_name}
+  
 globals:
   - id: previous_setpoint
     type: float
@@ -128,7 +125,6 @@ switch:
           state: OFF         
   
     
-
 output:
   - platform: template
     id: heater_output
@@ -150,7 +146,7 @@ interval:
         float current_setpoint = climate->target_temperature;
         if (current_setpoint != id(previous_setpoint)) {
           id(previous_setpoint) = current_setpoint;
-          id(reset_integral).press();
+          id(run_integral_reset).execute();
         }
 
 
@@ -194,45 +190,8 @@ binary_sensor:
     name: "Window Sensor"
     entity_id: ${window_sensor}
     id: window
-        
-    
-  - platform: template
-    name: "Window"
-    id: window_kamer_template
-    entity_category: diagnostic
-    device_class: window
-    lambda: |-
-      return id(window).state;
-    on_release: 
-      then:
-        - button.press: reset_integral
 
 sensor:
-  - platform: homeassistant 
-    name: "Outside Temperature Sensor"
-    entity_id: ${outdoor_sensor}
-    id: outside_temperature
-    filters: 
-      - heartbeat: ${interval_time}
-      - timeout:
-          timeout: 1min
-          value: !lambda return 0;
-      - lambda: |-
-          //const float filterFactor = 0.1f;
-          const float filterFactor = 0.00001f;
-          float keepFactor = 1.0f - filterFactor;
-          float value = id(outside_temperature).state;
-
-          if (isnan(value)){
-            return x;
-          }
-
-          if (isnan(x)) {
-            return keepFactor * value + 0.0;  // Default fallback value
-          } else {
-            return keepFactor * value + x * filterFactor;
-          }
-
   - platform: homeassistant 
     name: "Temperature Sensor"
     entity_id: ${temperature_sensor}
@@ -248,8 +207,6 @@ sensor:
 
           if (isnan(x)) return keepFactor * value + 0.0;  // Default fallback value
           else return keepFactor * value + x * filterFactor;
-          
-          
 
   - platform: homeassistant 
     name: "Humidity Sensor"
@@ -271,38 +228,6 @@ sensor:
           } else {
             return keepFactor * value + x * filterFactor;
           }
-          
-
-     
-  # - platform: pid
-  #   climate_id: pid_climate
-  #   id: pid_calculated_error_template
-  #   type: ERROR  
-  #   internal: True
-
-  # - platform: pid
-  #   climate_id: pid_climate
-  #   id: pid_calculated_p_error_template
-  #   type: PROPORTIONAL  
-  #   internal: True
-
-  # - platform: pid
-  #   climate_id: pid_climate
-  #   id: pid_calculated_i_error_template
-  #   type: INTEGRAL  
-  #   internal: True
-
-  # - platform: pid
-  #   climate_id: pid_climate
-  #   id: pid_calculated_d_error_template
-  #   type: DERIVATIVE  
-  #   internal: True
-
-  # - platform: pid
-  #   climate_id: pid_climate
-  #   id: pid_output_power_template
-  #   type: HEAT  
-  #   internal: True
              
 
   - platform: template
@@ -364,126 +289,6 @@ sensor:
     lambda: |- 
       return heat_output->value();
 
-  
 
-
-  # - platform: template
-  #   id: pid_calculated_error
-  #   name: "PID: Error" 
-  #   icon: "mdi:gauge"
-  #   unit_of_measurement: "%"
-  #   state_class: measurement
-  #   filters: 
-  #     - clamp: 
-  #         max_value: 100
-  #         min_value: -100
-  #         ignore_out_of_range: false
-  #   lambda: |-
-  #     return id(pid_calculated_error_template).state; 
-  #   update_interval: ${diagnostic_interval_time} 
-  #   entity_category: diagnostic
-
-
-  # - platform: template
-  #   id: pid_calculated_p_error
-  #   name: "PID: P Error" 
-  #   icon: "mdi:gauge"
-  #   unit_of_measurement: "%"
-  #   state_class: measurement
-  #   filters: 
-  #     - clamp: 
-  #         max_value: 100
-  #         min_value: -100
-  #         ignore_out_of_range: false
-  #   lambda: |-
-  #     return id(pid_calculated_p_error_template).state; 
-  #   update_interval: ${diagnostic_interval_time}  
-  #   entity_category: diagnostic
-
-
-  # - platform: template
-  #   id: pid_calculated_i_error
-  #   name: "PID: I Error" 
-  #   icon: "mdi:gauge"
-  #   unit_of_measurement: "%"
-  #   state_class: measurement
-  #   filters: 
-  #     - clamp: 
-  #         max_value: 100
-  #         min_value: -100
-  #         ignore_out_of_range: false
-  #   lambda: |-
-  #     return id(pid_calculated_i_error_template).state; 
-  #   update_interval: ${diagnostic_interval_time}
-  #   entity_category: diagnostic
-
-
-  # - platform: template
-  #   id: pid_calculated_d_error
-  #   name: "PID: D Error" 
-  #   icon: "mdi:gauge"
-  #   unit_of_measurement: "%"
-  #   state_class: measurement
-  #   filters: 
-  #     - clamp: 
-  #         max_value: 100
-  #         min_value: -100
-  #         ignore_out_of_range: false
-  #   lambda: |-
-  #     return id(pid_calculated_d_error_template).state; 
-  #   update_interval: ${diagnostic_interval_time}  
-  #   entity_category: diagnostic
-
-
-
-  # - platform: template
-  #   id: pid_output_power
-  #   name: "PID: Heating Power" 
-  #   unit_of_measurement: "%"
-  #   icon: "mdi:gauge"
-  #   state_class: measurement
-  #   filters: 
-  #     - clamp: 
-  #         max_value: 100
-  #         min_value: -100
-  #         ignore_out_of_range: false
-  #   lambda: |-
-  #     return id(pid_output_power_template).state; 
-  #   update_interval: ${diagnostic_interval_time} 
-  #   entity_category: diagnostic
-
-
-  - platform: template
-    name: "Temperature Sensor"
-    id: temperature_sensor_output
-    unit_of_measurement: "°C"
-    icon: "mdi:thermometer"
-    device_class: temperature
-    state_class: measurement
-    update_interval: ${interval_time}
-    lambda: |- 
-      return id(temperature).state;
-
-  - platform: template
-    name: "Humidity Sensor"
-    id: humidity_sensor_output
-    unit_of_measurement: "%"
-    icon: "mdi:water-percent"
-    device_class: humidity
-    state_class: measurement
-    update_interval: ${interval_time}
-    lambda: |- 
-      return id(humidity).state;
-
-  - platform: template
-    name: "Outdoor Temperature Sensor"
-    id: outside_temperature_sensor_output
-    unit_of_measurement: "°C"
-    icon: "mdi:thermometer"
-    device_class: temperature
-    state_class: measurement
-    update_interval: ${interval_time}
-    lambda: |- 
-      return id(outside_temperature).state;
 
 
