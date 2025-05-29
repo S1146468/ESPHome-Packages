@@ -83,6 +83,9 @@ sensor:
         if (heat_demand_pct < 0.0f) heat_demand_pct = 0.0f;
         if (heat_demand_pct > 100.0f) heat_demand_pct = 100.0f;
       }
+      
+      // Scale by room demand (0–100%)
+      heat_demand_pct *= (id(${device_name}_max_heat_demand).state / 100.0f);
 
       float min_temp = ${min_cv_temp};
       float max_temp = ${max_cv_temp};
