@@ -31,16 +31,29 @@ sensor:
 ##################################
 # Aggregate demand (max function)#
 ##################################
-  - platform: group
+  - platform: template
     id: ${device_name}_max_heat_demand
-    type: max
     internal: true
-    # List every heat_demand_xxx sensor id you created above
-    sensors:
-      - demand_room_1
-      - demand_room_2
-      - demand_room_3
-      # Add more ids here …
+    lambda: |-
+      float max_val = 0.0f;
+
+      if (!isnan(id(${device_name}_demand_room_1).state)) {
+        max_val = id(${device_name}_demand_room_1).state;
+      }
+
+      if (!isnan(id(${device_name}_demand_room_2).state) && id(${device_name}_demand_room_2).state > max_val) {
+        max_val = id(${device_name}_demand_room_2).state;
+      }
+
+      // Add more rooms here if needed
+        //   if (!isnan(id(${device_name}_demand_room_3).state) && id(${device_name}_demand_room_3).state > max_val) {
+        //     max_val = id(${device_name}_demand_room_3).state;
+        //   }
+
+      return max_val;
+    update_interval: 1s
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
 
 ##############################################
 # Calculate target water temperature (°C)    #

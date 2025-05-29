@@ -57,7 +57,14 @@ packages:
         __esphome_pid_climate_friendly_name__: Pid Climate
         __esphome_pid_climate__: pid_climate
         __diagnostic_interval__: 10s
-        
+    - path: ThermostatTemperatureCalculation.yaml
+      vars: 
+        device_name: ${name}
+        min_cv_temp: "30" 
+        max_cv_temp: "70"
+        outside_temp_sensor: ${outdoor_sensor}
+        heat_demand_room_1: ${sensor.climate_stijn_heat_output}
+        heat_demand_room_2: ${sensor.climate_stijn_heat_output}
   ref: main
   refresh: 0s
 
