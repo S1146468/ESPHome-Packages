@@ -7,7 +7,7 @@ substitutions:
   climate_trv: climate.fake_radiatorknop_stijn #climate.trvzb_kamer_stijn
   temperature_sensor: sensor.snzb02p_kamer_stijn_temperature
   humidity_sensor: sensor.snzb02p_kamer_stijn_humidity
-  outdoor_sensor: sensor.temperature
+  outdoor_sensor: sensor.temperature 
   window_sensor: binary_sensor.snzb04p_kamer_stijn_contact
   interval_time: 1s
   diagnostic_interval_time: 10s
