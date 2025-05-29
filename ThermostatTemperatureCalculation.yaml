@@ -1,19 +1,25 @@
 substitutions:
+  device_name: CV
   min_cv_temp: "30" 
   max_cv_temp: "80"
   outside_temp_sensor: sensor.outside_temp
   heat_demand_room_1: sensor.room_1
-  heat_demand_room_2: sensor.room_1
+  heat_demand_room_2: sensor.room_2
 # heat_demand_room_3: sensor.room_3
 
-# ----- Heat Demand Sensors -----
+
 sensor:
   - platform: homeassistant
-    id: demand_room_1
+    id: ${device_name}_outside_temperature_sensor
+    entity_id: ${outside_temp_sensor}
+
+# ----- Heat Demand Sensors -----
+  - platform: homeassistant
+    id: ${device_name}_demand_room_1
     entity_id: ${heat_demand_room_1}
 
   - platform: homeassistant
-    id: demand_room_2
+    id: ${device_name}_demand_room_2
     entity_id: ${heat_demand_room_2}
 
 #   - platform: homeassistant
@@ -26,9 +32,9 @@ sensor:
 # Aggregate demand (max function)#
 ##################################
   - platform: group
-    id: max_heat_demand
-    name: "Max Heat Demand"
+    id: ${device_name}_max_heat_demand
     type: max
+    internal: true
     # List every heat_demand_xxx sensor id you created above
     sensors:
       - demand_room_1
@@ -40,15 +46,31 @@ sensor:
 # Calculate target water temperature (°C)    #
 ##############################################
   - platform: template
-    id: target_water_temperature
+    id: ${device_name}_target_water_temperature
     name: "Target Water Temperature"
     unit_of_measurement: "°C"
     accuracy_decimals: 1
     update_interval: 1s
     lambda: |-
       // Guard against missing data
-      if (isnan(id(max_heat_demand).state) || isnan(id(min_cv_temp).state) || isnan(id(max_cv_temp).state)) {
+      if (isnan(id(${device_name}_outside_temperature_sensor).state)) {
         return NAN;
       }
-      // max_heat_demand is a percentage (0‑100)
-      return (id(max_heat_demand).state / 100.0f) * (id(max_cv_temp).state - id(min_cv_temp).state) + id(min_cv_temp).state;
+
+      float t = id(${device_name}_outside_temperature_sensor).state;
+      float heat_demand_pct;
+
+      // Heating demand curve based on outdoor temperature
+      if (t <= 0.0f) {
+        heat_demand_pct = 100.0f;
+      } else if (t >= 25.0f) {
+        heat_demand_pct = 0.0f;
+      } else {
+        heat_demand_pct = (-0.016f * t * t * t) + (0.26f * t * t) - (1.3f * t) + 100.0f;
+        if (heat_demand_pct < 0.0f) heat_demand_pct = 0.0f;
+        if (heat_demand_pct > 100.0f) heat_demand_pct = 100.0f;
+      }
+
+      float min_temp = ${min_cv_temp};
+      float max_temp = ${max_cv_temp};
+      return (heat_demand_pct / 100.0f) * (max_temp - min_temp) + min_temp;
