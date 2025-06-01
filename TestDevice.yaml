@@ -1,5 +1,5 @@
 substitutions:
-  name: testdevice
+  devicename: testdevice
   friendly_name: TestDevice
   climate_pid_name: pid_climate
   climate_pid_friendly_name: "Pid Climate"
@@ -11,9 +11,12 @@ substitutions:
   window_sensor: binary_sensor.snzb04p_kamer_stijn_contact
   interval_time: 1s
   diagnostic_interval_time: 10s
-
+substitutions:
+  interval:
+    diagnostic: 10s
+    
 esphome:
-  name: ${name}
+  name: ${devicename}
   name_add_mac_suffix: false
   friendly_name: ${friendly_name}
 
