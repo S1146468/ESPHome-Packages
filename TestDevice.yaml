@@ -27,7 +27,6 @@ wifi:
 
 
 
-
 packages:
   url: https://github.com/S1146468/ESPHome-Packages/
   files:
