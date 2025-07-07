@@ -40,7 +40,7 @@ binary_sensor:
       inverted: ${__inverted__}
     filters:
       - delayed_off: 10ms
-    name: "Button"
+    name: "${__buttonFriendlyName__} GPIO"
     id: ${__buttonId__}_gpio
 
 

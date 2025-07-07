@@ -29,7 +29,7 @@ wifi:
 
 
 packages:
-  url: https://github.com/S1146468/ESPHome-Packages
+  url: https://github.com/S1146468/ESPHome-Packages/
   files:
     - path: Switches/ButtonExtraFeatures.yaml
       vars:
@@ -41,9 +41,9 @@ packages:
         __onMaxTime__: 500ms
         __offMinTime__: 30ms
         __offMaxTime__: 500ms
-        __holdOnMinTime__: 1s
-        __holdOnMaxTime__: 3s
-        __endTime__: 250ms
+        __holdOnMinTime__: 500ms
+        __holdOnMaxTime__: 10s
+        __endTime__: 500ms
 
 
 
