@@ -1,6 +1,0 @@
-substitutions:
-  __internal__: "true"
-  __device_name__: device_name
-  __friendly_name__: "friendly_name"
-  __button_tag__: "button1"
-  

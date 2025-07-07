@@ -1,17 +1,3 @@
-substitutions:
-  buttonId: button
-  buttonFriendlyName: "Button"
-  gpioId: GPIO00
-  inverted: true
-  onMinTime: 30ms
-  onMaxTime: 500ms
-  offMinTime: 30ms
-  offMaxTime: 500ms
-  holdOnMinTime: 1s
-  holdOnMaxTime: 3s
-  endTime: 250ms
-
-
 esphome:
   name: testdevice
   name_add_mac_suffix: false
@@ -40,111 +26,24 @@ wifi:
   password: !secret wifi_password
 
 
-globals:
-  - id: ${buttonId}_single_state_global
-    type: bool
-    restore_value: no
-    initial_value: 'false'
-  - id: ${buttonId}_double_state_global
-    type: bool
-    restore_value: no
-    initial_value: 'false'
-  - id: ${buttonId}_triple_state_global
-    type: bool
-    restore_value: no
-    initial_value: 'false'
-  - id: ${buttonId}_hold_state_global
-    type: bool
-    restore_value: no
-    initial_value: 'false'
-
-# The GPIO button
-binary_sensor:
-  - platform: gpio
-    pin: 
-      number: ${gpioId}  # Change this to your actual pin
-      mode:
-        input: true
-      inverted: ${inverted}
-    filters:
-      - delayed_off: 10ms
-    name: "Button"
-    id: ${buttonId}_gpio
 
 
-    on_multi_click:
-    - timing: # Single short click
-        -  ON for ${onMinTime} to ${onMaxTime}
-        -  OFF for at least ${endTime}
-      then:
-        - logger.log: "Single short click"
-        - globals.set:
-              id: ${buttonId}_single_state_global
-              value: !lambda 'return !id(${buttonId}_single_state_global);'
-
-    - timing: # Double short click
-        -  ON for ${onMinTime} to ${onMaxTime}
-        -  OFF for ${offMinTime} to ${offMaxTime}
-        -  ON for ${onMinTime} to ${onMaxTime}
-        -  OFF for at least ${endTime}
-      then:
-        - logger.log: "Double short click"
-        - globals.set:
-              id: ${buttonId}_double_state_global
-              value: !lambda 'return !id(${buttonId}_double_state_global);'
-
-    - timing: # Triple short click
-        -  ON for ${onMinTime} to ${onMaxTime}
-        -  OFF for ${offMinTime} to ${offMaxTime}
-        -  ON for ${onMinTime} to ${onMaxTime}
-        -  OFF for ${offMinTime} to ${offMaxTime}
-        -  ON for ${onMinTime} to ${onMaxTime}
-        -  OFF for at least ${endTime}
-      then:
-        - logger.log: "Triple short click"
-        - globals.set:
-              id: ${buttonId}_triple_state_global
-              value: !lambda 'return !id(${buttonId}_triple_state_global);'
-
-    - timing: # Hold
-        -  ON for ${holdOnMinTime} to ${holdOnMaxTime}
-        -  OFF for at least ${endTime}
-      then:
-        - logger.log: "Hold"
-        - globals.set:
-              id: ${buttonId}_hold_state_global
-              value: !lambda 'return !id(${buttonId}_hold_state_global);'
-
-    # Expose global var as binary sensor
-  - platform: template
-    name: "${buttonFriendlyName} Single"
-    id: ${buttonId}_single_template_sensor
-    lambda: |-
-      return id(${buttonId}_single_state_global);
-
-    # Expose global var as binary sensor
-  - platform: template
-    name: "${buttonFriendlyName} Double"
-    id: ${buttonId}_double_template_sensor
-    lambda: |-
-      return id(${buttonId}_double_state_global);
-
-    # Expose global var as binary sensor
-  - platform: template
-    name: "${buttonFriendlyName} Triple"
-    id: ${buttonId}_triple_template_sensor
-    lambda: |-
-      return id(${buttonId}_triple_state_global);
-
-    # Expose global var as binary sensor
-  - platform: template
-    name: "${buttonFriendlyName} Hold"
-    id: ${buttonId}_hold_template_sensor
-    lambda: |-
-      return id(${buttonId}_hold_state_global);
-
-
-
+packages:
+  url: https://github.com/S1146468/ESPHome-Packages
+  files:
+    - path: Switches/ButtonExtraFeatures.yaml
+      vars:
+        __buttonId__: button_test
+        __buttonFriendlyName__: "Button Test"
+        __gpioId__: GPIO39
+        __inverted__: "true"
+        __onMinTime__: 30ms
+        __onMaxTime__: 500ms
+        __offMinTime__: 30ms
+        __offMaxTime__: 500ms
+        __holdOnMinTime__: 1s
+        __holdOnMaxTime__: 3s
+        __endTime__: 250ms
 
 
 
