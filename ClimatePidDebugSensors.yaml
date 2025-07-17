@@ -33,9 +33,7 @@ sensor:
     lambda: |-
       return id(${__device_name__}_${__esphome_pid_climate__}_error_raw).state; 
     update_interval: ${__diagnostic_interval__} 
-    internal: 
-    - lambda: -|
-        return ${not __enable_error__};
+    internal: ${not ${__enable_error__}}
     entity_category: diagnostic
 
 
@@ -65,9 +63,7 @@ sensor:
     lambda: |-
       return id(${__device_name__}_${__esphome_pid_climate__}_proportional_raw).state; 
     update_interval: ${__diagnostic_interval__}  
-    internal: 
-    - lambda: -|
-        return ${not __enable_error__};
+    internal: ${not ${__enable_error__}}        
     entity_category: diagnostic
 
 
@@ -97,9 +93,7 @@ sensor:
     lambda: |-
       return id(${__device_name__}_${__esphome_pid_climate__}_integral_raw).state; 
     update_interval: ${__diagnostic_interval__}
-    internal: 
-    - lambda: -|
-        return ${not __enable_error__};
+    internal: ${not ${__enable_error__}}
     entity_category: diagnostic
 
 
@@ -129,9 +123,7 @@ sensor:
     lambda: |-
       return id(${__device_name__}_${__esphome_pid_climate__}_derivative_raw).state; 
     update_interval: ${__diagnostic_interval__}  
-    internal: 
-    - lambda: -|
-        return ${not __enable_error__};
+    internal: ${not ${__enable_error__}}
     entity_category: diagnostic
 
 
@@ -160,9 +152,7 @@ sensor:
     lambda: |-
       return id(${__device_name__}_${__esphome_pid_climate__}_heat_raw).state; 
     update_interval: ${__diagnostic_interval__} 
-    internal: 
-    - lambda: -|
-        return ${not __enable_output_heat__};
+    internal: ${not ${__enable_multiplier__}}
     entity_category: diagnostic
 
 
@@ -192,9 +182,7 @@ sensor:
     lambda: |-
       return id(${__device_name__}_${__esphome_pid_climate__}_cool_raw).state; 
     update_interval: ${__diagnostic_interval__} 
-    internal: 
-    - lambda: -|
-        return ${not __enable_output_cool__};
+    internal: ${not ${__enable_multiplier__}}
     entity_category: diagnostic
 
 
@@ -225,9 +213,7 @@ sensor:
     lambda: |-
       return id(${__device_name__}_${__esphome_pid_climate__}_kp_raw).state; 
     update_interval: ${__diagnostic_interval__} 
-    internal: 
-    - lambda: -|
-        return ${not __enable_multiplier__};
+    internal: ${not ${__enable_multiplier__}}
     entity_category: diagnostic
 
 
@@ -258,9 +244,7 @@ sensor:
     lambda: |-
       return id(${__device_name__}_${__esphome_pid_climate__}_ki_raw).state; 
     update_interval: ${__diagnostic_interval__} 
-    internal: 
-    - lambda: -|
-        return ${not __enable_multiplier__};
+    internal: ${not ${__enable_multiplier__}}
     entity_category: diagnostic
 
 
@@ -291,7 +275,5 @@ sensor:
     lambda: |-
       return id(${__device_name__}_${__esphome_pid_climate__}_kd_raw).state; 
     update_interval: ${__diagnostic_interval__} 
-    internal: 
-    - lambda: -|
-        return ${not __enable_multiplier__};
+    internal: ${not ${__enable_multiplier__}}
     entity_category: diagnostic
