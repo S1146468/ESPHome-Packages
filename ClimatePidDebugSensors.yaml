@@ -35,7 +35,7 @@ sensor:
     update_interval: ${__diagnostic_interval__} 
     internal: 
     - lambda: -|
-        return !(${__enable_error__});
+        return ${not __enable_error__};
     entity_category: diagnostic
 
 
@@ -67,7 +67,7 @@ sensor:
     update_interval: ${__diagnostic_interval__}  
     internal: 
     - lambda: -|
-        return !(${__enable_error__});
+        return ${not __enable_error__};
     entity_category: diagnostic
 
 
@@ -99,7 +99,7 @@ sensor:
     update_interval: ${__diagnostic_interval__}
     internal: 
     - lambda: -|
-        return !(${__enable_error__});
+        return ${not __enable_error__};
     entity_category: diagnostic
 
 
@@ -131,7 +131,7 @@ sensor:
     update_interval: ${__diagnostic_interval__}  
     internal: 
     - lambda: -|
-        return !(${__enable_error__});
+        return ${not __enable_error__};
     entity_category: diagnostic
 
 
@@ -162,7 +162,7 @@ sensor:
     update_interval: ${__diagnostic_interval__} 
     internal: 
     - lambda: -|
-        return !(${__enable_output_heat__});
+        return ${not __enable_output_heat__};
     entity_category: diagnostic
 
 
@@ -194,7 +194,7 @@ sensor:
     update_interval: ${__diagnostic_interval__} 
     internal: 
     - lambda: -|
-        return !(${__enable_output_cool__});
+        return ${not __enable_output_cool__};
     entity_category: diagnostic
 
 
@@ -227,7 +227,7 @@ sensor:
     update_interval: ${__diagnostic_interval__} 
     internal: 
     - lambda: -|
-        return !(${__enable_multiplier__});
+        return ${not __enable_multiplier__};
     entity_category: diagnostic
 
 
@@ -260,7 +260,7 @@ sensor:
     update_interval: ${__diagnostic_interval__} 
     internal: 
     - lambda: -|
-        return !(${__enable_multiplier__});
+        return ${not __enable_multiplier__};
     entity_category: diagnostic
 
 
@@ -293,5 +293,5 @@ sensor:
     update_interval: ${__diagnostic_interval__} 
     internal: 
     - lambda: -|
-        return !(${__enable_multiplier__});
+        return ${not __enable_multiplier__};
     entity_category: diagnostic
