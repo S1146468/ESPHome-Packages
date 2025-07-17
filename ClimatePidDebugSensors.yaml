@@ -1,11 +1,13 @@
 substitutions:
-  __internal__: "true"
+  
   __device_name__: device_name
   __esphome_pid_climate_friendly_name__: "Friendly name"
   __esphome_pid_climate__: climate_name
   __diagnostic_interval__: 30s
-
-
+  __enable_error__: "false"
+  __enable_multiplier__: "false"
+  __enable_output_heat__: "false"
+  __enable_output_cool__: "false"
 
 
 
@@ -32,7 +34,10 @@ sensor:
     lambda: |-
       return id(${__device_name__}_${__esphome_pid_climate__}_error_raw).state; 
     update_interval: ${__diagnostic_interval__} 
-    internal: ${__internal__}
+    internal: 
+    - lambda: -|
+        if(${__enable_error__} == "false") return true;
+        if(${__enable_error__} == "true") return false;
     entity_category: diagnostic
 
 
@@ -62,7 +67,10 @@ sensor:
     lambda: |-
       return id(${__device_name__}_${__esphome_pid_climate__}_proportional_raw).state; 
     update_interval: ${__diagnostic_interval__}  
-    internal: ${__internal__}
+    internal: 
+    - lambda: -|
+        if(${__enable_error__} == "false") return true;
+        if(${__enable_error__} == "true") return false;
     entity_category: diagnostic
 
 
@@ -92,7 +100,10 @@ sensor:
     lambda: |-
       return id(${__device_name__}_${__esphome_pid_climate__}_integral_raw).state; 
     update_interval: ${__diagnostic_interval__}
-    internal: ${__internal__}
+    internal: 
+    - lambda: -|
+        if(${__enable_error__} == "false") return true;
+        if(${__enable_error__} == "true") return false;
     entity_category: diagnostic
 
 
@@ -122,7 +133,10 @@ sensor:
     lambda: |-
       return id(${__device_name__}_${__esphome_pid_climate__}_derivative_raw).state; 
     update_interval: ${__diagnostic_interval__}  
-    internal: ${__internal__}
+    internal: 
+    - lambda: -|
+        if(${__enable_error__} == "false") return true;
+        if(${__enable_error__} == "true") return false;
     entity_category: diagnostic
 
 
@@ -151,7 +165,10 @@ sensor:
     lambda: |-
       return id(${__device_name__}_${__esphome_pid_climate__}_heat_raw).state; 
     update_interval: ${__diagnostic_interval__} 
-    internal: ${__internal__}
+    internal: 
+    - lambda: -|
+        if(${__enable_output_heat__} == "false") return true;
+        if(${__enable_output_heat__} == "true") return false;
     entity_category: diagnostic
 
 
@@ -181,7 +198,10 @@ sensor:
     lambda: |-
       return id(${__device_name__}_${__esphome_pid_climate__}_cool_raw).state; 
     update_interval: ${__diagnostic_interval__} 
-    internal: ${__internal__}
+    internal: 
+    - lambda: -|
+        if(${__enable_output_cool__} == "false") return true;
+        if(${__enable_output_cool__} == "true") return false;
     entity_category: diagnostic
 
 
@@ -212,7 +232,10 @@ sensor:
     lambda: |-
       return id(${__device_name__}_${__esphome_pid_climate__}_kp_raw).state; 
     update_interval: ${__diagnostic_interval__} 
-    internal: ${__internal__}
+    internal: 
+    - lambda: -|
+        if(${__enable_multiplier__} == "false") return true;
+        if(${__enable_multiplier__} == "true") return false;
     entity_category: diagnostic
 
 
@@ -243,7 +266,10 @@ sensor:
     lambda: |-
       return id(${__device_name__}_${__esphome_pid_climate__}_ki_raw).state; 
     update_interval: ${__diagnostic_interval__} 
-    internal: ${__internal__}
+    internal: 
+    - lambda: -|
+        if(${__enable_multiplier__} == "false") return true;
+        if(${__enable_multiplier__} == "true") return false;
     entity_category: diagnostic
 
 
@@ -274,5 +300,8 @@ sensor:
     lambda: |-
       return id(${__device_name__}_${__esphome_pid_climate__}_kd_raw).state; 
     update_interval: ${__diagnostic_interval__} 
-    internal: ${__internal__}
+    internal: 
+    - lambda: -|
+        if(${__enable_multiplier__} == "false") return true;
+        if(${__enable_multiplier__} == "true") return false;
     entity_category: diagnostic
