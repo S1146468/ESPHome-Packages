@@ -152,7 +152,7 @@ sensor:
     lambda: |-
       return id(${__device_name__}_${__esphome_pid_climate__}_heat_raw).state; 
     update_interval: ${__diagnostic_interval__} 
-    internal: ${not ${__enable_multiplier__}}
+    internal: ${not ${__enable_output_heat__}}
     entity_category: diagnostic
 
 
@@ -182,7 +182,7 @@ sensor:
     lambda: |-
       return id(${__device_name__}_${__esphome_pid_climate__}_cool_raw).state; 
     update_interval: ${__diagnostic_interval__} 
-    internal: ${not ${__enable_multiplier__}}
+    internal: ${not ${__enable_output_cool__}}
     entity_category: diagnostic
 
 
