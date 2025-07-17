@@ -1,5 +1,4 @@
 substitutions:
-  
   __device_name__: device_name
   __esphome_pid_climate_friendly_name__: "Friendly name"
   __esphome_pid_climate__: climate_name
@@ -36,8 +35,7 @@ sensor:
     update_interval: ${__diagnostic_interval__} 
     internal: 
     - lambda: -|
-        if(${__enable_error__} == false) return true;
-        if(${__enable_error__} == true) return false;
+        return !(${__enable_error__});
     entity_category: diagnostic
 
 
@@ -69,8 +67,7 @@ sensor:
     update_interval: ${__diagnostic_interval__}  
     internal: 
     - lambda: -|
-        if(${__enable_error__} == false) return true;
-        if(${__enable_error__} == true) return false;
+        return !(${__enable_error__});
     entity_category: diagnostic
 
 
@@ -102,8 +99,7 @@ sensor:
     update_interval: ${__diagnostic_interval__}
     internal: 
     - lambda: -|
-        if(${__enable_error__} == false) return true;
-        if(${__enable_error__} == true) return false;
+        return !(${__enable_error__});
     entity_category: diagnostic
 
 
@@ -135,8 +131,7 @@ sensor:
     update_interval: ${__diagnostic_interval__}  
     internal: 
     - lambda: -|
-        if(${__enable_error__} == false) return true;
-        if(${__enable_error__} == true) return false;
+        return !(${__enable_error__});
     entity_category: diagnostic
 
 
@@ -167,8 +162,7 @@ sensor:
     update_interval: ${__diagnostic_interval__} 
     internal: 
     - lambda: -|
-        if(${__enable_output_heat__} == false) return true;
-        if(${__enable_output_heat__} == true) return false;
+        return !(${__enable_output_heat__});
     entity_category: diagnostic
 
 
@@ -200,8 +194,7 @@ sensor:
     update_interval: ${__diagnostic_interval__} 
     internal: 
     - lambda: -|
-        if(${__enable_output_cool__} == false) return true;
-        if(${__enable_output_cool__} == true) return false;
+        return !(${__enable_output_cool__});
     entity_category: diagnostic
 
 
@@ -234,8 +227,7 @@ sensor:
     update_interval: ${__diagnostic_interval__} 
     internal: 
     - lambda: -|
-        if(${__enable_multiplier__} == false) return true;
-        if(${__enable_multiplier__} == true) return false;
+        return !(${__enable_multiplier__});
     entity_category: diagnostic
 
 
@@ -268,8 +260,7 @@ sensor:
     update_interval: ${__diagnostic_interval__} 
     internal: 
     - lambda: -|
-        if(${__enable_multiplier__} == false) return true;
-        if(${__enable_multiplier__} == true) return false;
+        return !(${__enable_multiplier__});
     entity_category: diagnostic
 
 
@@ -302,6 +293,5 @@ sensor:
     update_interval: ${__diagnostic_interval__} 
     internal: 
     - lambda: -|
-        if(${__enable_multiplier__} == false) return true;
-        if(${__enable_multiplier__} == true) return false;
+        return !(${__enable_multiplier__});
     entity_category: diagnostic
