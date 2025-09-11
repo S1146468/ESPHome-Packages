@@ -194,6 +194,7 @@ binary_sensor:
     on_release: 
       then:
         - button.press: ${device.id}_reset_integral
+        - script.execute: ${device.id}_sync_target_and_hvac
 
 
 # --- Read HA climate values ---
