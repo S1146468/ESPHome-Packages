@@ -1,0 +1,95 @@
+
+substitutions:
+  water_temp:
+    min_temp: "30" 
+    max_temp: "70"
+  opentherm_update_interval: 15s
+  output_entity_name: T_set
+  outside_temp_sensor: sensor.outside_temp
+  heat_demand:
+    room_1: esphome_entity
+    room_2: esphome_entity
+
+
+interval:
+  - interval: ${opentherm_update_interval}   # how often to update the boiler setpoint
+    then:
+      - lambda: |-
+          // Read current target water temperature
+          float target = id(target_water_temperature).state;
+
+          // Only write if valid (not NAN)
+          if (!isnan(target)) {
+            id(${outputId}).set_level(target);
+          }
+
+
+
+sensor:
+  - platform: homeassistant
+    id: outside_temperature_sensor
+    entity_id: ${outside_temp_sensor}
+
+##################################
+# Aggregate demand (max function)#
+##################################
+  - platform: template
+    id: max_heat_demand
+    internal: true
+    lambda: |-
+      float max_val = 0.0f;
+
+
+      if (!isnan(id(${heat_demand.room_1}))) {
+        max_val = id(${heat_demand.room_1});
+      }
+
+      if (!isnan(id(${heat_demand.room_2})) && id(${heat_demand.room_2}) > max_val) {
+        max_val = id(${heat_demand.room_2});
+      }
+
+      return max_val * 100.0f;
+    update_interval: ${opentherm_update_interval}
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+
+##############################################
+# Calculate target water temperature (°C)    #
+##############################################
+  - platform: template
+    id: target_water_temperature
+    name: "Target Water Temperature"
+    unit_of_measurement: "°C"
+    accuracy_decimals: 1
+    update_interval: ${opentherm_update_interval}
+    lambda: |-
+      float t = 0.0f;
+
+      if (!isnan(id(outside_temperature_sensor).state)) {
+        t = id(outside_temperature_sensor).state;
+      }
+
+      float heat_demand_pct;
+
+      // Heating demand curve based on outdoor temperature
+      if (t <= 0.0f) {
+        heat_demand_pct = 100.0f;
+      } else if (t >= 25.0f) {
+        heat_demand_pct = 0.0f;
+      } else {
+        heat_demand_pct = (-0.016f * t * t * t) + (0.26f * t * t) - (1.3f * t) + 100.0f;
+        if (heat_demand_pct < 0.0f) heat_demand_pct = 0.0f;
+        if (heat_demand_pct > 100.0f) heat_demand_pct = 100.0f;
+      }
+      
+      // Scale by room demand (0–100%)
+      heat_demand_pct *= (id(max_heat_demand).state / 100.0f);
+
+      //ESP_LOGI("Heat Demand:   ", "Room 1: %.03f%%     Room 2: %.03f%%     Sum: %.03f%%", id(${heat_demand.room_1}) * 100.0f, id(${heat_demand.room_2}) * 100.0f, heat_demand_pct);
+
+      if (heat_demand_pct == 0.0f) return 0.0f;
+
+      float min_temp = ${water_temp.min_temp};
+      float max_temp = ${water_temp.max_temp};
+
+      return (heat_demand_pct / 100.0f) * (max_temp - min_temp) + min_temp;
