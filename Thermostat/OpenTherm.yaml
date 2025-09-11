@@ -7,8 +7,8 @@ substitutions:
 ####################################################################################################
 # Enable OpenTherm communication
 opentherm:
-  in_pin: ${opentherm.ot_in} # WeMos D1 Mini ESP32 input pin for stacking with Master OpenTherm Shield
-  out_pin: ${opentherm.ot_out} # WeMos D1 Mini ESP32 output pin for stacking with Master OpenTherm Shield
+  in_pin: ${openthermPin.ot_in} # WeMos D1 Mini ESP32 input pin for stacking with Master OpenTherm Shield
+  out_pin: ${openthermPin.ot_out} # WeMos D1 Mini ESP32 output pin for stacking with Master OpenTherm Shield
 
 
 # Use switches to enable/disable central heating and hot water from HA interface
