@@ -1,8 +1,8 @@
 substitutions:
   outputId: t_set
   openthermPin:
-    ot_in: "0"
-    ot_out: "0"
+    ot_in: 0
+    ot_out: 0
 
 ####################################################################################################
 # Enable OpenTherm communication
