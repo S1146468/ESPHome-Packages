@@ -1,0 +1,172 @@
+esphome:
+  name: thermostaat
+  name_add_mac_suffix: false
+  friendly_name: Thermostaat
+
+
+  devices:
+    - id: climate_stijn
+      name: "Climate Stijn"
+      area_id: kamer_stijn    
+
+    - id: climate_nick
+      name: "Climate Nick"
+      area_id: kamer_nick 
+
+  areas:
+    - id: kamer_stijn
+      name: "Kamer Stijn"
+    
+    - id: kamer_nick
+      name: "Kamer Nick"
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+    
+# Enable logging
+logger:
+  level: info
+
+# Example configuration entry
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+api:
+  encryption:
+    key: !secret thermostaat_KEY
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  power_save_mode: none
+  manual_ip:
+    static_ip: !secret thermostat_IP
+    gateway: !secret gateway_IP
+    subnet: !secret subnet
+  ap:
+    ssid: "Thermostaat"
+    password: ""
+
+  domain: .local
+
+packages:
+
+########################################################################################
+# Opentherm 
+########################################################################################
+  opentherm: !include
+    file: C:\VScode\EspHome\Test\Thermostat\OpenTherm.yaml
+    vars:
+      outputId: t_set
+      opentherm:
+        in_pin: "21"
+        out_pin: "22"
+
+
+
+########################################################################################
+# Room Climate Devices
+########################################################################################
+  ClimateStijn: !include
+    file: C:\VScode\EspHome\Test\Thermostat\ClimatePID\ClimateDevice.yaml
+    vars:
+      device:
+        id: climate_stijn
+        name: "Climate Stijn"
+      climate:
+        id: verwarming_stijn
+        name: "Verwarming Stijn"
+        output: heater_output_stijn
+        interval: 5s
+      control:
+        pid:
+          kp: 1.0
+          ki: 0.05
+          kd: 0.5
+        deadband:
+          kp_multiplier: 0.0
+          ki_multiplier: 0.5
+          kd_multiplier: 0.0
+      sensor:
+        temperature: sensor.temp_sensor_kamer_stijn_temperature
+        humidity: sensor.temp_sensor_kamer_stijn_humidity
+        window: binary_sensor.raam_sensor_kamer_stijn_contact
+      master: climate.verwarming_stijn_master
+
+  ClimateNick: !include
+    file: C:\VScode\EspHome\Test\Thermostat\ClimatePID\ClimateDevice.yaml
+    vars:
+      device:
+        id: climate_nick
+        name: "Climate Nick"
+      climate:
+        id: verwarming_nick
+        name: "Verwarming Nick"
+        output: heater_output_nick
+        interval: 5s
+      control:
+        pid:
+          kp: 1.0
+          ki: 0.05
+          kd: 0.5
+        deadband:
+          kp_multiplier: 0.0
+          ki_multiplier: 0.5
+          kd_multiplier: 0.0
+      sensor:
+        temperature: sensor.temp_sensor_kamer_nick_temperature
+        humidity: sensor.temp_sensor_kamer_nick_humidity
+        window: binary_sensor.raam_sensor_kamer_nick_contact
+      master: climate.verwarming_nick_master
+
+
+########################################################################################
+# Debug Sensors
+########################################################################################
+  DebugStijn: !include
+    file: C:\VScode\EspHome\Test\Thermostat\ClimatePID\ClimateDebugSensors.yaml
+    vars:
+      device:
+        id: climate_stijn
+        name: "Climate Stijn"
+      climateId: verwarming_stijn
+      disabled:                
+        error: "false"
+        multiplier: "false"
+        heatOutput: "false"
+        coolOutput: "true"
+      updateInterval: 5s
+
+
+
+  DebugNick: !include
+    file: C:\VScode\EspHome\Test\Thermostat\ClimatePID\ClimateDebugSensors.yaml
+    vars:
+      device:
+        id: climate_nick
+        name: "Climate Nick"
+      climateId: verwarming_nick
+      disabled:
+        error: "false"
+        multiplier: "false"
+        heatOutput: "false"
+        coolOutput: "true"
+      updateInterval: 5s
+
+
+  OutputCalculation: !include
+    file: C:\VScode\EspHome\Test\Thermostat\ThermostatOutputCalculation.yaml
+    vars:
+      water_temp:
+        min_temp: "30" 
+        max_temp: "80"
+      opentherm_update_interval: 5s
+      output_entity_name: t_set
+      outside_temp_sensor: sensor.temperature
+      heat_demand:
+        room_1: heater_output_stijn
+        room_2: heater_output_nick
+

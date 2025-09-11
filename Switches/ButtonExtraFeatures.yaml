@@ -1,116 +1,376 @@
 substitutions:
-  __buttonId__: button
-  __buttonFriendlyName__: "Button"
-  __gpioId__: GPIO00
-  __inverted__: "true"
-  __onMinTime__: 30ms
-  __onMaxTime__: 500ms
-  __offMinTime__: 30ms
-  __offMaxTime__: 500ms
-  __holdOnMinTime__: 1s
-  __holdOnMaxTime__: 3s
-  __endTime__: 250ms
+  config:
+    deviceId: "button"
+    buttonId: "button"
+    gpioId: "GPIO99"
+    friendlyName: "Button"
+  timings:
+    rising:
+      min: 30ms
+      max: 500ms
+    falling:
+      min: 30ms
+      max: 500ms
+    hold:
+      min: 1s
+      max: 3s
+    end: 250ms
+    pulse: 1s
+
+
 
 
 globals:
-  - id: ${__buttonId__}_single_state_global
+  - id: ${config.buttonId}_single_state_global
     type: bool
     restore_value: no
     initial_value: 'false'
-  - id: ${__buttonId__}_double_state_global
+  - id: ${config.buttonId}_double_state_global
     type: bool
     restore_value: no
     initial_value: 'false'
-  - id: ${__buttonId__}_triple_state_global
+  - id: ${config.buttonId}_triple_state_global
     type: bool
     restore_value: no
     initial_value: 'false'
-  - id: ${__buttonId__}_hold_state_global
+  - id: ${config.buttonId}_hold_state_global
+    type: bool
+    restore_value: no
+    initial_value: 'false'
+  - id: ${config.buttonId}_verylong_state_global
     type: bool
     restore_value: no
     initial_value: 'false'
 
-# The GPIO button
 binary_sensor:
   - platform: gpio
-    pin: 
-      number: ${__gpioId__}  # Change this to your actual pin
+    device_id: ${config.deviceId}
+    internal: true
+    pin:
+      number: ${config.gpioId}
       mode:
         input: true
-      inverted: ${__inverted__}
+      inverted: true        # set to false if your button is active-high
     filters:
+      - delayed_on: 10ms
       - delayed_off: 10ms
-    name: "${__buttonFriendlyName__} GPIO"
-    id: ${__buttonId__}_gpio
-
+    id: ${config.buttonId}_gpio
+    name: "${config.friendlyName} GPIO"
 
     on_multi_click:
-    - timing: # Single short click
-        -  ON for ${__onMinTime__} to ${__onMaxTime__}
-        -  OFF for at least ${__endTime__}
-      then:
-        - logger.log: "Single short click"
-        - globals.set:
-              id: ${__buttonId__}_single_state_global
-              value: !lambda 'return !id(${__buttonId__}_single_state_global);'
+      # Single
+      - timing:
+          - ON for ${timings.rising.min} to ${timings.rising.max}
+          - OFF for at least ${timings.end}
+        then:
+          - logger.log: "Single short click"
+          - globals.set:
+              id: ${config.buttonId}_single_state_global
+              value: 'true'
+          - delay: ${timings.pulse}
+          - globals.set:
+              id: ${config.buttonId}_single_state_global
+              value: 'false'
+          - homeassistant.event:
+              event: esphome.button_gesture
+              data:
+                id: ${config.buttonId}
+                type: single
 
-    - timing: # Double short click
-        -  ON for ${__onMinTime__} to ${__onMaxTime__}
-        -  OFF for ${__offMinTime__} to ${__offMaxTime__}
-        -  ON for ${__onMinTime__} to ${__onMaxTime__}
-        -  OFF for at least ${__endTime__}
-      then:
-        - logger.log: "Double short click"
-        - globals.set:
-              id: ${__buttonId__}_double_state_global
-              value: !lambda 'return !id(${__buttonId__}_double_state_global);'
+      # Double
+      - timing:
+          - ON for ${timings.rising.min} to ${timings.rising.max}
+          - OFF for ${timings.falling.min} to ${timings.falling.max}
+          - ON for ${timings.rising.min} to ${timings.rising.max}
+          - OFF for at least ${timings.end}
+        then:
+          - logger.log: "Double short click"
+          - globals.set:
+              id: ${config.buttonId}_double_state_global
+              value: 'true'
+          - delay: ${timings.pulse}
+          - globals.set:
+              id: ${config.buttonId}_double_state_global
+              value: 'false'
+          - homeassistant.event:
+              event: esphome.button_gesture
+              data:
+                id: ${config.buttonId}
+                type: double
 
-    - timing: # Triple short click
-        -  ON for ${__onMinTime__} to ${__onMaxTime__}
-        -  OFF for ${__offMinTime__} to ${__offMaxTime__}
-        -  ON for ${__onMinTime__} to ${__onMaxTime__}
-        -  OFF for ${__offMinTime__} to ${__offMaxTime__}
-        -  ON for ${__onMinTime__} to ${__onMaxTime__}
-        -  OFF for at least ${__endTime__}
-      then:
-        - logger.log: "Triple short click"
-        - globals.set:
-              id: ${__buttonId__}_triple_state_global
-              value: !lambda 'return !id(${__buttonId__}_triple_state_global);'
+      # Triple
+      - timing:
+          - ON for ${timings.rising.min} to ${timings.rising.max}
+          - OFF for ${timings.falling.min} to ${timings.falling.max}
+          - ON for ${timings.rising.min} to ${timings.rising.max}
+          - OFF for ${timings.falling.min} to ${timings.falling.max}
+          - ON for ${timings.rising.min} to ${timings.rising.max}
+          - OFF for at least ${timings.end}
+        then:
+          - logger.log: "Triple short click"
+          - globals.set:
+              id: ${config.buttonId}_triple_state_global
+              value: 'true'
+          - delay: ${timings.pulse}
+          - globals.set:
+              id: ${config.buttonId}_triple_state_global
+              value: 'false'
+          - homeassistant.event:
+              event: esphome.button_gesture
+              data:
+                id: ${config.buttonId}
+                type: triple
 
-    - timing: # Hold
-        -  ON for ${__holdOnMinTime__} to ${__holdOnMaxTime__}
-        -  OFF for at least ${__endTime__}
-      then:
-        - logger.log: "Hold"
-        - globals.set:
-              id: ${__buttonId__}_hold_state_global
-              value: !lambda 'return !id(${__buttonId__}_hold_state_global);'
+      # Hold (min..max)
+      - timing:
+          - ON for ${timings.hold.min} to ${timings.hold.max}
+          - OFF for at least ${timings.end}
+        then:
+          - logger.log: "Hold"
+          - globals.set:
+              id: ${config.buttonId}_hold_state_global
+              value: 'true'
+          - delay: ${timings.pulse}
+          - globals.set:
+              id: ${config.buttonId}_hold_state_global
+              value: 'false'
+          - homeassistant.event:
+              event: esphome.button_gesture
+              data:
+                id: ${config.buttonId}
+                type: hold
 
-    # Expose global var as binary sensor
+      # Very long hold (> max)
+      - timing:
+          - ON for at least ${timings.hold.max}
+          - OFF for at least ${timings.end}
+        then:
+          - logger.log: "Very long hold"
+          - globals.set:
+              id: ${config.buttonId}_verylong_state_global
+              value: 'true'
+          - delay: ${timings.pulse}
+          - globals.set:
+              id: ${config.buttonId}_verylong_state_global
+              value: 'false'
+          - homeassistant.event:
+              event: esphome.button_gesture
+              data:
+                id: ${config.buttonId}
+                type: very_long
+
+  # Expose the gesture states as template binary sensors
   - platform: template
-    name: "${__buttonFriendlyName__} Single"
-    id: ${__buttonId__}_single_template_sensor
+    device_id: ${config.deviceId}
+    name: "${config.friendlyName} Single"
     lambda: |-
-      return id(${__buttonId__}_single_state_global);
-
-    # Expose global var as binary sensor
+      return id(${config.buttonId}_single_state_global);
+      
   - platform: template
-    name: "${__buttonFriendlyName__} Double"
-    id: ${__buttonId__}_double_template_sensor
+    device_id: ${config.deviceId}
+    name: "${config.friendlyName} Double"
     lambda: |-
-      return id(${__buttonId__}_double_state_global);
+      return id(${config.buttonId}_double_state_global);
 
-    # Expose global var as binary sensor
   - platform: template
-    name: "${__buttonFriendlyName__} Triple"
-    id: ${__buttonId__}_triple_template_sensor
+    device_id: ${config.deviceId}
+    name: "${config.friendlyName} Triple"
     lambda: |-
-      return id(${__buttonId__}_triple_state_global);
+      return id(${config.buttonId}_triple_state_global);
 
-    # Expose global var as binary sensor
   - platform: template
-    name: "${__buttonFriendlyName__} Hold"
-    id: ${__buttonId__}_hold_template_sensor
+    device_id: ${config.deviceId}
+    name: "${config.friendlyName} Hold"
     lambda: |-
-      return id(${__buttonId__}_hold_state_global);
+      return id(${config.buttonId}_hold_state_global);
+
+  - platform: template
+    device_id: ${config.deviceId}
+    name: "${config.friendlyName} Very Long Hold"
+    lambda: |-
+      return id(${config.buttonId}_verylong_state_global);
+
+
+
+# substitutions:
+#   config:
+#     buttonId: "button"
+#     gpioId: "GPIO99"
+#     friendlyName: "Button"
+#   timings:
+#     rising:
+#       min: 30ms
+#       max: 500ms
+#     falling:
+#       min: 30ms
+#       max: 500ms
+#     hold:
+#       min: 1s
+#       max: 3s
+#     end: 250ms
+#     pulse: 1s
+
+
+# globals:
+#   - id: ${config.buttonId}_single_state_global
+#     type: bool
+#     restore_value: no
+#     initial_value: 'false'
+#   - id: ${config.buttonId}_double_state_global
+#     type: bool
+#     restore_value: no
+#     initial_value: 'false'
+#   - id: ${config.buttonId}_triple_state_global
+#     type: bool
+#     restore_value: no
+#     initial_value: 'false'
+#   - id: ${config.buttonId}_hold_state_global
+#     type: bool
+#     restore_value: no
+#     initial_value: 'false'
+#   - id: ${config.buttonId}_verylong_state_global
+#     type: bool
+#     restore_value: no
+#     initial_value: 'false'
+
+# binary_sensor:
+#   - platform: gpio
+#     internal: true
+#     pin:
+#       number: ${config.gpioId}
+#       mode:
+#         input: true
+#       inverted: true        # set to false if your button is active-high
+#     filters:
+#       - delayed_on: 10ms
+#       - delayed_off: 10ms
+#     id: ${config.buttonId}_gpio
+#     name: "${config.friendlyName} GPIO"
+
+#     on_multi_click:
+#       # Single
+#       - timing:
+#           - ON for ${timings.rising.min} to ${timings.rising.max}
+#           - OFF for at least ${timings.end}
+#         then:
+#           - logger.log: "Single short click"
+#           - globals.set:
+#               id: ${config.buttonId}_single_state_global
+#               value: 'true'
+#           - delay: ${timings.pulse}
+#           - globals.set:
+#               id: ${config.buttonId}_single_state_global
+#               value: 'false'
+#           - homeassistant.event:
+#               event: esphome.button_gesture
+#               data:
+#                 id: ${config.buttonId}
+#                 type: single
+
+#       # Double
+#       - timing:
+#           - ON for ${timings.rising.min} to ${timings.rising.max}
+#           - OFF for ${timings.falling.min} to ${timings.falling.max}
+#           - ON for ${timings.rising.min} to ${timings.rising.max}
+#           - OFF for at least ${timings.end}
+#         then:
+#           - logger.log: "Double short click"
+#           - globals.set:
+#               id: ${config.buttonId}_double_state_global
+#               value: 'true'
+#           - delay: ${timings.pulse}
+#           - globals.set:
+#               id: ${config.buttonId}_double_state_global
+#               value: 'false'
+#           - homeassistant.event:
+#               event: esphome.button_gesture
+#               data:
+#                 id: ${config.buttonId}
+#                 type: double
+
+#       # Triple
+#       - timing:
+#           - ON for ${timings.rising.min} to ${timings.rising.max}
+#           - OFF for ${timings.falling.min} to ${timings.falling.max}
+#           - ON for ${timings.rising.min} to ${timings.rising.max}
+#           - OFF for ${timings.falling.min} to ${timings.falling.max}
+#           - ON for ${timings.rising.min} to ${timings.rising.max}
+#           - OFF for at least ${timings.end}
+#         then:
+#           - logger.log: "Triple short click"
+#           - globals.set:
+#               id: ${config.buttonId}_triple_state_global
+#               value: 'true'
+#           - delay: ${timings.pulse}
+#           - globals.set:
+#               id: ${config.buttonId}_triple_state_global
+#               value: 'false'
+#           - homeassistant.event:
+#               event: esphome.button_gesture
+#               data:
+#                 id: ${config.buttonId}
+#                 type: triple
+
+#       # Hold (min..max)
+#       - timing:
+#           - ON for ${timings.hold.min} to ${timings.hold.max}
+#           - OFF for at least ${timings.end}
+#         then:
+#           - logger.log: "Hold"
+#           - globals.set:
+#               id: ${config.buttonId}_hold_state_global
+#               value: 'true'
+#           - delay: ${timings.pulse}
+#           - globals.set:
+#               id: ${config.buttonId}_hold_state_global
+#               value: 'false'
+#           - homeassistant.event:
+#               event: esphome.button_gesture
+#               data:
+#                 id: ${config.buttonId}
+#                 type: hold
+
+#       # Very long hold (> max)
+#       - timing:
+#           - ON for at least ${timings.hold.max}
+#           - OFF for at least ${timings.end}
+#         then:
+#           - logger.log: "Very long hold"
+#           - globals.set:
+#               id: ${config.buttonId}_verylong_state_global
+#               value: 'true'
+#           - delay: ${timings.pulse}
+#           - globals.set:
+#               id: ${config.buttonId}_verylong_state_global
+#               value: 'false'
+#           - homeassistant.event:
+#               event: esphome.button_gesture
+#               data:
+#                 id: ${config.buttonId}
+#                 type: very_long
+
+#   # Expose the gesture states as template binary sensors
+#   - platform: template
+#     name: "${config.friendlyName} Single"
+#     lambda: |-
+#       return id(${config.buttonId}_single_state_global);
+      
+#   - platform: template
+#     name: "${config.friendlyName} Double"
+#     lambda: |-
+#       return id(${config.buttonId}_double_state_global);
+
+#   - platform: template
+#     name: "${config.friendlyName} Triple"
+#     lambda: |-
+#       return id(${config.buttonId}_triple_state_global);
+
+#   - platform: template
+#     name: "${config.friendlyName} Hold"
+#     lambda: |-
+#       return id(${config.buttonId}_hold_state_global);
+
+#   - platform: template
+#     name: "${config.friendlyName} Very Long Hold"
+#     lambda: |-
+#       return id(${config.buttonId}_verylong_state_global);
