@@ -61,9 +61,9 @@ packages:
     file: C:\VScode\EspHome\Test\Thermostat\OpenTherm.yaml
     vars:
       outputId: t_set
-      opentherm:
-        in_pin: "21"
-        out_pin: "22"
+      openthermPin:
+        ot_in: "21"
+        ot_out: "22"
 
 
 
