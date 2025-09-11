@@ -85,7 +85,7 @@ sensor:
       // Scale by room demand (0–100%)
       heat_demand_pct *= (id(max_heat_demand).state / 100.0f);
 
-      //ESP_LOGI("Heat Demand:   ", "Room 1: %.03f%%     Room 2: %.03f%%     Sum: %.03f%%", id(${heat_demand.room_1}) * 100.0f, id(${heat_demand.room_2}) * 100.0f, heat_demand_pct);
+      ESP_LOGI("Heat Demand:   ", "Room 1: %.03f%%     Room 2: %.03f%%     Sum: %.03f%%", id(${heat_demand.room_1}) * 100.0f, id(${heat_demand.room_2}) * 100.0f, heat_demand_pct);
 
       if (heat_demand_pct == 0.0f) return 0.0f;
 
