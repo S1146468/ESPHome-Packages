@@ -10,6 +10,18 @@ substitutions:
     room_1: esphome_entity
     room_2: esphome_entity
 
+  heating_curve:
+    t_in: "20.0"           # Static indoor target for curve (°C)
+    t_out_design: "-10.0"  # Design outdoor temp (°C)
+    ts_design: "65.0"      # Supply at design cold (°C)
+    delta_sr: "10.0"       # Supply-return split (K)
+    n_exp: "1.30"          # Radiator exponent
+    capacity_ratio: "1.00" # >1 if radiator is oversized
+    alpha_ema: "0.10"      # Outdoor smoothing (0..1), pick per your update interval
+
+  demand:
+    deadband: "0.05"              # 5%: below this, turn CH off
+    blend_exp: "0.70"             # 0.6–0.8 gives nicer low-load response
 
 interval:
   - interval: ${opentherm_update_interval}   # how often to update the boiler setpoint
@@ -56,6 +68,7 @@ sensor:
 ##############################################
 # Calculate target water temperature (°C)    #
 ##############################################
+
   - platform: template
     id: target_water_temperature
     name: "Target Water Temperature"
@@ -63,33 +76,106 @@ sensor:
     accuracy_decimals: 1
     update_interval: ${opentherm_update_interval}
     lambda: |-
-      float t = 0.0f;
-
+      // --- Outdoor temperature (EMA smoothed) ---
+      float tout_raw = NAN;
       if (!isnan(id(outside_temperature_sensor).state)) {
-        t = id(outside_temperature_sensor).state;
+        tout_raw = id(outside_temperature_sensor).state;
+      }
+      static float tout_sm = NAN;
+      const float alpha = ${heating_curve.alpha_ema};
+      if (!isnan(tout_raw)) {
+        tout_sm = isnan(tout_sm) ? tout_raw : (alpha * tout_raw + (1.0f - alpha) * tout_sm);
+      } else if (isnan(tout_sm)) {
+        // No outdoor temp yet
+        return 0.0f;
+      }
+      float tout = isnan(tout_sm) ? tout_raw : tout_sm;
+      if (isnan(tout)) return 0.0f;
+
+      // --- Curve parameters ---
+      const float tin      = ${heating_curve.t_in};
+      const float tmin     = ${water_temp.min_temp};
+      const float tmax     = ${water_temp.max_temp};
+      const float tout_des = ${heating_curve.t_out_design};
+      const float ts_des   = ${heating_curve.ts_design};
+      const float dSR      = ${heating_curve.delta_sr};
+      const float n        = ${heating_curve.n_exp};
+      const float invN     = 1.0f / n;
+      const float capRatio = ${heating_curve.capacity_ratio};
+
+      // --- Non-linear radiator curve ---
+      // Ts = tin + dSR/2 + C * (tin - tout)^(1/n), clamped to [tmin..tmax]
+      float C = (ts_des - tin - dSR/2.0f) / powf((tin - tout_des), invN);
+      C /= powf(capRatio, invN);  // Oversized radiator -> lower C (lower Ts)
+      float deltaTin = fmaxf(0.0f, tin - tout);
+      float ts_curve = tin + dSR/2.0f + C * powf(deltaTin, invN);
+      ts_curve = fminf(fmaxf(ts_curve, tmin), tmax);
+
+      // --- Room demand (0..1) to gate down the curve ---
+      float room_dem = 1.0f;
+      if (!isnan(id(max_heat_demand).state)) {
+        room_dem = id(max_heat_demand).state / 100.0f;
+      }
+      room_dem = fminf(fmaxf(room_dem, 0.0f), 1.0f);
+
+      if (room_dem <= 0.0f) {
+        ESP_LOGI("heating_curve", "No demand -> 0°C (CH off)");
+        return 0.0f;  // lets boiler disable CH
       }
 
-      float heat_demand_pct;
+      // Linearly blend between Tmin and the weather curve by demand
+      float target = tmin + room_dem * (ts_curve - tmin);
 
-      // Heating demand curve based on outdoor temperature
-      if (t <= 0.0f) {
-        heat_demand_pct = 100.0f;
-      } else if (t >= 25.0f) {
-        heat_demand_pct = 0.0f;
-      } else {
-        heat_demand_pct = (-0.016f * t * t * t) + (0.26f * t * t) - (1.3f * t) + 100.0f;
-        if (heat_demand_pct < 0.0f) heat_demand_pct = 0.0f;
-        if (heat_demand_pct > 100.0f) heat_demand_pct = 100.0f;
-      }
+      // OPTIONAL: tiny indoor trim (uncomment if you have room temp + setpoint)
+      // float room_temp = id(room_temperature).state;       // e.g. 19.5
+      // float setpoint  = id(room_setpoint).state;          // e.g. 20.0
+      // if (!isnan(room_temp) && !isnan(setpoint)) {
+      //   float err = setpoint - room_temp;                 // °C
+      //   float k   = 2.0f;                                 // K per °C error
+      //   float trim = fminf(fmaxf(k * err, -5.0f), 5.0f);  // clamp ±5 K
+      //   target = fminf(fmaxf(target + trim, tmin), tmax);
+      // }
+
+      ESP_LOGI("heating_curve",
+               "Tout=%.2fC (sm=%.2fC) Ts_curve=%.1fC demand=%.3f -> Target=%.1fC",
+               tout_raw, tout, ts_curve, room_dem, target);
+      return target;
+
+
+  # - platform: template
+  #   id: target_water_temperature
+  #   name: "Target Water Temperature"
+  #   unit_of_measurement: "°C"
+  #   accuracy_decimals: 1
+  #   update_interval: ${opentherm_update_interval}
+  #   lambda: |-
+  #     float t = 0.0f;
+
+  #     if (!isnan(id(outside_temperature_sensor).state)) {
+  #       t = id(outside_temperature_sensor).state;
+  #     }
+
+  #     float heat_demand_pct;
+
+  #     // Heating demand curve based on outdoor temperature
+  #     if (t <= 0.0f) {
+  #       heat_demand_pct = 100.0f;
+  #     } else if (t >= 25.0f) {
+  #       heat_demand_pct = 0.0f;
+  #     } else {
+  #       heat_demand_pct = (-0.016f * t * t * t) + (0.26f * t * t) - (1.3f * t) + 100.0f;
+  #       if (heat_demand_pct < 0.0f) heat_demand_pct = 0.0f;
+  #       if (heat_demand_pct > 100.0f) heat_demand_pct = 100.0f;
+  #     }
       
-      // Scale by room demand (0–100%)
-      heat_demand_pct *= (id(max_heat_demand).state / 100.0f);
+  #     // Scale by room demand (0–100%)
+  #     heat_demand_pct *= (id(max_heat_demand).state / 100.0f);
 
-      ESP_LOGI("Heat Demand:   ", "Room 1: %.03f%%     Room 2: %.03f%%     Sum: %.03f%%", id(${heat_demand.room_1}) * 100.0f, id(${heat_demand.room_2}) * 100.0f, heat_demand_pct);
+  #     ESP_LOGI("Heat Demand:   ", "Room 1: %.03f%%     Room 2: %.03f%%     Sum: %.03f%%", id(${heat_demand.room_1}) * 100.0f, id(${heat_demand.room_2}) * 100.0f, heat_demand_pct);
 
-      if (heat_demand_pct == 0.0f) return 0.0f;
+  #     if (heat_demand_pct == 0.0f) return 0.0f;
 
-      float min_temp = ${water_temp.min_temp};
-      float max_temp = ${water_temp.max_temp};
+  #     float min_temp = ${water_temp.min_temp};
+  #     float max_temp = ${water_temp.max_temp};
 
-      return (heat_demand_pct / 100.0f) * (max_temp - min_temp) + min_temp;
+  #     return (heat_demand_pct / 100.0f) * (max_temp - min_temp) + min_temp;
