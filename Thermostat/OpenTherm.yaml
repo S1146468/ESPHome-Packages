@@ -24,14 +24,7 @@ opentherm:
               case 114:  // BURNER_FLAME_LOW (U16)
                 id(ot_burner_flame_low).publish_state(raw16);
                 break;
-              case 116:  // BURNER_STARTS (U16)
-                id(ot_burner_starts).publish_state(raw16);
-                break;
-              case 120:  // BURNER_HOURS (8.8 fixed point)
-                id(ot_burner_hours).publish_state(fx88);
-                break;
-              case 123:  // DHW_BURNER_HOURS (8.8)
-                id(ot_dhw_burner_hours).publish_state(fx88);
+              default:
                 break;
             }
           }
