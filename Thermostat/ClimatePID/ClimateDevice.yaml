@@ -277,6 +277,12 @@ sensor:
           ignore_out_of_range: false
       - round: 0
       - lambda: |-
+          // Setting heating modes
+          // if(x < 25.0f) return 25.0f;
+          if(x < 50.0f) return 50.0f;
+          // if(x < 75.0f) return 75.0f;
+          if(x < 100.0f) return 100.0f;
+      - lambda: |-
           // Visual heating state in home assistant
           if(x < 0.0f)  id(${device.id}_heat_output_switch).turn_off();
           if(x == 0.0f) id(${device.id}_heat_output_switch).turn_off();
@@ -284,5 +290,5 @@ sensor:
           return x;
     update_interval: ${climate.interval}
     lambda: |- 
-      return id(${climate.output}) * 25.0f;
+      return id(${climate.output});
 
