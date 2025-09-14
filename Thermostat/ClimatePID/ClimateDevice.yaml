@@ -284,5 +284,5 @@ sensor:
           return x;
     update_interval: ${climate.interval}
     lambda: |- 
-      return id(${climate.output});
+      return id(${climate.output}) * 25.0f;
 
