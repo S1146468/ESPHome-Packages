@@ -9,25 +9,6 @@ substitutions:
 opentherm:
   in_pin: ${openthermPin.ot_in} # WeMos D1 Mini ESP32 input pin for stacking with Master OpenTherm Shield
   out_pin: ${openthermPin.ot_out} # WeMos D1 Mini ESP32 output pin for stacking with Master OpenTherm Shield
-  before_process_response:
-    then:
-      - lambda: |-
-          // 16-bit raw helper
-          auto raw16 = (uint16_t(x.valueHB) << 8) | uint16_t(x.valueLB);
-          auto fx88  = int16_t(raw16) / 256.0f;
-
-          if (x.type == esphome::opentherm::MessageType::READ_ACK) {
-            switch (x.id) {
-              case 113:  // FAILED_BURNER_STARTS (U16)
-                id(ot_failed_burner_starts).publish_state(raw16);
-                break;
-              case 114:  // BURNER_FLAME_LOW (U16)
-                id(ot_burner_flame_low).publish_state(raw16);
-                break;
-              default:
-                break;
-            }
-          }
 
 # Use switches to enable/disable central heating and hot water from HA interface
 # https://esphome.io/components/opentherm.html#switch
@@ -151,14 +132,5 @@ sensor:
     name: "Return Water Temperature"
     entity_category: diagnostic
 
-- platform: template
-  name: "OT Failed burner starts"
-  id: ot_failed_burner_starts
-  entity_category: diagnostic
-
-- platform: template
-  name: "OT Burner flame low"
-  id: ot_burner_flame_low
-  entity_category: diagnostic
 
 
