@@ -92,7 +92,7 @@ globals:
   - id: ${device.id}_previous_setpoint
     type: float
     initial_value: "22.0"
-    
+
   - id: ${climate.output}
     type: float
     restore_value: no
@@ -284,15 +284,14 @@ sensor:
           if(x > 0.0f)  id(${device.id}_heat_output_switch).turn_on();
 
 
-                    // Setting heating modes
+          // Setting heating modes
           float output = 0.0f;
 
-          if(x < 0.0f) output = 0.0f;
-          if(x == 0.0f) output = 0.0f;
-          // if(x < 25.0f) output = 25.0f;
-          if(x < 50.0f) output = 50.0f;
-          // if(x < 75.0f) output = 75.0f;
           if(x < 100.0f) output = 100.0f;
+          // if(x < 75.0f) output = 75.0f;
+          if(x < 50.0f) output = 50.0f;
+          // if(x < 25.0f) output = 25.0f;
+          if(x <= 0.0f) output = 0.0f;
 
           return output;
 
