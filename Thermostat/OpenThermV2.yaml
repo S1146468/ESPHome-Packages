@@ -9,32 +9,8 @@ substitutions:
 opentherm:
   in_pin: ${openthermPin.ot_in} # WeMos D1 Mini ESP32 input pin for stacking with Master OpenTherm Shield
   out_pin: ${openthermPin.ot_out} # WeMos D1 Mini ESP32 output pin for stacking with Master OpenTherm Shield
-  before_process_response:
-    then:
-      - lambda: |-
-          // 16-bit raw helper
-          auto raw16 = (uint16_t(x.valueHB) << 8) | uint16_t(x.valueLB);
-          auto fx88  = int16_t(raw16) / 256.0f;
+  dhw_enable: true
 
-          if (x.type == esphome::opentherm::MessageType::READ_ACK) {
-            switch (x.id) {
-              case 113:  // FAILED_BURNER_STARTS (U16)
-                id(ot_failed_burner_starts).publish_state(raw16);
-                break;
-              case 114:  // BURNER_FLAME_LOW (U16)
-                id(ot_burner_flame_low).publish_state(raw16);
-                break;
-              case 116:  // BURNER_STARTS (U16)
-                id(ot_burner_starts).publish_state(raw16);
-                break;
-              case 120:  // BURNER_HOURS (8.8 fixed point)
-                id(ot_burner_hours).publish_state(fx88);
-                break;
-              case 123:  // DHW_BURNER_HOURS (8.8)
-                id(ot_dhw_burner_hours).publish_state(fx88);
-                break;
-            }
-          }
 
 # Use switches to enable/disable central heating and hot water from HA interface
 # https://esphome.io/components/opentherm.html#switch
@@ -47,12 +23,12 @@ switch:
       internal: true
       entity_category: config
 
-    dhw_enable:
-      id: dhw_enable
-      name: "Hot Water"
-      restore_mode: RESTORE_DEFAULT_OFF
-      internal: true
-      entity_category: config
+    # dhw_enable:
+    #   id: dhw_enable
+    #   name: "Hot Water"
+    #   restore_mode: RESTORE_DEFAULT_OFF
+    #   internal: true
+    #   entity_category: config
 
 
 # Use numbers or outputs to control numerical values like CH/DHW setpoint from HA interface
@@ -128,16 +104,16 @@ sensor:
     name: "Heating Temperature"
     entity_category: diagnostic
 
+  t_dhw:
+    id: dhw_temperature
+    name: "Hot Water Temperature"
+    entity_category: diagnostic
+
   ch_pressure: 
     id: ch_pressure
     name: "Water pressure in CH circuit (bar)"
     entity_category: diagnostic
 
-  rel_mod_level:
-    id: rel_mod_level
-    name: "Relative Modulation Level (%)"
-    entity_category: diagnostic
-    
   burner_starts:  
     id: burner_starts
     name: "Number of starts burner"
@@ -153,19 +129,7 @@ sensor:
     name: "Number of hours that burner is in operation during DHW mode"
     entity_category: diagnostic
 
-  t_ret:
-    id: t_ret
-    name: "Return Water Temperature"
+  t_dhw_set:  
+    id: t_dhw_set_
+    name: "Hot Water Temperature Setpoint (°C)"
     entity_category: diagnostic
-
-- platform: template
-  name: "OT Failed burner starts"
-  id: ot_failed_burner_starts
-  entity_category: diagnostic
-
-- platform: template
-  name: "OT Burner flame low"
-  id: ot_burner_flame_low
-  entity_category: diagnostic
-
-
