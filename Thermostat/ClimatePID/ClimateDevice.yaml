@@ -92,6 +92,7 @@ globals:
   - id: ${device.id}_previous_setpoint
     type: float
     initial_value: "22.0"
+    
   - id: ${climate.output}
     type: float
     restore_value: no
