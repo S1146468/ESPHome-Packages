@@ -13,7 +13,7 @@ substitutions:
   heating_curve:
     t_in: "20.0"           # Static indoor target for curve (°C)
     t_out_design: "-10.0"  # Design outdoor temp (°C)
-    ts_design: "65.0"      # Supply at design cold (°C)
+    ts_design: "70.0"      # Supply at design cold (°C)
     delta_sr: "10.0"       # Supply-return split (K)
     n_exp: "1.30"          # Radiator exponent
     capacity_ratio: "1.00" # >1 if radiator is oversized
