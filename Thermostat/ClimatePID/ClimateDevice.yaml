@@ -278,10 +278,13 @@ sensor:
       - round: 0
       - lambda: |-
           // Setting heating modes
+          float output = 0.0f;
           // if(x < 25.0f) return 25.0f;
-          if(x < 50.0f) return 50.0f;
+          if(x < 50.0f) output = 50.0f;
           // if(x < 75.0f) return 75.0f;
-          if(x < 100.0f) return 100.0f;
+          if(x < 100.0f) output = 100.0f;
+
+          return output;
       - lambda: |-
           // Visual heating state in home assistant
           if(x < 0.0f)  id(${device.id}_heat_output_switch).turn_off();
