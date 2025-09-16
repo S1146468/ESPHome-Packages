@@ -44,7 +44,7 @@ script:
   - id: ${device.id}_run_pid_autotune
     then:
       - lambda: |-
-          ${device.id}_autotune_in_progress = true;
+          id(${device.id}_autotune_in_progress) = true;
           auto call = id(${climate.id}).make_call();
           call.set_mode("AUTO");
           // etc. see API reference
@@ -66,7 +66,7 @@ script:
       - lambda: |-
           using namespace esphome;
 
-          if(${device.id}_autotune_in_progress) return;
+          if(id(${device.id}_autotune_in_progress)) return;
           
           
           auto climate = id(${climate.id});  // Access the climate object
