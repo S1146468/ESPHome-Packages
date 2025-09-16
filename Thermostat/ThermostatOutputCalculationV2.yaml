@@ -1,0 +1,125 @@
+
+substitutions:
+  water_temp:
+    min_temp: "30" 
+    max_temp: "70"
+  opentherm_update_interval: 15s
+  output_entity_name: T_set
+  outside_temp_sensor: sensor.outside_temp
+  heat_demand:
+    room_1: esphome_entity
+    room_2: esphome_entity
+  pid_output:
+    room_1: room_a_pid_output
+    room_2: room_b_pid_output
+
+interval:
+  - interval: ${opentherm_update_interval}   # e.g. 10s
+    then:
+      - lambda: |-
+          float target = id(target_water_temperature).state;
+
+          // Decide whether to heat
+          bool enable = id(ch_should_enable).state;
+
+          // Only write if valid
+          if (!isnan(target)) {
+            if (enable) {
+              id(${outputId}).set_level(target);   // your OpenTherm setpoint output
+            } else {
+              id(${outputId}).set_level(${idle_flow|20.0}); // idle/low setpoint or OFF if your OT impl supports it
+            }
+          }
+
+
+
+
+# --- Are any valves meaningfully open? (protects against pumping closed loop)
+binary_sensor:
+  - platform: template
+    id: any_valve_open
+    lambda: |-
+      return (id(room_a_pid_output).state > 5.0f) ||
+             (id(room_b_pid_output).state > 5.0f);
+
+# --- CH enable logic (optional but recommended)
+  - platform: template
+    id: ch_should_enable
+    lambda: |-
+      bool demand_ok = id(max_room_demand).state >= 0.10f;
+      bool valves_ok = id(any_valve_open).state;
+      return demand_ok && valves_ok;
+
+
+sensor:
+  - platform: homeassistant
+    id: outside_temperature_sensor
+    entity_id: ${outside_temp_sensor}
+
+# --- Aggregate demand
+  - platform: template
+    id: max_room_demand
+    name: "Max Room Demand"
+    update_interval: ${opentherm_update_interval}
+    accuracy_decimals: 2
+    lambda: |-
+      float a = id(room_a_room_demand).state;
+      float b = id(room_b_room_demand).state;
+      if (isnan(a)) a = 0;
+      if (isnan(b)) b = 0;
+      return a > b ? a : b;
+
+# --- Raw flow target with outdoor bias and clamps
+  - platform: template
+    id: flow_target_raw
+    name: "Flow Target Raw"
+    unit_of_measurement: "°C"
+    update_interval: ${opentherm_update_interval}
+    accuracy_decimals: 1
+    lambda: |-
+      const float Tmin = ${tmin|35.0};   // min flow °C
+      const float Tmax = ${tmax|60.0};   // max flow °C
+      const float k    = ${outdoor_bias_k|1.0};  // °C flow per °C below Tref
+      const float Tref = ${outdoor_ref|10.0};    // reference outdoor °C
+
+      float D = id(max_room_demand).state;
+      if (isnan(D)) D = 0.0f;
+
+      float Tout = id(outside_temperature_sensor).state;
+      if (isnan(Tout)) Tout = Tref;
+
+      float Tdem = Tmin + D * (Tmax - Tmin);
+      float B    = k * (Tref - Tout);
+      float Tf   = Tdem + B;
+
+      if (Tf < Tmin) Tf = Tmin;
+      if (Tf > Tmax) Tf = Tmax;
+      return Tf;
+
+# --- Rate-limited flow target (protect boiler & comfort)
+  - platform: template
+    id: flow_target_rl
+    name: "Flow Target (Rate-Limited)"
+    unit_of_measurement: "°C"
+    update_interval: ${opentherm_update_interval}
+    accuracy_decimals: 1
+    lambda: |-
+      static float last = 40.0f;
+      float target = id(flow_target_raw).state;
+      const float up_step   = 5.0f  / 60.0f * 10.0f; // +5 °C/min @ 10s tick ≈ 0.83
+      const float down_step = 10.0f / 60.0f * 10.0f; // -10 °C/min @ 10s tick ≈ 1.67
+      if (target > last + up_step)   target = last + up_step;
+      if (target < last - down_step) target = last - down_step;
+      last = target;
+      return target;
+
+# --- Expose the final target as the value your interval writer reads
+  - platform: template
+    id: target_water_temperature
+    name: "Target Water Temperature"
+    unit_of_measurement: "°C"
+    update_interval: ${opentherm_update_interval}
+    accuracy_decimals: 1
+    lambda: |-
+      return id(flow_target_rl).state;
+
