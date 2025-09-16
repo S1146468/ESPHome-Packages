@@ -266,7 +266,8 @@ sensor:
 
   - platform: template
     name: "${device.name} Heat output"
-    id: ${pid_output}
+  climate:
+    id: ${climate.pid_output}
     device_id: ${device.id}
     unit_of_measurement: "%"
     icon: "mdi:gauge"
