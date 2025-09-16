@@ -106,11 +106,6 @@ sensor:
     id: ch_pressure
     name: "Water pressure in CH circuit (bar)"
     entity_category: diagnostic
-
-  rel_mod_level:
-    id: rel_mod_level
-    name: "Relative Modulation Level (%)"
-    entity_category: diagnostic
     
   burner_starts:  
     id: burner_starts
@@ -127,10 +122,6 @@ sensor:
     name: "Number of hours that burner is in operation during DHW mode"
     entity_category: diagnostic
 
-  t_ret:
-    id: t_ret
-    name: "Return Water Temperature"
-    entity_category: diagnostic
 
 
 
