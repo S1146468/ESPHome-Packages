@@ -289,54 +289,43 @@ sensor:
       return id(${device.id}_heat_output_level);
 
   - platform: template
-    id: ${climate.demand}
-    name: "${device.name} Room Demand"
+    id: heater_output_stijn
+    name: "Climate Stijn Room Demand"
     update_interval: ${climate.interval}
     accuracy_decimals: 2
     unit_of_measurement: ""
     filters:
-      # Smooth the final demand a bit (optional; remove if you prefer raw)
       - exponential_moving_average:
           alpha: 0.3
           send_every: 1
+          send_first_at: 1
     lambda: |-
       // Inputs
-      const float T   = id(${device.id}_temperature).state;
-      const float Tsp = id(${climate.id}).target_temperature;   // from your PID climate
-      float dv = id(${pid_output}).state / 100.0f;    // valve [%] -> [0..1]
+      const float T   = id(climate_stijn_temperature).state;     // your room temp sensor
+      const float Tsp = id(verwarming_stijn).target_temperature; // your ESPHome PID climate
+      float dv = id(${pid_output.room_1}).state / 100.0f;        // [%] → [0..1]
 
-      // Basic guards
+      // Guards
       if (isnan(T) || isnan(Tsp) || isnan(dv)) return 0.0f;
 
-      // Stale sensor guard (no updates for > 300 s)
-      const uint32_t now_s   = (uint32_t) id(uptime_s).state;
-      const uint32_t last_s  = id(${device.id}_last_temp_seen_s);
-      const bool stale = (now_s - last_s) > 300U;
-
-      // Frost protection if stale or sensor bad: only call gentle heat if truly cold
-      if (stale) {
-        if (T < 7.0f) return 0.25f;  // small demand to keep pipes safe
-        return 0.0f;
-      }
-
-      // Temperature error term normalized over a 1.5 °C band
+      // Normalized temperature error over 1.5 °C band
       float de = (Tsp - T) / 1.5f;
       if (de < 0.0f) de = 0.0f;
       if (de > 1.0f) de = 1.0f;
 
-      // Above-setpoint gate: if already warm, ignore any lingering valve contribution
+      // If already at/above setpoint, ignore valve contribution
       if (T >= Tsp) dv = 0.0f;
 
-      // Ignore tiny valve wiggles (<10%) to avoid flicker in demand
+      // Ignore tiny valve wiggles (<10%)
       if (dv < 0.10f) dv = 0.0f;
 
       // Combine: demand reflects either strong need or wide-open valve
       float d = de > dv ? de : dv;
 
-      // Optional small hysteresis on demand to prevent chatter
-      static float last = 0.0f;
-      const float db = 0.05f;  // 5% hysteresis
-      if (fabsf(d - last) < db) d = last;
-      last = d;
+      // Small hysteresis to prevent chatter
+      static float last_d = 0.0f;
+      const float db = 0.05f;
+      if (fabsf(d - last_d) < db) d = last_d;
+      last_d = d;
 
       return d;
