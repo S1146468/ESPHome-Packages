@@ -1,5 +1,6 @@
 substitutions:
   outputId: t_set
+  boiler_enable: boiler_enable
   openthermPin:
     ot_in: 0
     ot_out: 0
@@ -15,7 +16,7 @@ opentherm:
 switch:
   - platform: opentherm
     ch_enable:
-      id: ch_enable
+      id: ${boiler_enable}
       name: "Heating"
       restore_mode: RESTORE_DEFAULT_ON
       internal: true

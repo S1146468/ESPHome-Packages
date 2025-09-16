@@ -8,6 +8,7 @@ substitutions:
     down_step_c: "2.50"   # 10 °C/min * 15 s / 60
   opentherm_update_interval: 15s
   output_entity_name: T_set
+  boiler_enable: boiler_enable
   outside_temp_sensor: sensor.outside_temp
   heat_demand:
     room_1: esphome_entity
@@ -109,7 +110,12 @@ binary_sensor:
   - platform: template
     id: ch_should_enable
     lambda: |-
-      return id(max_room_demand).state >= 0.10f && id(any_valve_open).state;
+      if(id(max_room_demand).state >= 0.10f && id(any_valve_open).state)
+      {
+        id(${boiler_enable})turn_on();
+      } else {
+        id(${boiler_enable})turn_off();
+      }
 
 # --- Writer
 interval:
