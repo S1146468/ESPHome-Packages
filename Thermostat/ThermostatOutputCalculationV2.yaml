@@ -4,7 +4,7 @@ substitutions:
     min_temp: "30" 
     max_temp: "70"
   opentherm_update_interval: 15s
-  opentherm_update_interval_seconds: "15"  # not parsed, adjust if needed
+  opentherm_update_interval_seconds: 15  # not parsed, adjust if needed
   output_entity_name: T_set
   outside_temp_sensor: sensor.outside_temp
   heat_demand:
