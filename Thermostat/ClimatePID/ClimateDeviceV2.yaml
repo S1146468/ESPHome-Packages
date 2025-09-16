@@ -303,7 +303,7 @@ sensor:
       // Inputs
       const float T   = id(climate_stijn_temperature).state;     // your room temp sensor
       const float Tsp = id(verwarming_stijn).target_temperature; // your ESPHome PID climate
-      float dv = id(${pid_output.room_1}).state / 100.0f;        // [%] → [0..1]
+      float dv = id(${climate.pid_output}).state / 100.0f;        // [%] → [0..1]
 
       // Guards
       if (isnan(T) || isnan(Tsp) || isnan(dv)) return 0.0f;
