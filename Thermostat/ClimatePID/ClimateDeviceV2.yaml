@@ -44,7 +44,7 @@ script:
   - id: ${device.id}_run_pid_autotune
     then:
       - lambda: |-
-          auto call = id(my_climate).make_call();
+          auto call = id(${climate.id}).make_call();
           call.set_mode("OFF");
           // etc. see API reference
           call.perform();
