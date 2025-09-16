@@ -99,7 +99,6 @@ binary_sensor:
 # --- Any valve open?
   - platform: template
     id: any_valve_open
-    update_interval: ${opentherm_update_interval}
     lambda: |-
       return (id(${pid_output.room_1}).state > 5.0f) ||
              (id(${pid_output.room_2}).state > 5.0f);
@@ -107,7 +106,6 @@ binary_sensor:
 # --- CH enable logic
   - platform: template
     id: ch_should_enable
-    update_interval: ${opentherm_update_interval}
     lambda: |-
       return id(max_room_demand).state >= 0.10f && id(any_valve_open).state;
 
