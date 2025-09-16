@@ -290,7 +290,7 @@ sensor:
 
   - platform: template
     id: ${climate.demand}
-    name: "Climate Stijn Room Demand"
+    name: "${device.name} Room Demand"
     update_interval: ${climate.interval}
     accuracy_decimals: 2
     unit_of_measurement: ""
