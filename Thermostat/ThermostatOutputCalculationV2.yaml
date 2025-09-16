@@ -28,6 +28,7 @@ sensor:
   - platform: template
     id: max_room_demand
     name: "Max Room Demand"
+    unit_of_measurement: "%"
     accuracy_decimals: 2
     update_interval: ${opentherm_update_interval}
     lambda: |-
