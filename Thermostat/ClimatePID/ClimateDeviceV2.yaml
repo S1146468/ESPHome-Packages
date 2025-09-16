@@ -322,4 +322,4 @@ sensor:
       // Combine: demand reflects either strong need or wide-open valve
       float d = de > dv ? de : dv;
 
-      return d;
+      return d * 100.0f;

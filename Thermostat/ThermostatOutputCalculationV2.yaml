@@ -50,7 +50,7 @@ sensor:
       const float k    = 1.0f;   // °C flow per °C below Tref
       const float Tref = 10.0f;  // reference outdoor °C
 
-      float D = id(max_room_demand).state;
+      float D = id(max_room_demand).state / 100.0f; // [%] → [0..1]
       if (isnan(D)) D = 0.0f;
 
       float Tout = id(outside_temperature_sensor).state;
