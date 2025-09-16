@@ -3,6 +3,9 @@ substitutions:
   water_temp:
     min_temp: "30" 
     max_temp: "70"
+  rate:
+    up_step_c:   "1.25"   # 5 °C/min * 15 s / 60
+    down_step_c: "2.50"   # 10 °C/min * 15 s / 60
   opentherm_update_interval: 15s
   opentherm_update_interval_seconds: 15  # not parsed, adjust if needed
   output_entity_name: T_set
@@ -73,12 +76,8 @@ sensor:
       static float last = ${water_temp.min_temp};
       float target = id(flow_target_raw).state;
 
-      // Ramp limits (make tunable with substitutions if needed)
-      const float up_per_min   = 5.0f;
-      const float down_per_min = 10.0f;
-      const float tick_s       = (${opentherm_update_interval_seconds}).seconds(); // not parsed, adjust manually if needed
-      const float up_step      = up_per_min   / 60.0f * ${opentherm_update_interval_seconds};
-      const float down_step    = down_per_min / 60.0f * ${opentherm_update_interval_seconds};
+      const float up_step   = ${rate.up_step_c};
+      const float down_step = ${rate.down_step_c};
 
       if (target > last + up_step)   target = last + up_step;
       if (target < last - down_step) target = last - down_step;
