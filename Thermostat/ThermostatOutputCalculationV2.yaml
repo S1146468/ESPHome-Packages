@@ -113,9 +113,12 @@ binary_sensor:
       if(id(max_room_demand).state >= 0.10f && id(any_valve_open).state)
       {
         id(${boiler_enable})turn_on();
+        return true;
       } else {
         id(${boiler_enable})turn_off();
+        return false;
       }
+      return false;
 
 # --- Writer
 interval:
