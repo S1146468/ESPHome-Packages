@@ -338,6 +338,7 @@ sensor:
 
       // Ignore tiny valve wiggles (<10%)
       if (dv < 0.10f) dv = 0.0f;
+      if (de < 0.10f) de = 0.0f;
 
       // Combine: demand reflects either strong need or wide-open valve
       float d = de > dv ? de : dv;
