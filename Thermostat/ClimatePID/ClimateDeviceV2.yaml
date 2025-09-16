@@ -301,8 +301,8 @@ sensor:
           send_first_at: 1
     lambda: |-
       // Inputs
-      const float T   = id(climate_stijn_temperature).state;     // your room temp sensor
-      const float Tsp = id(verwarming_stijn).target_temperature; // your ESPHome PID climate
+      const float T   = id(${device.id}_temperature).state;     // your room temp sensor
+      const float Tsp = id(${climate.id}).target_temperature; // your ESPHome PID climate
       float dv = id(${climate.pid_output}).state / 100.0f;        // [%] → [0..1]
 
       // Guards
