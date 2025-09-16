@@ -68,25 +68,7 @@ sensor:
       if (Tf > Tmax) Tf = Tmax;
       return Tf;
 
-  # Rate-limited flow target (protect boiler)
-  - platform: template
-    id: flow_target_rl
-    name: "Flow Target (Rate-Limited)"
-    unit_of_measurement: "°C"
-    accuracy_decimals: 1
-    update_interval: ${opentherm_update_interval}
-    lambda: |-
-      static float last = ${water_temp.min_temp};
-      float target = id(flow_target_raw).state;
 
-      const float up_step   = ${rate.up_step_c};
-      const float down_step = ${rate.down_step_c};
-
-      if (target > last + up_step)   target = last + up_step;
-      if (target < last - down_step) target = last - down_step;
-
-      last = target;
-      return target;
 
   # Final target exposed for writer
   - platform: template
@@ -96,7 +78,7 @@ sensor:
     accuracy_decimals: 1
     update_interval: ${opentherm_update_interval}
     lambda: |-
-      return id(flow_target_rl).state;
+      return id(flow_target_raw).state;
 
 binary_sensor:
 # --- Any valve open?
