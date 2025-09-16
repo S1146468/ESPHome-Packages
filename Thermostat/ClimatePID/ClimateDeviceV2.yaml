@@ -311,10 +311,6 @@ sensor:
     update_interval: ${climate.interval}
     unit_of_measurement: "%"
     filters:
-      - exponential_moving_average:
-          alpha: 0.3
-          send_every: 1
-          send_first_at: 1
       - round: 0
     lambda: |-
       // Inputs
