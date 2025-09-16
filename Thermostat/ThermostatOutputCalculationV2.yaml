@@ -19,7 +19,7 @@ sensor:
     id: outside_temperature_sensor
     entity_id: ${outside_temp_sensor}
     internal: false
-    update_interval: ${opentherm_update_interval}
+
 
   # Max room demand (0..1)
   - platform: template
