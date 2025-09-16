@@ -289,7 +289,7 @@ sensor:
       return id(${device.id}_heat_output_level);
 
   - platform: template
-    id: heater_output_stijn
+    id: ${climate.demand}
     name: "Climate Stijn Room Demand"
     update_interval: ${climate.interval}
     accuracy_decimals: 2
