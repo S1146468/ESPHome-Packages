@@ -53,6 +53,9 @@ sensor:
       float D = id(max_room_demand).state / 100.0f; // [%] → [0..1]
       if (isnan(D)) D = 0.0f;
 
+      // No demand, return minimum
+      if (D < 0.1f) return 0.0f; 
+
       float Tout = id(outside_temperature_sensor).state;
       if (isnan(Tout)) Tout = Tref;
 
