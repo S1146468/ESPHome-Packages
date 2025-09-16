@@ -293,8 +293,7 @@ sensor:
     name: "${device.name} Room Demand"
     device_id: ${device.id}
     update_interval: ${climate.interval}
-    accuracy_decimals: 2
-    unit_of_measurement: ""
+    unit_of_measurement: "%"
     filters:
       - exponential_moving_average:
           alpha: 0.3
