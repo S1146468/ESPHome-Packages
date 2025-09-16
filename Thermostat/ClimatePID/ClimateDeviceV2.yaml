@@ -308,8 +308,9 @@ sensor:
       // Guards
       if (isnan(T) || isnan(Tsp) || isnan(dv)) return 0.0f;
 
-      if(id(${climate.pid_output}).state <= 0.0f) return 0.0f; // No demand if PID output is zero or negative
-      
+      // No demand if PID output is zero or negative
+      if(id(${climate.pid_output}).state <= 0.0f) return 0.0f; 
+
       // Normalized temperature error over 1.5 °C band
       float de = (Tsp - T) / 1.5f;
       if (de < 0.0f) de = 0.0f;
