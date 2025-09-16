@@ -322,10 +322,4 @@ sensor:
       // Combine: demand reflects either strong need or wide-open valve
       float d = de > dv ? de : dv;
 
-      // Small hysteresis to prevent chatter
-      static float last_d = 0.0f;
-      const float db = 0.05f;
-      if (fabsf(d - last_d) < db) d = last_d;
-      last_d = d;
-
       return d * 100.0f;
