@@ -7,6 +7,7 @@ substitutions:
     name: "climate"
     demand: room_demand
     pid_output: pid_output
+    boiler_active: ch_active
     interval: 15s
   control:
     pid:
@@ -294,10 +295,26 @@ sensor:
           ignore_out_of_range: false
       - round: 0
       - lambda: |-
-          // Visual heating state in home assistant
-          if(x < 0.0f)  id(${device.id}_heat_output_switch).turn_off();
-          if(x == 0.0f) id(${device.id}_heat_output_switch).turn_off();
-          if(x > 0.0f)  id(${device.id}_heat_output_switch).turn_on();
+          // // Visual heating state in home assistant
+          // if(x =< 0.0f) id(${device.id}_heat_output_switch).turn_off();
+          // if(x > 0.0f)  id(${device.id}_heat_output_switch).turn_on();
+
+          bool pid_output = false;
+          bool heat_demand = false;
+          bool boiler_on = false;
+          
+          if(id(${climate.pid_output}).state > 0.0f) pid_output = true;
+          if(id(${climate.demand}).state > 0.0f) heat_demand = true;
+          if(id(${climate.demand}).state == true) boiler_on = true;
+
+          if( pid_output == true && heat_demand == true && boiler_on == true)
+          {
+            id(${device.id}_heat_output_switch).turn_on();
+          } 
+          else 
+          {
+            id(${device.id}_heat_output_switch).turn_off();
+          }
 
           return x;
     update_interval: ${climate.interval}
