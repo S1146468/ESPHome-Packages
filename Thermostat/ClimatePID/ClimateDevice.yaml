@@ -193,7 +193,6 @@ binary_sensor:
     name: "${device.name} Window"
     id: ${device.id}_window_kamer_template
     device_id: ${device.id}
-    entity_category: diagnostic
     device_class: window
     lambda: |-
       return id(${device.id}_window).state;
