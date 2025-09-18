@@ -5,7 +5,9 @@ substitutions:
   climate:
     id: climate
     name: "climate"
-    output: heater_output
+    demand: room_demand
+    pid_output: pid_output
+    boiler_active: ch_active
     interval: 15s
   control:
     pid:
@@ -42,6 +44,13 @@ button:
 script:
   - id: ${device.id}_run_pid_autotune
     then:
+      - lambda: |-
+          id(${device.id}_autotune_in_progress) = true;
+          auto call = id(${climate.id}).make_call();
+          call.set_mode("AUTO");
+          // etc. see API reference
+          call.perform();
+
       - climate.pid.set_control_parameters:
           id: ${climate.id}
           kp: 0.0
@@ -58,6 +67,9 @@ script:
       - lambda: |-
           using namespace esphome;
 
+          if(id(${device.id}_autotune_in_progress)) return;
+          
+          
           auto climate = id(${climate.id});  // Access the climate object
           float currentSetpoint = climate->target_temperature;
           climate::ClimateMode currentMode = climate->mode;
@@ -93,11 +105,15 @@ globals:
     type: float
     initial_value: "22.0"
 
-  - id: ${climate.output}
+  - id: ${device.id}_heat_output_level
     type: float
     restore_value: no
     initial_value: "0.0"
 
+  - id: ${device.id}_autotune_in_progress
+    type: bool
+    restore_value: no
+    initial_value: "false"
 
 switch:
   - platform: template
@@ -121,9 +137,9 @@ output:
     write_action:
       lambda: |-
         // Window control
-        if(isnan(id(${device.id}_window).state))    { id(${climate.output}) = state; return; } // Turn on heating control when window state is unavailable
-        if(id(${device.id}_window).state == 1.0)    { id(${climate.output}) = 0.0;   return; } // Turn off heating control when window is open       
-        if(id(${device.id}_window).state == 0.0)    { id(${climate.output}) = state; return; } // Turn on heating control when window is closed
+        if(isnan(id(${device.id}_window).state))    { id(${device.id}_heat_output_level) = state; return; } // Turn on heating control when window state is unavailable
+        if(id(${device.id}_window).state == 1.0)    { id(${device.id}_heat_output_level) = 0.0;   return; } // Turn off heating control when window is open       
+        if(id(${device.id}_window).state == 0.0)    { id(${device.id}_heat_output_level) = state; return; } // Turn on heating control when window is closed
   
   - platform: template
     id: ${device.id}_cool_output
@@ -157,7 +173,7 @@ climate:
     default_target_temperature: 21°C
     heat_output: ${device.id}_heat_output
     cool_output: ${device.id}_cool_output
-    internal: true
+    internal: false
     visual:
       min_temperature: 4
       max_temperature: 35
@@ -168,13 +184,13 @@ climate:
       kp: ${control.pid.kp}
       ki: ${control.pid.ki}
       kd: ${control.pid.kd}
-      min_integral: -10.0
-      max_integral: 10.0
+      min_integral: 0.0
+      max_integral: 1.0
       starting_integral_term: 0.0
       derivative_averaging_samples: 5
     deadband_parameters:
       threshold_low: -0.5
-      threshold_high: 0.5
+      threshold_high: 0.0
       kp_multiplier: ${control.deadband.kp_multiplier}
       ki_multiplier: ${control.deadband.ki_multiplier}
       kd_multiplier: ${control.deadband.kd_multiplier}
@@ -188,6 +204,10 @@ binary_sensor:
     name: "Window Sensor"
     entity_id: ${sensor.window}
     id: ${device.id}_window
+    on_release: 
+      then:
+        - button.press: ${device.id}_reset_integral
+        - script.execute: ${device.id}_sync_target_and_hvac
     
   - platform: template
     name: "${device.name} Window"
@@ -196,10 +216,7 @@ binary_sensor:
     device_class: window
     lambda: |-
       return id(${device.id}_window).state;
-    on_release: 
-      then:
-        - button.press: ${device.id}_reset_integral
-        - script.execute: ${device.id}_sync_target_and_hvac
+    
 
 
 # --- Read HA climate values ---
@@ -264,10 +281,10 @@ sensor:
 
   - platform: template
     name: "${device.name} Heat output"
-    id: ${device.id}_pid_output
+    id: ${climate.pid_output}
     device_id: ${device.id}
     unit_of_measurement: "%"
-    icon: "mdi:gauge"
+    icon: "mdi:heat-wave"
     state_class: measurement
     filters: 
       - multiply: !lambda return 100.0;
@@ -277,24 +294,69 @@ sensor:
           ignore_out_of_range: false
       - round: 0
       - lambda: |-
-          // Visual heating state in home assistant
-          if(x < 0.0f)  id(${device.id}_heat_output_switch).turn_off();
-          if(x == 0.0f) id(${device.id}_heat_output_switch).turn_off();
-          if(x > 0.0f)  id(${device.id}_heat_output_switch).turn_on();
+          // // Visual heating state in home assistant
+          // if(x =< 0.0f) id(${device.id}_heat_output_switch).turn_off();
+          // if(x > 0.0f)  id(${device.id}_heat_output_switch).turn_on();
 
+          bool pid_output = false;
+          bool heat_demand = false;
+          bool boiler_on = false;
+          
+          // No demand, return minimum
+          if (x < 0.1f) x = 0.0f; 
+          
+          if(id(${climate.pid_output}).state > 0.0f) pid_output = true;
+          if(id(${climate.demand}).state > 0.0f) heat_demand = true;
+          if(id(${climate.demand}).state == true) boiler_on = true;
 
-          // Setting heating modes
-          float output = 0.0f;
+          if( pid_output == true && heat_demand == true && boiler_on == true)
+          {
+            id(${device.id}_heat_output_switch).turn_on();
+          } 
+          else 
+          {
+            id(${device.id}_heat_output_switch).turn_off();
+          }
 
-          if(x < 100.0f) output = 100.0f;
-          // if(x < 75.0f) output = 75.0f;
-          if(x < 50.0f) output = 50.0f;
-          // if(x < 25.0f) output = 25.0f;
-          if(x <= 0.0f) output = 0.0f;
-
-          return output;
-
+          return x;
     update_interval: ${climate.interval}
     lambda: |- 
-      return id(${climate.output});
+      return id(${device.id}_heat_output_level);
 
+  - platform: template
+    id: ${climate.demand}
+    name: "${device.name} Room Demand"
+    device_id: ${device.id}
+    icon: "mdi:gauge"
+    update_interval: ${climate.interval}
+    unit_of_measurement: "%"
+    filters:
+      - round: 0
+    lambda: |-
+      // Inputs
+      const float T   = id(${device.id}_temperature).state;     // your room temp sensor
+      const float Tsp = id(${climate.id}).target_temperature; // your ESPHome PID climate
+      float dv = id(${climate.pid_output}).state / 100.0f;        // [%] → [0..1]
+
+      // Guards
+      if (isnan(T) || isnan(Tsp) || isnan(dv)) return 0.0f;
+
+      // No demand if PID output is zero or negative
+      if(id(${climate.pid_output}).state <= 0.0f) return 0.0f; 
+
+      // Normalized temperature error over 1.5 °C band
+      float de = (Tsp - T) / 1.5f;
+      if (de < 0.0f) de = 0.0f;
+      if (de > 1.0f) de = 1.0f;
+
+      // If already at/above setpoint, ignore valve contribution
+      if (T >= Tsp) dv = 0.0f;
+
+      // Ignore tiny valve wiggles (<10%)
+      if (dv < 0.10f) dv = 0.0f;
+      if (de < 0.10f) de = 0.0f;
+
+      // Combine: demand reflects either strong need or wide-open valve
+      float d = de > dv ? de : dv;
+
+      return d * 100.0f;
