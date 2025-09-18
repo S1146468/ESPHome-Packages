@@ -23,7 +23,7 @@ sensor:
     id: ${device.id}_error
     name: "${device.name} Error" 
     device_id: ${device.id}
-    icon: "mdi:alert-circle-outline"
+    icon: "mdi:plus-minus-variant"
     unit_of_measurement: "%"
     state_class: measurement
     filters: 
@@ -54,7 +54,7 @@ sensor:
     id: ${device.id}_proportional
     name: "${device.name} Error Proportional" 
     device_id: ${device.id}
-    icon: "mdi:chart-line"
+    icon: "mdi:sigma"
     unit_of_measurement: "%"
     state_class: measurement
     filters: 
@@ -85,7 +85,7 @@ sensor:
     id: ${device.id}_integral
     name: "${device.name} Error Integral" 
     device_id: ${device.id}
-    icon: "mdi:sigma-lower"
+    icon: "mdi:math-integral"
     unit_of_measurement: "%"
     state_class: measurement
     filters: 
@@ -116,7 +116,7 @@ sensor:
     id: ${device.id}_derivative
     name: "${device.name} Error Derivative" 
     device_id: ${device.id}
-    icon: "mdi:slope-up"
+    icon: "mdi:chart-line"
     unit_of_measurement: "%"
     state_class: measurement
     filters: 
