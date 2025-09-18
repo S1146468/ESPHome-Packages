@@ -209,13 +209,13 @@ binary_sensor:
         - button.press: ${device.id}_reset_integral
         - script.execute: ${device.id}_sync_target_and_hvac
     
-  # - platform: template
-  #   name: "${device.name} Window"
-  #   id: ${device.id}_window_kamer_template
-  #   device_id: ${device.id}
-  #   device_class: window
-  #   lambda: |-
-  #     return id(${device.id}_window).state;
+  - platform: template
+    name: "${device.name} Window"
+    id: ${device.id}_window_kamer_template
+    device_id: ${device.id}
+    device_class: window
+    lambda: |-
+      return id(${device.id}_window).state;
     
 
 
