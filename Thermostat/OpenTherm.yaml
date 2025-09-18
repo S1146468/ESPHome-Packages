@@ -98,7 +98,7 @@ sensor:
 
 # OpenTherm sensors
 # https://esphome.io/components/opentherm.html#sensor
-# - platform: opentherm
+- platform: opentherm
 #   t_boiler:
 #     id: ch_temperature
 #     name: "Heating Temperature"
