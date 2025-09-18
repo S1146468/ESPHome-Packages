@@ -31,6 +31,8 @@ sensor:
     icon: mdi:gauge
     unit_of_measurement: "%"
     update_interval: ${opentherm_update_interval}
+    filters:
+      - round: 0
     lambda: |-
       float a = id(${heat_demand.room_1}).state;
       float b = id(${heat_demand.room_2}).state;
@@ -46,7 +48,10 @@ sensor:
     name: "Target Water Temperature"
     unit_of_measurement: "°C"
     accuracy_decimals: 1
+    icon: mdi:coolant-temperature
     update_interval: ${opentherm_update_interval}
+    filters:
+      - round: 0
     lambda: |-
       const float Tmin = ${water_temp.min_temp};
       const float Tmax = ${water_temp.max_temp};

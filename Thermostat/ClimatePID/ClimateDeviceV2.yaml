@@ -209,6 +209,7 @@ binary_sensor:
     name: "${device.name} Window"
     id: ${device.id}_window_kamer_template
     device_id: ${device.id}
+    state_class: measurement
     device_class: window
     lambda: |-
       return id(${device.id}_window).state;
