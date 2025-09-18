@@ -183,7 +183,7 @@ climate:
       kp: ${control.pid.kp}
       ki: ${control.pid.ki}
       kd: ${control.pid.kd}
-      min_integral: -1.0
+      min_integral: 0.0
       max_integral: 1.0
       starting_integral_term: 0.0
       derivative_averaging_samples: 5
