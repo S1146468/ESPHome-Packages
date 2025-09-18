@@ -102,12 +102,10 @@ sensor:
   t_boiler:
     id: ch_temperature
     name: "Heating Temperature"
-    entity_category: diagnostic
 
   ch_pressure: 
     id: ch_pressure
     name: "Water pressure in CH circuit (bar)"
-    entity_category: diagnostic
     
   burner_starts:  
     id: burner_starts

@@ -24,11 +24,11 @@ sensor:
     entity_id: ${outside_temp_sensor}
     internal: false
 
-
   # Max room demand (0..1)
   - platform: template
     id: max_room_demand
     name: "Max Room Demand"
+    icon: mdi:gauge
     unit_of_measurement: "%"
     update_interval: ${opentherm_update_interval}
     lambda: |-
@@ -38,10 +38,12 @@ sensor:
       if (isnan(b)) b = 0.0f;
       return a > b ? a : b;
 
-  # Raw flow target with outdoor bias and clamps
+
+
+  # Final target exposed for writer
   - platform: template
-    id: flow_target_raw
-    name: "Flow Target Raw"
+    id: target_water_temperature
+    name: "Target Water Temperature"
     unit_of_measurement: "°C"
     accuracy_decimals: 1
     update_interval: ${opentherm_update_interval}
@@ -67,18 +69,6 @@ sensor:
       if (Tf < Tmin) Tf = Tmin;
       if (Tf > Tmax) Tf = Tmax;
       return Tf;
-
-
-
-  # Final target exposed for writer
-  - platform: template
-    id: target_water_temperature
-    name: "Target Water Temperature"
-    unit_of_measurement: "°C"
-    accuracy_decimals: 1
-    update_interval: ${opentherm_update_interval}
-    lambda: |-
-      return id(flow_target_raw).state;
 
 binary_sensor:
 # --- Any valve open?
@@ -114,6 +104,6 @@ interval:
             if (enable) {
               id(${output_entity_name}).set_level(target);
             } else {
-              id(${output_entity_name}).set_level(20.0f);
+              id(${output_entity_name}).set_level(0.0f);
             }
           }
