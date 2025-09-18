@@ -52,13 +52,13 @@ button:
 # https://esphome.io/components/opentherm.html#binary-sensor
 binary_sensor:
   - platform: opentherm
-    ch_active:
-      id: ch_active
-      name: "Heating Active"
+    # ch_active:
+    #   id: ch_active
+    #   name: "Heating Active"
 
-    dhw_active:
-      id: dhw_active
-      name: "Hot Water Active"
+    # dhw_active:
+    #   id: dhw_active
+    #   name: "Hot Water Active"
 
     flame_on:
       id: flame_on
