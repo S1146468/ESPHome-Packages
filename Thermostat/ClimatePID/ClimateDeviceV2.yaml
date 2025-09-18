@@ -302,6 +302,9 @@ sensor:
           bool heat_demand = false;
           bool boiler_on = false;
           
+          // No demand, return minimum
+          if (x < 0.1f) x = 0.0f; 
+          
           if(id(${climate.pid_output}).state > 0.0f) pid_output = true;
           if(id(${climate.demand}).state > 0.0f) heat_demand = true;
           if(id(${climate.demand}).state == true) boiler_on = true;
