@@ -99,13 +99,13 @@ sensor:
 # OpenTherm sensors
 # https://esphome.io/components/opentherm.html#sensor
 - platform: opentherm
-#   t_boiler:
-#     id: ch_temperature
-#     name: "Heating Temperature"
+  t_boiler:
+    id: ch_temperature
+    name: "Heating Temperature"
 
-#   ch_pressure: 
-#     id: ch_pressure
-#     name: "Water pressure in CH circuit (bar)"
+  ch_pressure: 
+    id: ch_pressure
+    name: "Water pressure in CH circuit (bar)"
     
   burner_starts:  
     id: burner_starts
