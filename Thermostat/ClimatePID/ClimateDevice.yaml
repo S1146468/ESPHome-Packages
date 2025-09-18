@@ -295,9 +295,6 @@ sensor:
       - round: 0
       - lambda: |-
           // // Visual heating state in home assistant
-          // if(x =< 0.0f) id(${device.id}_heat_output_switch).turn_off();
-          // if(x > 0.0f)  id(${device.id}_heat_output_switch).turn_on();
-
           bool pid_output = false;
           bool heat_demand = false;
           bool boiler_on = false;
