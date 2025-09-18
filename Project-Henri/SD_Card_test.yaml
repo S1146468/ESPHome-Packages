@@ -1,0 +1,90 @@
+esphome:
+  name: esp32-project-henri
+  friendly_name: ESP32_Project_Henri
+  includes:
+    - sd_reader.h
+  on_boot:
+    priority: -10
+    then:
+      - delay: 2s
+      - logger.log: "Boot: mounting SD and listing root"
+      - lambda: |-
+          const int SD_CS=10, SD_SCK=12, SD_MISO=13, SD_MOSI=11;
+          if (sd_mount_any(SD_CS, SD_SCK, SD_MISO, SD_MOSI)) {
+            sd_list_dir("/");
+            read_sd_file("/photos/data.txt", SD_CS, SD_SCK, SD_MISO, SD_MOSI);
+          }
+
+  platformio_options:
+    lib_ldf_mode: deep+
+    build_flags:
+      - -I$PROJECT_PACKAGES_DIR/framework-arduinoespressif32/libraries/Network/src
+
+
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: arduino
+    version: 3.1.3
+
+# Enable logging
+logger: 
+  level: INFO 
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret project-henri_KEY
+
+ota:
+  - platform: esphome
+    password: ""
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esp32-Project-Henri"
+    password: "LQXx0z8DZ8zg"
+  domain: .local
+
+# SPI bus (pas pinnen aan naar jouw wiring)
+# spi:
+#   clk_pin: GPIO12
+#   mosi_pin: GPIO11
+#   miso_pin: GPIO13
+
+web_server:
+  port: 80
+
+# Template button om handmatig lezen te triggeren
+button:
+  - platform: restart
+    name: "Restart"
+
+
+  - platform: template
+    name: "List SD root"
+    on_press:
+      - lambda: |-
+          const int SD_CS=10, SD_SCK=12, SD_MISO=13, SD_MOSI=11;
+          if (sd_mount_any(SD_CS, SD_SCK, SD_MISO, SD_MOSI)) sd_list_dir("/");
+
+  - platform: template
+    name: "Read /photos/data.txt"
+    on_press:
+      - lambda: |-
+          const int SD_CS=10, SD_SCK=12, SD_MISO=13, SD_MOSI=11;
+          read_sd_file("/photos/data.txt", SD_CS, SD_SCK, SD_MISO, SD_MOSI);
+
+sensor:
+  - platform: uptime
+    name: "Uptime"
+
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: "IP Address"
