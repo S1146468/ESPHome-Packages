@@ -287,10 +287,7 @@ sensor:
           bool pid_output = false;
           bool heat_demand = false;
           bool boiler_on = false;
-          
-          // No demand, return minimum
-          if (x < 0.1f) x = 0.0f; 
-          
+
           if(id(${device.id}_heat_output_level) > 0.0f) pid_output = true;
           if(id(${climate.demand}).state > 0.0f) heat_demand = true;
           if(id(${climate.demand}).state == true) boiler_on = true;
@@ -313,7 +310,10 @@ sensor:
           return x;
     update_interval: ${climate.interval}
     lambda: |- 
-      return id(${device.id}_heat_output_level);
+      // No demand, return minimum
+      float x = id(${device.id}_heat_output_level);
+      if (x < 0.1f) x = 0.0f; 
+      return x;
 
   - platform: template
     id: ${climate.demand}
