@@ -295,6 +295,8 @@ sensor:
           if(id(${climate.demand}).state > 0.0f) heat_demand = true;
           if(id(${climate.demand}).state == true) boiler_on = true;
 
+          ESP_LOGW("PID Output: %i", "Heat Demand: %i", "Boiler On: %i", pid_output, heat_demand, boiler_on);
+
           if( pid_output == true && heat_demand == true && boiler_on == true)
           {
             id(${device.id}_heat_output_switch).turn_on();
