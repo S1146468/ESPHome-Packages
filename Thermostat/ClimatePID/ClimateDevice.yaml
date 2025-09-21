@@ -14,16 +14,29 @@ substitutions:
       kp: 0.0
       ki: 0.0
       kd: 0.0
+    clamp: 
+      i_min: 0.0
+      i_max: 0.0
+    averaging: 
+      derivative: 1
+      output: 1
     deadband:
-      kp_multiplier: 0.0
-      ki_multiplier: 0.0
-      kd_multiplier: 0.0
+      threshold: 
+        low: 0.0
+        high: 0.0
+      multiplier: 
+        kp: 0.0
+        ki: 0.0
+        kd: 0.0
+      averaging: 
+        output: 1
   sensor:
     temperature: sensor.temperature
     humidity: sensor.humidity
     window: binary_sensor.window
   master: climate.name
 
+    
 
 button:
   - platform: template
@@ -141,10 +154,10 @@ output:
         if(id(${device.id}_window).state == 1.0)    { id(${device.id}_heat_output_level) = 0.0;   return; } // Turn off heating control when window is open       
         if(id(${device.id}_window).state == 0.0)    { id(${device.id}_heat_output_level) = state; return; } // Turn on heating control when window is closed
   
-  - platform: template
-    id: ${device.id}_cool_output
-    type: float
-    write_action: []
+  # - platform: template
+  #   id: ${device.id}_cool_output
+  #   type: float
+  #   write_action: []
         
 
 interval:
@@ -172,7 +185,7 @@ climate:
     humidity_sensor: ${device.id}_humidity
     default_target_temperature: 21°C
     heat_output: ${device.id}_heat_output
-    cool_output: ${device.id}_cool_output
+    # cool_output: ${device.id}_cool_output
     internal: false
     visual:
       min_temperature: 4
@@ -184,17 +197,18 @@ climate:
       kp: ${control.pid.kp}
       ki: ${control.pid.ki}
       kd: ${control.pid.kd}
-      min_integral: 0.0
-      max_integral: 1.0
+      min_integral: ${control.clamp.i_min}
+      max_integral: ${control.clamp.i_max}
       starting_integral_term: 0.0
-      derivative_averaging_samples: 5
+      derivative_averaging_samples: ${control.averaging.derivative}
+      output_averaging_samples: ${control.averaging.output}
     deadband_parameters:
-      threshold_low: -0.5
-      threshold_high: 0.0
-      kp_multiplier: ${control.deadband.kp_multiplier}
-      ki_multiplier: ${control.deadband.ki_multiplier}
-      kd_multiplier: ${control.deadband.kd_multiplier}
-      deadband_output_averaging_samples: 30
+      threshold_low: ${control.deadband.threshold.low}
+      threshold_high: ${control.deadband.threshold.high}
+      kp_multiplier: ${control.deadband.multiplier.kp}
+      ki_multiplier: ${control.deadband.multiplier.ki}
+      kd_multiplier: ${control.deadband.multiplier.kd}
+      deadband_output_averaging_samples: ${control.deadband.averaging.output}
 
 
 
