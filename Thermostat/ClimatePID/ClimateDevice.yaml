@@ -292,7 +292,7 @@ sensor:
           if(id(${climate.demand}).state > 0.0f) heat_demand = true;
           if(id(${climate.demand}).state == true) boiler_on = true;
 
-          if(${device.name} == "Climate Stijn")
+          if("${device.name}" == "Climate Stijn")
           {
             ESP_LOGW("Heat Debug ${device.name}", "PID Output: %s      Heat Demand: %s      Boiler On: %s",
               pid_output ? "true " : "false",
@@ -300,7 +300,6 @@ sensor:
               boiler_on ? "true " : "false");
           }
           
-
           if( pid_output == true && heat_demand == true && boiler_on == true)
           {
             id(${device.id}_heat_output_switch).turn_on();
