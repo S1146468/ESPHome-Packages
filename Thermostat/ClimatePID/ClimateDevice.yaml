@@ -304,10 +304,10 @@ sensor:
             id(${device.id}_heat_output_switch).turn_off();
           }
 
-          if(${device.id}_heat_output_level =< 0.0f)
-          {
-            x = 0.0f;
-          }
+          // if(${device.id}_heat_output_level =< 0.0f)
+          // {
+          //   x = 0.0f;
+          // }
 
           return x;
     update_interval: ${climate.interval}
