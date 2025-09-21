@@ -22,8 +22,8 @@ substitutions:
       output: 1
     deadband:
       threshold: 
-        low: 0.0
-        high: 0.0
+        low: "0.0"
+        high: "0.0"
       multiplier: 
         kp: 0.0
         ki: 0.0
