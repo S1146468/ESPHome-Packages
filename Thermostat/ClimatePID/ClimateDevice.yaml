@@ -260,17 +260,6 @@ sensor:
     id: ${device.id}_temperature
     filters: 
       - heartbeat: ${climate.interval}
-      - lambda: |-
-          const float filterFactor = 0.1f;
-          float keepFactor = 1.0f - filterFactor;
-          float value = id(${device.id}_temperature).state;
-
-          if (isnan(value)) return x;
-
-          if (isnan(x)) return keepFactor * value + 0.0;  // Default fallback value
-          else return keepFactor * value + x * filterFactor;
-          
-          
 
   - platform: homeassistant 
     name: "${device.name} Humidity Sensor"
@@ -278,20 +267,6 @@ sensor:
     id: ${device.id}_humidity
     filters: 
       - heartbeat: ${climate.interval}
-      - lambda: |-
-          const float filterFactor = 0.1f;
-          float keepFactor = 1.0f - filterFactor;
-          float value = id(${device.id}_humidity).state;
-
-          if (isnan(value)){
-            return x;
-          }
-
-          if (isnan(x)) {
-            return keepFactor * value + 0.0;  // Default fallback value
-          } else {
-            return keepFactor * value + x * filterFactor;
-          }
 
   - platform: template
     name: "${device.name} Heat output"
