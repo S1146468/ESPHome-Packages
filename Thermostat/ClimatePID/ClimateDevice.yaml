@@ -291,7 +291,7 @@ sensor:
           // No demand, return minimum
           if (x < 0.1f) x = 0.0f; 
           
-          if(id(${device.id}_heat_output_level).state > 0.0f) pid_output = true;
+          if(id(${device.id}_heat_output_level) > 0.0f) pid_output = true;
           if(id(${climate.demand}).state > 0.0f) heat_demand = true;
           if(id(${climate.demand}).state == true) boiler_on = true;
 
@@ -322,13 +322,13 @@ sensor:
       // Inputs
       const float T   = id(${device.id}_temperature).state;     // your room temp sensor
       const float Tsp = id(${climate.id}).target_temperature; // your ESPHome PID climate
-      float dv = id(${device.id}_heat_output_level).state / 100.0f;        // [%] → [0..1]
+      float dv = id(${device.id}_heat_output_level) / 100.0f;        // [%] → [0..1]
 
       // Guards
       if (isnan(T) || isnan(Tsp) || isnan(dv)) return 0.0f;
 
       // No demand if PID output is zero or negative
-      if(id(${device.id}_heat_output_level).state <= 0.0f) return 0.0f; 
+      if(id(${device.id}_heat_output_level) <= 0.0f) return 0.0f; 
 
       // Normalized temperature error over 1.5 °C band
       float de = (Tsp - T) / 1.5f;
