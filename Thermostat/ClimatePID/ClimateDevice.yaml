@@ -302,6 +302,7 @@ sensor:
           else 
           {
             id(${device.id}_heat_output_switch).turn_off();
+            x = 0.0f;
           }
 
           return x;
