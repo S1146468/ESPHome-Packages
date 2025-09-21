@@ -109,17 +109,17 @@ sensor:
     
   burner_starts:  
     id: burner_starts
-    name: "Number of starts burner"
+    name: "Burner starts"
     entity_category: diagnostic
     
   burner_operation_hours:  
     id: burner_operation_hours
-    name: "Number of hours that burner is in operation"
+    name: "Hours burner CH mode"
     entity_category: diagnostic
     
   dhw_burner_operation_hours:  
     id: dhw_burner_operation_hours
-    name: "Number of hours that burner is in operation during DHW mode"
+    name: "Hours burner is in DHW mode"
     entity_category: diagnostic
 
 
