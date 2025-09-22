@@ -344,8 +344,8 @@ sensor:
       if (de < 0.0f) de = 0.0f;
       if (de > 1.0f) de = 1.0f;
 
-      // If already at/above setpoint, ignore valve contribution
-      if (T >= Tsp) dv = 0.0f;
+      // // If already at/above setpoint, ignore valve contribution
+      // if (T >= Tsp) dv = 0.0f;
 
       // Ignore tiny valve wiggles (<10%)
       if (dv < 0.10f) dv = 0.0f;
