@@ -183,13 +183,14 @@ interval:
         if(id(${climate.demand}).state > 0.0f) heat_demand = true;
         if(id(${climate.boiler_active}).state == true) boiler_on = true;
 
-        if("${device.name}" == "Climate Stijn")
-        {
+        // if("${device.name}" == "Climate Stijn")
+        // {
           ESP_LOGW("Heat Debug ${device.name}", "PID Output: %s      Heat Demand: %s      Boiler On: %s",
             pid_output ? "true " : "false",
             heat_demand ? "true " : "false",
             boiler_on ? "true " : "false");
-        }
+          ESP_LOGW("Heat Debug ${device.name}", "Climate Output: %f      PID Output: %f      Heat Demand: %f", id(${device.id}_heat_output_level), id(${climate.pid_output}).state, id(${climate.demand}).state);
+        // }
         
         if( pid_output == true && heat_demand == true && boiler_on == true)
         {
@@ -315,8 +316,8 @@ sensor:
       - round: 0
     update_interval: ${climate.interval}
     lambda: |- 
-      // No demand, return minimum
       float x = id(${device.id}_heat_output_level);
+
       if (x < 0.1f) x = 0.0f; 
       return x;
 
