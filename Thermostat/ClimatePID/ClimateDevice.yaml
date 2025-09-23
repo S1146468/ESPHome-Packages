@@ -179,7 +179,7 @@ interval:
         bool heat_demand = false;
         bool boiler_on = false;
 
-        if(id(${climate.pid_output}) > 0.0f) pid_output = true;
+        if(id(${climate.pid_output}).state > 0.0f) pid_output = true;
         if(id(${climate.demand}).state > 0.0f) heat_demand = true;
         if(id(${climate.boiler_active}).state == true) boiler_on = true;
 
