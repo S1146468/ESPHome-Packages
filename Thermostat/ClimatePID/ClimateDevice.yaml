@@ -374,7 +374,6 @@ sensor:
     unit_of_measurement: "%"
     icon: "mdi:heat-wave"
     state_class: measurement
-    internal: true
     filters: 
       - multiply: !lambda return 100.0;
       - clamp: 
@@ -401,7 +400,6 @@ sensor:
     name: "${device.name} Room Demand"
     device_id: ${device.id}
     icon: "mdi:gauge"
-    internal: true
     update_interval: ${climate.interval}
     unit_of_measurement: "%"
     filters:
