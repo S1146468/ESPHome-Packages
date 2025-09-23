@@ -384,8 +384,8 @@ sensor:
       - round: 0
     update_interval: ${climate.interval}
     lambda: |- 
-      float pidOut = id(${climate.pid_output}_temp.state);
-      float demand = id(${climate.demand}_temp.state);
+      float pidOut = id(${climate.pid_output}_temp).state;
+      float demand = id(${climate.demand}_temp).state;
 
       if(pidOut == 0.0f || demand == 0.0f)
       {
