@@ -297,7 +297,9 @@ sensor:
     filters: 
       - heartbeat: ${climate.interval}
 
+
   - platform: template
+    name: "${device.name} Heat output Temp"
     id: ${climate.pid_output}_temp
     device_id: ${device.id}
     unit_of_measurement: "%"
@@ -322,6 +324,7 @@ sensor:
 
 
   - platform: template
+    name: "${device.name} Room Demand Temp"
     id: ${climate.demand}_temp
     device_id: ${device.id}
     icon: "mdi:gauge"
