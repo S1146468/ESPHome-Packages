@@ -321,7 +321,7 @@ sensor:
       if (x < 0.05f)  {
         x = 0.0f;
       } else {
-        x = x * 0.75f + 0.25f
+        x = x * 0.75f + 0.25f;
       }
       
       return x;
