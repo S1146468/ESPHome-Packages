@@ -318,7 +318,12 @@ sensor:
     lambda: |- 
       float x = id(${device.id}_heat_output_level);
 
-      if (x < 0.1f) x = 0.0f; 
+      if (x < 0.05f)  {
+        x = 0.0f;
+      } else {
+        x = x * 0.75f + 0.25f
+      }
+      
       return x;
 
 
@@ -359,8 +364,8 @@ sensor:
       // if (T >= Tsp) dv = 0.0f;
 
       // Ignore tiny valve wiggles (<10%)
-      if (dv < 0.10f) dv = 0.0f;
-      if (de < 0.10f) de = 0.0f;
+      if (dv < 0.05f) dv = 0.0f;
+      if (de < 0.05f) de = 0.0f;
 
       // Combine: demand reflects either strong need or wide-open valve
       float d = de > dv ? de : dv;
