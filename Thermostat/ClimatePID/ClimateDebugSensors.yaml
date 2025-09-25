@@ -204,6 +204,7 @@ sensor:
     device_id: ${device.id}
     unit_of_measurement: ""
     icon: "mdi:alpha-p-circle-outline"
+    state_class: measurement
     accuracy_decimals: 5
     filters: 
       - clamp: 
@@ -235,6 +236,7 @@ sensor:
     device_id: ${device.id}
     unit_of_measurement: ""
     icon: "mdi:alpha-i-circle-outline"
+    state_class: measurement
     accuracy_decimals: 5
     filters: 
       - clamp: 
@@ -266,6 +268,7 @@ sensor:
     device_id: ${device.id}
     unit_of_measurement: ""
     icon: "mdi:alpha-d-circle-outline"
+    state_class: measurement
     accuracy_decimals: 5
     filters: 
       - clamp: 
