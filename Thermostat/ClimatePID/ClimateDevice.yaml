@@ -380,6 +380,7 @@ sensor:
     id: ${climate.pid_output}
     device_id: ${device.id}
     unit_of_measurement: "%"
+    state_class: measurement
     icon: "mdi:heat-wave"
     filters: 
       - clamp: 
@@ -406,6 +407,7 @@ sensor:
     name: "${device.name} Room Demand"
     device_id: ${device.id}
     icon: "mdi:gauge"
+    state_class: measurement
     update_interval: ${climate.interval}
     unit_of_measurement: "%"
     filters:
