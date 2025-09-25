@@ -384,7 +384,6 @@ sensor:
     icon: "mdi:heat-wave"
     state_class: measurement
     filters: 
-      - multiply: !lambda return 100.0;
       - clamp: 
           max_value: 100.0
           min_value: 0.0
