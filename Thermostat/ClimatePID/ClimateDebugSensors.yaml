@@ -24,6 +24,7 @@ sensor:
     name: "${device.name} Error" 
     device_id: ${device.id}
     icon: "mdi:plus-minus-variant"
+    state_class: measurement
     unit_of_measurement: "%"
     filters: 
       - clamp: 
@@ -54,6 +55,7 @@ sensor:
     name: "${device.name} Error Proportional" 
     device_id: ${device.id}
     icon: "mdi:sigma"
+    state_class: measurement
     unit_of_measurement: "%"
     filters: 
       - clamp: 
@@ -84,6 +86,7 @@ sensor:
     name: "${device.name} Error Integral" 
     device_id: ${device.id}
     icon: "mdi:math-integral"
+    state_class: measurement
     unit_of_measurement: "%"
     filters: 
       - clamp: 
@@ -114,6 +117,7 @@ sensor:
     name: "${device.name} Error Derivative" 
     device_id: ${device.id}
     icon: "mdi:chart-line"
+    state_class: measurement
     unit_of_measurement: "%"
     filters: 
       - clamp: 
@@ -143,6 +147,7 @@ sensor:
     name: "${device.name} PID Output Heat" 
     device_id: ${device.id}
     unit_of_measurement: "%"
+    state_class: measurement
     icon: "mdi:fire"
     filters: 
       - clamp: 
@@ -173,6 +178,7 @@ sensor:
     name: "${device.name} PID Output Cool" 
     device_id: ${device.id}
     unit_of_measurement: "%"
+    state_class: measurement
     icon: "mdi:snowflake"
     filters: 
       - clamp: 
