@@ -305,7 +305,6 @@ sensor:
     device_id: ${device.id}
     unit_of_measurement: "%"
     icon: "mdi:heat-wave"
-    state_class: measurement
     internal: false
     filters: 
       - multiply: !lambda return 100.0;
@@ -382,7 +381,6 @@ sensor:
     device_id: ${device.id}
     unit_of_measurement: "%"
     icon: "mdi:heat-wave"
-    state_class: measurement
     filters: 
       - clamp: 
           max_value: 100.0

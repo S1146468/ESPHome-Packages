@@ -25,7 +25,6 @@ sensor:
     device_id: ${device.id}
     icon: "mdi:plus-minus-variant"
     unit_of_measurement: "%"
-    state_class: measurement
     filters: 
       - clamp: 
           max_value: 100
@@ -56,7 +55,6 @@ sensor:
     device_id: ${device.id}
     icon: "mdi:sigma"
     unit_of_measurement: "%"
-    state_class: measurement
     filters: 
       - clamp: 
           max_value: 100
@@ -87,7 +85,6 @@ sensor:
     device_id: ${device.id}
     icon: "mdi:math-integral"
     unit_of_measurement: "%"
-    state_class: measurement
     filters: 
       - clamp: 
           max_value: 100
@@ -118,7 +115,6 @@ sensor:
     device_id: ${device.id}
     icon: "mdi:chart-line"
     unit_of_measurement: "%"
-    state_class: measurement
     filters: 
       - clamp: 
           max_value: 100
@@ -148,7 +144,6 @@ sensor:
     device_id: ${device.id}
     unit_of_measurement: "%"
     icon: "mdi:fire"
-    state_class: measurement
     filters: 
       - clamp: 
           max_value: 100
@@ -179,7 +174,6 @@ sensor:
     device_id: ${device.id}
     unit_of_measurement: "%"
     icon: "mdi:snowflake"
-    state_class: measurement
     filters: 
       - clamp: 
           max_value: 100
@@ -210,7 +204,6 @@ sensor:
     device_id: ${device.id}
     unit_of_measurement: ""
     icon: "mdi:alpha-p-circle-outline"
-    state_class: measurement
     accuracy_decimals: 5
     filters: 
       - clamp: 
@@ -242,7 +235,6 @@ sensor:
     device_id: ${device.id}
     unit_of_measurement: ""
     icon: "mdi:alpha-i-circle-outline"
-    state_class: measurement
     accuracy_decimals: 5
     filters: 
       - clamp: 
@@ -274,7 +266,6 @@ sensor:
     device_id: ${device.id}
     unit_of_measurement: ""
     icon: "mdi:alpha-d-circle-outline"
-    state_class: measurement
     accuracy_decimals: 5
     filters: 
       - clamp: 
