@@ -185,11 +185,11 @@ interval:
 
         // if("${device.name}" == "Climate Stijn")
         // {
-          ESP_LOGW("Heat Debug ${device.name}", "PID Output: %s      Heat Demand: %s      Boiler On: %s",
-            pid_output ? "true " : "false",
-            heat_demand ? "true " : "false",
-            boiler_on ? "true " : "false");
-          ESP_LOGW("Heat Debug ${device.name}", "Climate Output: %f      PID Output: %f      Heat Demand: %f", id(${device.id}_heat_output_level), id(${climate.pid_output}).state, id(${climate.demand}).state);
+          // ESP_LOGW("Heat Debug ${device.name}", "PID Output: %s      Heat Demand: %s      Boiler On: %s",
+          //   pid_output ? "true " : "false",
+          //   heat_demand ? "true " : "false",
+          //   boiler_on ? "true " : "false");
+          // ESP_LOGW("Heat Debug ${device.name}", "Climate Output: %f      PID Output: %f      Heat Demand: %f", id(${device.id}_heat_output_level), id(${climate.pid_output}).state, id(${climate.demand}).state);
         // }
         
         if( pid_output == true && heat_demand == true && boiler_on == true)
@@ -232,13 +232,13 @@ climate:
       starting_integral_term: 0.0
       derivative_averaging_samples: ${control.averaging.derivative}
       output_averaging_samples: ${control.averaging.output}
-    deadband_parameters:
-      threshold_low: ${control.deadband.threshold.low}
-      threshold_high: ${control.deadband.threshold.high}
-      kp_multiplier: ${control.deadband.multiplier.kp}
-      ki_multiplier: ${control.deadband.multiplier.ki}
-      kd_multiplier: ${control.deadband.multiplier.kd}
-      deadband_output_averaging_samples: ${control.deadband.averaging.output}
+    # deadband_parameters:
+    #   threshold_low: ${control.deadband.threshold.low}
+    #   threshold_high: ${control.deadband.threshold.high}
+    #   kp_multiplier: ${control.deadband.multiplier.kp}
+    #   ki_multiplier: ${control.deadband.multiplier.ki}
+    #   kd_multiplier: ${control.deadband.multiplier.kd}
+    #   deadband_output_averaging_samples: ${control.deadband.averaging.output}
 
 
 
