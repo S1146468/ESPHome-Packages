@@ -305,7 +305,7 @@ sensor:
     device_id: ${device.id}
     unit_of_measurement: "%"
     icon: "mdi:heat-wave"
-    internal: false
+    internal: true
     filters: 
       - multiply: !lambda return 100.0;
       - clamp: 
@@ -333,7 +333,7 @@ sensor:
     id: ${climate.demand}_temp
     device_id: ${device.id}
     icon: "mdi:gauge"
-    internal: false
+    internal: true
     update_interval: ${climate.interval}
     unit_of_measurement: "%"
     filters:
