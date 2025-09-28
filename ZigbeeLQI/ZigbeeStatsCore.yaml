@@ -1,8 +1,6 @@
-
-
-
-
-
+substitutions:
+  deviceId: device
+  
 interval:
   - interval: 30s
     then:
@@ -78,7 +76,7 @@ sensor:
   # Outputs (template sensors) — NEVER included as inputs because of exclude list
   - platform: template
     id: lqi_avg
-    device_id: zigbee_lqi_stats
+    device_id: ${deviceId}
     name: "Average"
     unit_of_measurement: "LQI"
     icon: mdi:signal-cellular-outline
@@ -87,7 +85,7 @@ sensor:
 
   - platform: template
     id: lqi_min
-    device_id: zigbee_lqi_stats
+    device_id: ${deviceId}
     name: "Min"
     unit_of_measurement: "LQI"
     icon: mdi:signal-cellular-1
@@ -96,7 +94,7 @@ sensor:
 
   - platform: template
     id: lqi_max
-    device_id: zigbee_lqi_stats
+    device_id: ${deviceId}
     name: "Max"
     unit_of_measurement: "LQI"
     icon: mdi:signal-cellular-3
@@ -105,7 +103,7 @@ sensor:
 
   - platform: template
     id: lqi_spread
-    device_id: zigbee_lqi_stats
+    device_id: ${deviceId}
     name: "Spread"
     unit_of_measurement: "LQI"
     icon: mdi:chart-bell-curve
@@ -114,7 +112,7 @@ sensor:
 
   - platform: template
     id: lqi_count
-    device_id: zigbee_lqi_stats
+    device_id: ${deviceId}
     name: "Count"
     unit_of_measurement: "devices"
     icon: mdi:counter
@@ -123,7 +121,7 @@ sensor:
 
   - platform: template
     id: lqi_stddev
-    device_id: zigbee_lqi_stats
+    device_id: ${deviceId}
     name: "StdDev"
     unit_of_measurement: "LQI"
     icon: mdi:sigma
