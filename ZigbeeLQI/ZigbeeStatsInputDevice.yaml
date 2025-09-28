@@ -1,0 +1,9 @@
+substitutions:
+  id: sensorID
+
+
+sensor:
+- platform: homeassistant
+  entity_id: sensor.${id}
+  id: lqi_${id}
+  internal: true

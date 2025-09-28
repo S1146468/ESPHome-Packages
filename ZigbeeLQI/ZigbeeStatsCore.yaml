@@ -1,0 +1,131 @@
+
+
+
+
+
+interval:
+  - interval: 30s
+    then:
+      - lambda: |-
+          using std::string;
+          using std::vector;
+
+          auto has_prefix = [](const string &s, const string &p) -> bool {
+            return s.size() >= p.size() && s.compare(0, p.size(), p) == 0;
+          };
+
+          static const vector<string> exclude_ids = {
+            "lqi_avg", "lqi_min", "lqi_max",
+            "lqi_spread", "lqi_count", "lqi_stddev"
+          };
+
+          // Collect valid LQI values from sensors whose YAML id starts with "lqi_",
+          // excluding the 6 outputs above.
+          vector<float> v;
+          v.reserve(64);
+
+          for (auto *s : App.get_sensors()) {
+            const string oid = s->get_object_id();
+            if (!has_prefix(oid, "lqi_")) continue;
+
+            bool excluded = false;
+            for (const auto &ex : exclude_ids) {
+              if (oid == ex) { excluded = true; break; }
+            }
+            if (excluded) continue;
+
+            float x = s->state;
+            if (!isnan(x)) v.push_back(x);
+          }
+
+          if (v.empty()) {
+            id(lqi_avg).publish_state(NAN);
+            id(lqi_min).publish_state(NAN);
+            id(lqi_max).publish_state(NAN);
+            id(lqi_spread).publish_state(NAN);
+            id(lqi_count).publish_state(NAN);
+            id(lqi_stddev).publish_state(NAN);
+          } else {
+            // count
+            id(lqi_count).publish_state((float)v.size());
+
+            // min / max / mean
+            float mn = v[0], mx = v[0], sum = 0.0f;
+            for (float x : v) {
+              if (x < mn) mn = x;
+              if (x > mx) mx = x;
+              sum += x;
+            }
+            float mean = sum / v.size();
+            id(lqi_min).publish_state(mn);
+            id(lqi_max).publish_state(mx);
+            id(lqi_avg).publish_state(mean);
+            id(lqi_spread).publish_state(mx - mn);
+
+            // sample stddev (N-1)
+            if (v.size() >= 2) {
+              float ss = 0.0f;
+              for (float x : v) { float d = x - mean; ss += d * d; }
+              id(lqi_stddev).publish_state(sqrtf(ss / (v.size() - 1)));
+            } else {
+              id(lqi_stddev).publish_state(NAN);
+            }
+          }
+
+
+
+sensor:
+  # Outputs (template sensors) — NEVER included as inputs because of exclude list
+  - platform: template
+    id: lqi_avg
+    device_id: zigbee_lqi_stats
+    name: "Average"
+    unit_of_measurement: "LQI"
+    icon: mdi:signal-cellular-outline
+    accuracy_decimals: 1
+    update_interval: never
+
+  - platform: template
+    id: lqi_min
+    device_id: zigbee_lqi_stats
+    name: "Min"
+    unit_of_measurement: "LQI"
+    icon: mdi:signal-cellular-1
+    accuracy_decimals: 0
+    update_interval: never
+
+  - platform: template
+    id: lqi_max
+    device_id: zigbee_lqi_stats
+    name: "Max"
+    unit_of_measurement: "LQI"
+    icon: mdi:signal-cellular-3
+    accuracy_decimals: 0
+    update_interval: never
+
+  - platform: template
+    id: lqi_spread
+    device_id: zigbee_lqi_stats
+    name: "Spread"
+    unit_of_measurement: "LQI"
+    icon: mdi:chart-bell-curve
+    accuracy_decimals: 1
+    update_interval: never
+
+  - platform: template
+    id: lqi_count
+    device_id: zigbee_lqi_stats
+    name: "Count"
+    unit_of_measurement: "devices"
+    icon: mdi:counter
+    accuracy_decimals: 0
+    update_interval: never
+
+  - platform: template
+    id: lqi_stddev
+    device_id: zigbee_lqi_stats
+    name: "StdDev"
+    unit_of_measurement: "LQI"
+    icon: mdi:sigma
+    accuracy_decimals: 2
+    update_interval: never
