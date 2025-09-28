@@ -59,16 +59,19 @@ script:
     then:
       - lambda: |-
           id(${device.id}_autotune_in_progress) = true;
-          auto call = id(${climate.id}).make_call();
-          call.set_mode("AUTO");
-          // etc. see API reference
-          call.perform();
+          // auto call = id(${climate.id}).make_call();
+          // call.set_mode("AUTO");
+          // // etc. see API reference
+          // call.perform();
 
       - climate.pid.set_control_parameters:
           id: ${climate.id}
           kp: 0.0
           ki: 0.0
           kd: 0.0
+
+      - climate.pid.reset_integral_term: ${climate.id}
+
       - climate.pid.autotune:
           id: ${climate.id}
           noiseband: 0.25
