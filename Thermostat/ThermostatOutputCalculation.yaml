@@ -10,12 +10,9 @@ substitutions:
   output_entity_name: T_set
   boiler_enable: boiler_enable
   outside_temp_sensor: sensor.outside_temp
-  heat_demand:
+  pid_output:
     room_1: esphome_entity
     room_2: esphome_entity
-  pid_output:
-    room_1: room_a_pid_output
-    room_2: room_b_pid_output
 
 # --- Outside temperature from HA
 sensor:
@@ -24,25 +21,7 @@ sensor:
     entity_id: ${outside_temp_sensor}
     internal: false
 
-  # Max room demand (0..1)
-  - platform: template
-    id: max_room_demand
-    name: "Max Room Demand"
-    icon: mdi:gauge
-    unit_of_measurement: "%"
-    update_interval: ${opentherm_update_interval}
-    filters:
-      - round: 0
-    lambda: |-
-      float a = id(${heat_demand.room_1}).state;
-      float b = id(${heat_demand.room_2}).state;
-      if (isnan(a)) a = 0.0f;
-      if (isnan(b)) b = 0.0f;
-      return a > b ? a : b;
-
-
-
-  # Final target exposed for writer
+   # Final target exposed for writer
   - platform: template
     id: target_water_temperature
     name: "Target Water Temperature"
@@ -53,41 +32,57 @@ sensor:
     filters:
       - round: 0
     lambda: |-
-      const float Tmin = ${water_temp.min_temp};
-      const float Tmax = ${water_temp.max_temp};
-      const float k    = 1.0f;   // °C flow per °C below Tref
-      const float Tref = 10.0f;  // reference outdoor °C
+      // --- HEATING CURVE ASSUMPTIONS ---
+      // When it's VERY cold outside:
+      const float t_out_cold    = 0.0; // °C outside
+      const float t_supply_max  = 70.0;  // °C CV flow target
 
-      float D = id(max_room_demand).state / 100.0f; // [%] → [0..1]
-      if (isnan(D)) D = 0.0f;
+      // When it's mild outside:
+      const float t_out_warm    = 15.0;  // °C outside
+      const float t_supply_min  = 40.0;  // °C CV flow target
 
-      // No demand, return minimum
-      if (D < 0.1f) return 0.0f; 
+      // Hard safety clamp so we never request insane values
+      const float t_supply_floor   = 40.0; // don't go below this
+      const float t_supply_ceiling = 70.0; // don't go above this
 
-      float Tout = id(outside_temperature_sensor).state;
-      if (isnan(Tout)) Tout = Tref;
+      // --- READ OUTDOOR SENSOR ---
+      float outdoor = id(outdoor_temperature).state;
 
-      float Tdem = Tmin + D * (Tmax - Tmin);
-      float B    = k * (Tref - Tout);
-      float Tf   = Tdem + B;
+      // Fallback if sensor is not valid
+      if (isnan(outdoor)) {
+        // safe middle value
+        return 50.0;
+      }
 
-      if (Tf < Tmin) Tf = Tmin;
-      if (Tf > Tmax) Tf = Tmax;
-      return Tf;
+      // --- LINEAR INTERPOLATION ---
+      // slope = (min - max) / (warm - cold)
+      float slope = (t_supply_min - t_supply_max) / (t_out_warm - t_out_cold);
+
+      // target = max + slope * (Toutdoor - Tcold)
+      float target = t_supply_max + slope * (outdoor - t_out_cold);
+
+      // --- CLAMP RESULT ---
+      if (target < t_supply_floor)   target = t_supply_floor;
+      if (target > t_supply_ceiling) target = t_supply_ceiling;
+
+      return target;
+
+
+
+
 
 binary_sensor:
 # --- Any valve open?
   - platform: template
     id: any_valve_open
     lambda: |-
-      return (id(${pid_output.room_1}).state > 5.0f) ||
-             (id(${pid_output.room_2}).state > 5.0f);
+      return (id(${pid_output.room_1}).state > 5.0f) || (id(${pid_output.room_2}).state > 5.0f);
 
 # --- CH enable logic
   - platform: template
     id: ch_should_enable
     lambda: |-
-      if(id(max_room_demand).state >= 0.10f && id(any_valve_open).state)
+      if(id(any_valve_open).state)
       {
         id(${boiler_enable}).turn_on();
         return true;
