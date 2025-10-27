@@ -1,11 +1,7 @@
-
 substitutions:
   water_temp:
-    min_temp: "30" 
+    min_temp: "40" 
     max_temp: "70"
-  rate:
-    up_step_c:   "1.25"   # 5 °C/min * 15 s / 60
-    down_step_c: "2.50"   # 10 °C/min * 15 s / 60
   opentherm_update_interval: 15s
   output_entity_name: T_set
   boiler_enable: boiler_enable
@@ -32,14 +28,13 @@ sensor:
     filters:
       - round: 0
     lambda: |-
-      // --- HEATING CURVE ASSUMPTIONS ---
       // When it's VERY cold outside:
       const float t_out_cold    = 0.0; // °C outside
-      const float t_supply_max  = 70.0;  // °C CV flow target
+      const float t_supply_max  = ${max_temp};  // °C CV flow target
 
       // When it's mild outside:
       const float t_out_warm    = 15.0;  // °C outside
-      const float t_supply_min  = 40.0;  // °C CV flow target
+      const float t_supply_min  = ${min_temp};  // °C CV flow target
 
       // Hard safety clamp so we never request insane values
       const float t_supply_floor   = 40.0; // don't go below this
@@ -51,7 +46,7 @@ sensor:
       // Fallback if sensor is not valid
       if (isnan(outdoor)) {
         // safe middle value
-        return 50.0;
+        return 60.0;
       }
 
       // --- LINEAR INTERPOLATION ---
