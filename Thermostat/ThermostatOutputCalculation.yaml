@@ -30,15 +30,15 @@ sensor:
     lambda: |-
       // When it's VERY cold outside:
       const float t_out_cold    = 0.0; // °C outside
-      const float t_supply_max  = ${max_temp};  // °C CV flow target
+      const float t_supply_max  = ${water_temp.max_temp};  // °C CV flow target
 
       // When it's mild outside:
       const float t_out_warm    = 15.0;  // °C outside
-      const float t_supply_min  = ${min_temp};  // °C CV flow target
+      const float t_supply_min  = ${water_temp.min_temp};  // °C CV flow target
 
       // Hard safety clamp so we never request insane values
-      const float t_supply_floor   = 40.0; // don't go below this
-      const float t_supply_ceiling = 70.0; // don't go above this
+      const float t_supply_floor   = t_supply_min; // don't go below this
+      const float t_supply_ceiling = t_supply_max; // don't go above this
 
       // --- READ OUTDOOR SENSOR ---
       float outdoor = id(outside_temperature_sensor).state;
