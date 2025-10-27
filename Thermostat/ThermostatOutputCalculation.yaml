@@ -46,7 +46,7 @@ sensor:
       const float t_supply_ceiling = 70.0; // don't go above this
 
       // --- READ OUTDOOR SENSOR ---
-      float outdoor = id(outdoor_temperature).state;
+      float outdoor = id(outside_temperature_sensor).state;
 
       // Fallback if sensor is not valid
       if (isnan(outdoor)) {
