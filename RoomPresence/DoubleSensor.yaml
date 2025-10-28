@@ -3,12 +3,16 @@ substitutions:
         id: doubleSensor
         name: "Double Sensor"
     config:
-        sensorId_1: binary_sensor.occupancy
-        sensorId_2: binary_sensor.occupancy
-        sensorTimeOut: 60s
+        sensor_1: 
+            entityId: binary_sensor.occupancy 
+            timeout: 60s
+        sensor_2: 
+            entityId: binary_sensor.occupancy 
+            timeout: 60s
     output:
         id: output
         name: "Output"
+        timeout: 30s
         icon: "mdi:sofa"
 
 
@@ -19,17 +23,17 @@ binary_sensor:
 # ────────────────────────────────────────────────────────────────
   - platform: homeassistant
     id: ${device.id}_occupancy_1
-    entity_id: ${config.sensorId_1}
+    entity_id: ${config.sensor_1.entityId}
     internal: true
     filters:
-      - delayed_off: ${config.sensorTimeOut}
+      - delayed_off: ${config.sensor_1.timeout}
 
   - platform: homeassistant
     id: ${device.id}_occupancy_2
-    entity_id: ${config.sensorId_2}
+    entity_id: ${config.sensor_2.entityId}
     internal: true
     filters:
-      - delayed_off: ${config.sensorTimeOut}
+      - delayed_off: ${config.sensor_2.timeout}
 # ────────────────────────────────────────────────────────────────
 
 
@@ -72,7 +76,7 @@ binary_sensor:
     device_class: occupancy
     icon: ${output.icon}
     filters:
-      - delayed_off: 5s #${config.sensorTimeOut}
+      - delayed_off: ${output.timeout}
     lambda: |-
       if (id(${device.id}_occupancy_1).state == true) return true;
       if (id(${device.id}_occupancy_2).state == true) return true;
