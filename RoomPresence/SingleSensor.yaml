@@ -20,6 +20,12 @@ binary_sensor:
     internal: true
     filters:
       - delayed_off: ${config.sensorTimeOut}
+    on_state_change: 
+      then:
+        - script.execute: ${device.id}_check_for_occupancy
+        - binary_sensor.template.publish:
+            id: ${device.id}_occupancy_debug
+            state: !lambda 'return id(${device.id}_occupancy).state;'
 # ────────────────────────────────────────────────────────────────
 
 
@@ -34,10 +40,6 @@ binary_sensor:
     device_class: occupancy
     entity_category: diagnostic
     internal: ${config.debugInternal}
-    lambda: |-
-      if (id(${device.id}_occupancy).state == false) return false;
-      if (id(${device.id}_occupancy).state == true) return true;
-      return false;
 # ────────────────────────────────────────────────────────────────
 
 
@@ -51,8 +53,22 @@ binary_sensor:
     name: "Occupancy"
     device_class: occupancy
     icon: ${output.icon}
-    lambda: |-
-      if (id(${device.id}_occupancy).state == false) return false;
-      if (id(${device.id}_occupancy).state == true) return true;
-      return false;
 # ────────────────────────────────────────────────────────────────
+
+
+script:
+  - id: ${device.id}_check_for_occupancy
+    then: 
+      - lambda: |-
+          if (id(${device.id}_occupancy).state == true) {
+            id(${device.id}_occupancy_output).publish_state(true);
+            return;
+          }
+
+          id(${device.id}_occupancy_output).publish_state(false);
+
+interval: 
+  - id: ${device.id}_watchdog
+    interval: 15s
+    then: 
+      - script.execute: ${device.id}_check_for_occupancy
