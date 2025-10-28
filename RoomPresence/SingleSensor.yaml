@@ -55,7 +55,6 @@ binary_sensor:
     icon: ${output.icon}
 # ────────────────────────────────────────────────────────────────
 
-
 script:
   - id: ${device.id}_check_for_occupancy
     then: 
