@@ -1,0 +1,80 @@
+substitutions:
+    device:
+        id: doubleSensor
+        name: "Double Sensor"
+    config:
+        sensorId_1: binary_sensor.occupancy
+        sensorId_2: binary_sensor.occupancy
+        sensorTimeOut: 60s
+    output:
+        id: output
+        name: "Output"
+        icon: "mdi:sofa"
+
+
+
+binary_sensor:
+# ────────────────────────────────────────────────────────────────
+# Input sensors imported from Home Assistant
+# ────────────────────────────────────────────────────────────────
+  - platform: homeassistant
+    id: ${device.id}_occupancy_1
+    entity_id: ${config.sensorId_1}
+    internal: true
+    filters:
+      - delayed_off: ${config.sensorTimeOut}
+
+  - platform: homeassistant
+    id: ${device.id}_occupancy_2
+    entity_id: ${config.sensorId_2}
+    internal: true
+    filters:
+      - delayed_off: ${config.sensorTimeOut}
+# ────────────────────────────────────────────────────────────────
+
+
+
+# ────────────────────────────────────────────────────────────────
+# Debug sensors exposed to Home Assistant
+# ────────────────────────────────────────────────────────────────
+  - platform: template
+    id: ${device.id}_occupancy_debug
+    device_id: ${device.id}
+    name: "Occupancy Debug 1"
+    device_class: occupancy
+    entity_category: diagnostic
+    lambda: |-
+      if (id(${device.id}_occupancy_1).state == false) return false;
+      if (id(${device.id}_occupancy_1).state == true) return true;
+      return false;
+
+  - platform: template
+    id: ${device.id}_occupancy_debug
+    device_id: ${device.id}
+    name: "Occupancy Debug 2"
+    device_class: occupancy
+    entity_category: diagnostic
+    lambda: |-
+      if (id(${device.id}_occupancy_2).state == false) return false;
+      if (id(${device.id}_occupancy_2).state == true) return true;
+      return false;
+# ────────────────────────────────────────────────────────────────
+
+
+
+# ────────────────────────────────────────────────────────────────
+# Virtual occupancy sensors exposed to Home Assistant
+# ────────────────────────────────────────────────────────────────
+  - platform: template
+    id: ${output.id}
+    device_id: ${device.id}
+    name: "${output.name}"
+    device_class: occupancy
+    icon: ${output.icon}
+    filters:
+      - delayed_off: 5s #${config.sensorTimeOut}
+    lambda: |-
+      if (id(${device.id}_occupancy_1).state == true) return true;
+      if (id(${device.id}_occupancy_2).state == true) return true;
+      return false;
+# ────────────────────────────────────────────────────────────────
