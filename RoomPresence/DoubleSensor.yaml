@@ -6,11 +6,11 @@ substitutions:
         sensor_1: 
             entityId: binary_sensor.occupancy 
             timeout: 60s
-            debugInternal: "true"
+            debugInternal: 'true'
         sensor_2: 
             entityId: binary_sensor.occupancy 
             timeout: 60s
-            debugInternal: "true"
+            debugInternal: 'true'
     output:
         id: output
         name: "Output"
