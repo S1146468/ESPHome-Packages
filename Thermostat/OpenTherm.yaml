@@ -44,7 +44,7 @@ output:
 
 button:
   - platform: restart
-    name: "Thermostaat restart"
+    name: "Restart"
 
 
 
