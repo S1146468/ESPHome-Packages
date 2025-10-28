@@ -22,10 +22,6 @@ binary_sensor:
     internal: true
     filters:
       - delayed_off: ${config.sensorTimeOut}
-    # on_press:
-    #   - script.execute: motion_timeout_kamer_stijn
-    # on_release:
-    #   - script.execute: motion_timeout_kamer_stijn
 # ────────────────────────────────────────────────────────────────
 
 
@@ -43,17 +39,6 @@ binary_sensor:
       if (id(${device.id}_occupancy).state == false) return false;
       if (id(${device.id}_occupancy).state == true) return true;
       return false;
-
-#   - platform: template
-#     id: ${device.id}_occupancy_debug
-#     device_id: ${device.id}
-#     name: "${device.name} Occupancy Debug"
-#     device_class: occupancy
-#     entity_category: diagnostic
-#     lambda: |-
-#       if (id(${device.id}_occupancy).state == false) return false;
-#       if (id(${device.id}_occupancy).state == true) return true;
-#       return false;
 # ────────────────────────────────────────────────────────────────
 
 
@@ -71,16 +56,4 @@ binary_sensor:
       if (id(${device.id}_occupancy).state == false) return false;
       if (id(${device.id}_occupancy).state == true) return true;
       return false;
-
-
-#   - platform: template
-#     id: ${device.id}
-#     device_id: ${device.id}
-#     name: "${output.name}"
-#     device_class: occupancy
-#     icon: ${output.icon}
-#     lambda: |-
-#       if (id(${device.id}_occupancy).state == false) return false;
-#       if (id(${device.id}_occupancy).state == true) return true;
-#       return false;
 # ────────────────────────────────────────────────────────────────
