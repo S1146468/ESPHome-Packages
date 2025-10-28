@@ -5,7 +5,7 @@ substitutions:
     config:
         sensorId: binary_sensor.occupancy
         sensorTimeOut: 60s
-        debugInternal: true
+        debugInternal: "true"
     output:
         id: output
         name: "Output"
