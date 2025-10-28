@@ -1,0 +1,86 @@
+substitutions:
+    device:
+        id: singleSensor
+        name: "Single Sensor"
+    config:
+        sensorId: binary_sensor.occupancy
+        sensorTimeOut: 60s
+    output:
+        id: output
+        name: "Output"
+        icon: "mdi:sofa"
+
+
+
+binary_sensor:
+# ────────────────────────────────────────────────────────────────
+# Input sensors imported from Home Assistant
+# ────────────────────────────────────────────────────────────────
+  - platform: homeassistant
+    id: ${device.singleSensor}_occupancy
+    entity_id: ${config.sensorId}
+    internal: true
+    filters:
+      - delayed_off: ${config.sensorTimeOut}
+    on_press:
+      - script.execute: motion_timeout_kamer_stijn
+    on_release:
+      - script.execute: motion_timeout_kamer_stijn
+# ────────────────────────────────────────────────────────────────
+
+
+
+# ────────────────────────────────────────────────────────────────
+# Debug sensors exposed to Home Assistant
+# ────────────────────────────────────────────────────────────────
+  - platform: template
+    id: occupancy_debug
+    device_id: ${device.singleSensor}
+    name: "Occupancy Debug"
+    device_class: occupancy
+    entity_category: diagnostic
+    lambda: |-
+      if (id(${device.singleSensor}_occupancy).state == false) return false;
+      if (id(${device.singleSensor}_occupancy).state == true) return true;
+      return false;
+
+#   - platform: template
+#     id: ${device.singleSensor}_occupancy_debug
+#     device_id: ${device.singleSensor}
+#     name: "${device.name} Occupancy Debug"
+#     device_class: occupancy
+#     entity_category: diagnostic
+#     lambda: |-
+#       if (id(${device.singleSensor}_occupancy).state == false) return false;
+#       if (id(${device.singleSensor}_occupancy).state == true) return true;
+#       return false;
+# ────────────────────────────────────────────────────────────────
+
+
+
+# ────────────────────────────────────────────────────────────────
+# Virtual occupancy sensors exposed to Home Assistant
+# ────────────────────────────────────────────────────────────────
+  - platform: template
+    id: ${output.id}
+    device_id: ${device.singleSensor}
+    name: "${output.name}"
+    device_class: occupancy
+    icon: ${output.icon}
+    lambda: |-
+      if (id(${device.singleSensor}_occupancy).state == false) return false;
+      if (id(${device.singleSensor}_occupancy).state == true) return true;
+      return false;
+
+
+#   - platform: template
+#     id: ${device.id}
+#     device_id: ${device.singleSensor}
+#     name: "${output.name}"
+#     device_class: occupancy
+#     icon: ${output.icon}
+#     lambda: |-
+#       if (id(${device.singleSensor}_occupancy).state == false) return false;
+#       if (id(${device.singleSensor}_occupancy).state == true) return true;
+#       return false;
+# ────────────────────────────────────────────────────────────────
