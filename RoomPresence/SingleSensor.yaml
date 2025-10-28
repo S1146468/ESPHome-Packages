@@ -17,7 +17,7 @@ binary_sensor:
 # Input sensors imported from Home Assistant
 # ────────────────────────────────────────────────────────────────
   - platform: homeassistant
-    id: ${device.singleSensor}_occupancy
+    id: ${device.id}_occupancy
     entity_id: ${config.sensorId}
     internal: true
     filters:
@@ -35,24 +35,24 @@ binary_sensor:
 # ────────────────────────────────────────────────────────────────
   - platform: template
     id: occupancy_debug
-    device_id: ${device.singleSensor}
+    device_id: ${device.id}
     name: "Occupancy Debug"
     device_class: occupancy
     entity_category: diagnostic
     lambda: |-
-      if (id(${device.singleSensor}_occupancy).state == false) return false;
-      if (id(${device.singleSensor}_occupancy).state == true) return true;
+      if (id(${device.id}_occupancy).state == false) return false;
+      if (id(${device.id}_occupancy).state == true) return true;
       return false;
 
 #   - platform: template
-#     id: ${device.singleSensor}_occupancy_debug
-#     device_id: ${device.singleSensor}
+#     id: ${device.id}_occupancy_debug
+#     device_id: ${device.id}
 #     name: "${device.name} Occupancy Debug"
 #     device_class: occupancy
 #     entity_category: diagnostic
 #     lambda: |-
-#       if (id(${device.singleSensor}_occupancy).state == false) return false;
-#       if (id(${device.singleSensor}_occupancy).state == true) return true;
+#       if (id(${device.id}_occupancy).state == false) return false;
+#       if (id(${device.id}_occupancy).state == true) return true;
 #       return false;
 # ────────────────────────────────────────────────────────────────
 
@@ -63,24 +63,24 @@ binary_sensor:
 # ────────────────────────────────────────────────────────────────
   - platform: template
     id: ${output.id}
-    device_id: ${device.singleSensor}
+    device_id: ${device.id}
     name: "${output.name}"
     device_class: occupancy
     icon: ${output.icon}
     lambda: |-
-      if (id(${device.singleSensor}_occupancy).state == false) return false;
-      if (id(${device.singleSensor}_occupancy).state == true) return true;
+      if (id(${device.id}_occupancy).state == false) return false;
+      if (id(${device.id}_occupancy).state == true) return true;
       return false;
 
 
 #   - platform: template
 #     id: ${device.id}
-#     device_id: ${device.singleSensor}
+#     device_id: ${device.id}
 #     name: "${output.name}"
 #     device_class: occupancy
 #     icon: ${output.icon}
 #     lambda: |-
-#       if (id(${device.singleSensor}_occupancy).state == false) return false;
-#       if (id(${device.singleSensor}_occupancy).state == true) return true;
+#       if (id(${device.id}_occupancy).state == false) return false;
+#       if (id(${device.id}_occupancy).state == true) return true;
 #       return false;
 # ────────────────────────────────────────────────────────────────
