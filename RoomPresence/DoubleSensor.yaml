@@ -6,9 +6,11 @@ substitutions:
         sensor_1: 
             entityId: binary_sensor.occupancy 
             timeout: 60s
+            debugInternal: true
         sensor_2: 
             entityId: binary_sensor.occupancy 
             timeout: 60s
+            debugInternal: true
     output:
         id: output
         name: "Output"
@@ -47,6 +49,7 @@ binary_sensor:
     name: "Occupancy Debug 1"
     device_class: occupancy
     entity_category: diagnostic
+    internal: ${config.sensor_1.debugInternal}
     lambda: |-
       if (id(${device.id}_occupancy_1).state == false) return false;
       if (id(${device.id}_occupancy_1).state == true) return true;
@@ -58,6 +61,7 @@ binary_sensor:
     name: "Occupancy Debug 2"
     device_class: occupancy
     entity_category: diagnostic
+    internal: ${config.sensor_2.debugInternal}
     lambda: |-
       if (id(${device.id}_occupancy_2).state == false) return false;
       if (id(${device.id}_occupancy_2).state == true) return true;

@@ -5,6 +5,7 @@ substitutions:
     config:
         sensorId: binary_sensor.occupancy
         sensorTimeOut: 60s
+        debugInternal: true
     output:
         id: output
         name: "Output"
@@ -35,6 +36,7 @@ binary_sensor:
     name: "Occupancy Debug"
     device_class: occupancy
     entity_category: diagnostic
+    internal: ${config.debugInternal}
     lambda: |-
       if (id(${device.id}_occupancy).state == false) return false;
       if (id(${device.id}_occupancy).state == true) return true;
