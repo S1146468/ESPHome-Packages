@@ -12,8 +12,6 @@ substitutions:
             timeout: 60s
             debugInternal: "true"
     output:
-        id: output
-        name: "Output"
         timeout: 30s
         icon: "mdi:sofa"
 
@@ -74,9 +72,9 @@ binary_sensor:
 # Virtual occupancy sensors exposed to Home Assistant
 # ────────────────────────────────────────────────────────────────
   - platform: template
-    id: ${output.id}
+    id: ${device.id}_occupancy_output
     device_id: ${device.id}
-    name: "${output.name}"
+    name: "Occupancy"
     device_class: occupancy
     icon: ${output.icon}
     filters:
