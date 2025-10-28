@@ -15,6 +15,7 @@ substitutions:
         icon: "mdi:sofa"
 
 
+       
 
 binary_sensor:
 # ────────────────────────────────────────────────────────────────
@@ -26,6 +27,12 @@ binary_sensor:
     internal: true
     filters:
       - delayed_off: ${config.sensor_1.timeout}
+    on_state_change: 
+      then:
+        - script.execute: ${device.id}_check_for_occupancy
+        - binary_sensor.template.publish:
+            id: ${device.id}_occupancy_debug_1
+            state: !lambda 'return id(${device.id}_occupancy_1).state;'
 
   - platform: homeassistant
     id: ${device.id}_occupancy_2
@@ -33,6 +40,13 @@ binary_sensor:
     internal: true
     filters:
       - delayed_off: ${config.sensor_2.timeout}
+    on_state_change: 
+      then:
+        - script.execute: ${device.id}_check_for_occupancy
+        - binary_sensor.template.publish:
+            id: ${device.id}_occupancy_debug_2
+            state: !lambda 'return id(${device.id}_occupancy_2).state;'
+        
 # ────────────────────────────────────────────────────────────────
 
 
@@ -47,10 +61,6 @@ binary_sensor:
     device_class: occupancy
     entity_category: diagnostic
     internal: ${config.sensor_1.debugInternal}
-    lambda: |-
-      if (id(${device.id}_occupancy_1).state == false) return false;
-      if (id(${device.id}_occupancy_1).state == true) return true;
-      return false;
 
   - platform: template
     id: ${device.id}_occupancy_debug_2
@@ -59,10 +69,6 @@ binary_sensor:
     device_class: occupancy
     entity_category: diagnostic
     internal: ${config.sensor_2.debugInternal}
-    lambda: |-
-      if (id(${device.id}_occupancy_2).state == false) return false;
-      if (id(${device.id}_occupancy_2).state == true) return true;
-      return false;
 # ────────────────────────────────────────────────────────────────
 
 
@@ -78,8 +84,29 @@ binary_sensor:
     icon: ${output.icon}
     filters:
       - delayed_off: ${output.timeout}
-    lambda: |-
-      if (id(${device.id}_occupancy_1).state == true) return true;
-      if (id(${device.id}_occupancy_2).state == true) return true;
-      return false;
 # ────────────────────────────────────────────────────────────────
+
+
+
+script:
+  - id: ${device.id}_check_for_occupancy
+    then: 
+      - lambda: |-
+          if (id(${device.id}_occupancy_1).state == true) {
+            id(${device.id}_occupancy_output).publish_state(true);
+            return;
+          }
+
+          if (id(${device.id}_occupancy_2).state == true) {
+            id(${device.id}_occupancy_output).publish_state(true);
+            return;
+          }
+
+          id(${device.id}_occupancy_output).publish_state(false);
+
+interval: 
+  - id: ${device.id}_watchdog
+    interval: 15s
+    then: 
+      - script.execute: ${device.id}_check_for_occupancy
+      
