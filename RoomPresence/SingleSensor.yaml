@@ -34,7 +34,7 @@ binary_sensor:
 # Debug sensors exposed to Home Assistant
 # ────────────────────────────────────────────────────────────────
   - platform: template
-    id: occupancy_debug
+    id: ${device.id}_occupancy_debug
     device_id: ${device.id}
     name: "Occupancy Debug"
     device_class: occupancy
