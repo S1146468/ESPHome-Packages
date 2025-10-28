@@ -69,6 +69,6 @@ script:
 
 interval: 
   - id: ${device.id}_watchdog
-    interval: 15s
+    interval: 1m
     then: 
       - script.execute: ${device.id}_check_for_occupancy
