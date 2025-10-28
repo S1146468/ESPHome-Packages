@@ -1,7 +1,6 @@
 substitutions:
     device:
         id: doubleSensor
-        name: "Double Sensor"
     config:
         sensor_1: 
             entityId: binary_sensor.occupancy 

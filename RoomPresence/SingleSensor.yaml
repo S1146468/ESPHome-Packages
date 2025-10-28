@@ -1,7 +1,6 @@
 substitutions:
     device:
         id: singleSensor
-        name: "Single Sensor"
     config:
         sensorId: binary_sensor.occupancy
         sensorTimeOut: 60s
