@@ -22,10 +22,10 @@ binary_sensor:
     internal: true
     filters:
       - delayed_off: ${config.sensorTimeOut}
-    on_press:
-      - script.execute: motion_timeout_kamer_stijn
-    on_release:
-      - script.execute: motion_timeout_kamer_stijn
+    # on_press:
+    #   - script.execute: motion_timeout_kamer_stijn
+    # on_release:
+    #   - script.execute: motion_timeout_kamer_stijn
 # ────────────────────────────────────────────────────────────────
 
 
