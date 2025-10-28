@@ -46,7 +46,7 @@ button:
 
   - platform: template
     id: ${device.id}_PID_autotune_start
-    name: "${device.name} PID autotune"
+    name: "PID autotune"
     device_id: ${device.id}
     entity_category: config
     on_press:
@@ -133,7 +133,7 @@ globals:
 switch:
   - platform: template
     id: ${device.id}_heat_output_switch
-    name: "${device.name} Heat Output Switch"
+    name: "Heat Output Switch"
     device_id: ${device.id}
     entity_category: config
     turn_on_action:
@@ -231,7 +231,6 @@ climate:
 
 binary_sensor:
   - platform: homeassistant 
-    name: "Window Sensor"
     entity_id: ${sensor.window}
     id: ${device.id}_window
     on_release: 
@@ -240,7 +239,7 @@ binary_sensor:
         - script.execute: ${device.id}_sync_target_and_hvac
     
   - platform: template
-    name: "${device.name} Window"
+    name: "Window"
     id: ${device.id}_window_kamer_template
     device_id: ${device.id}
     device_class: window
@@ -271,14 +270,12 @@ sensor:
         - script.execute: ${device.id}_sync_target_and_hvac
 
   - platform: homeassistant 
-    name: "${device.name} Temperature Sensor"
     entity_id: ${sensor.temperature}
     id: ${device.id}_temperature
     filters: 
       - heartbeat: ${climate.interval}
 
   - platform: homeassistant 
-    name: "${device.name} Humidity Sensor"
     entity_id: ${sensor.humidity}
     id: ${device.id}_humidity
     filters: 
@@ -290,7 +287,7 @@ sensor:
 
 
   - platform: template
-    name: "${device.name} Heat output"
+    name: "Heat output"
     id: ${climate.pid_output}
     device_id: ${device.id}
     unit_of_measurement: "%"
