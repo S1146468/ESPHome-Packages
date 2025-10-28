@@ -49,7 +49,7 @@ binary_sensor:
 # Virtual occupancy sensors exposed to Home Assistant
 # ────────────────────────────────────────────────────────────────
   - platform: template
-    id: ${output.id}
+    id: ${device.id}_occupancy_output
     device_id: ${device.id}
     name: "${output.name}"
     device_class: occupancy
