@@ -21,7 +21,7 @@ sensor:
 
   - platform: template
     id: ${device.id}_error
-    name: "${device.name} Error" 
+    name: "Error" 
     device_id: ${device.id}
     icon: "mdi:plus-minus-variant"
     state_class: measurement
@@ -52,7 +52,7 @@ sensor:
 
   - platform: template
     id: ${device.id}_proportional
-    name: "${device.name} Error Proportional" 
+    name: "Error Proportional" 
     device_id: ${device.id}
     icon: "mdi:sigma"
     state_class: measurement
@@ -83,7 +83,7 @@ sensor:
 
   - platform: template
     id: ${device.id}_integral
-    name: "${device.name} Error Integral" 
+    name: "Error Integral" 
     device_id: ${device.id}
     icon: "mdi:math-integral"
     state_class: measurement
@@ -114,7 +114,7 @@ sensor:
 
   - platform: template
     id: ${device.id}_derivative
-    name: "${device.name} Error Derivative" 
+    name: "Error Derivative" 
     device_id: ${device.id}
     icon: "mdi:chart-line"
     state_class: measurement
@@ -144,7 +144,7 @@ sensor:
 
   - platform: template
     id: ${device.id}_pid_heat
-    name: "${device.name} PID Output Heat" 
+    name: "PID Output Heat" 
     device_id: ${device.id}
     unit_of_measurement: "%"
     state_class: measurement
@@ -175,7 +175,7 @@ sensor:
 
   - platform: template
     id: ${device.id}_pid_cool
-    name: "${device.name} PID Output Cool" 
+    name: "PID Output Cool" 
     device_id: ${device.id}
     unit_of_measurement: "%"
     state_class: measurement
@@ -206,7 +206,7 @@ sensor:
 
   - platform: template
     id: ${device.id}_kp
-    name: "${device.name} Multiplier Proportional (Kp)" 
+    name: "Multiplier Proportional (Kp)" 
     device_id: ${device.id}
     unit_of_measurement: ""
     icon: "mdi:alpha-p-circle-outline"
@@ -238,7 +238,7 @@ sensor:
 
   - platform: template
     id: ${device.id}_ki
-    name: "${device.name} Multiplier Integral (Ki)" 
+    name: "Multiplier Integral (Ki)" 
     device_id: ${device.id}
     unit_of_measurement: ""
     icon: "mdi:alpha-i-circle-outline"
@@ -270,7 +270,7 @@ sensor:
 
   - platform: template
     id: ${device.id}_kd
-    name: "${device.name} Multiplier Derivative (Kd)" 
+    name: "Multiplier Derivative (Kd)" 
     device_id: ${device.id}
     unit_of_measurement: ""
     icon: "mdi:alpha-d-circle-outline"
@@ -286,3 +286,288 @@ sensor:
     update_interval: ${updateInterval} 
     internal: ${disabled.multiplier}
     entity_category: diagnostic
+
+
+
+
+
+
+
+
+
+
+# sensor:
+# # ------------------------------- PID Error ------------------------------- #
+#   - platform: pid
+#     climate_id: ${climateId}
+#     id: ${device.id}_error_raw
+#     type: ERROR  
+#     internal: True
+
+#   - platform: template
+#     id: ${device.id}_error
+#     name: "${device.name} Error" 
+#     device_id: ${device.id}
+#     icon: "mdi:plus-minus-variant"
+#     state_class: measurement
+#     unit_of_measurement: "%"
+#     filters: 
+#       - clamp: 
+#           max_value: 100
+#           min_value: -100
+#           ignore_out_of_range: false
+#     lambda: |-
+#       return id(${device.id}_error_raw).state; 
+#     update_interval: ${updateInterval} 
+#     internal: ${disabled.error}
+#     entity_category: diagnostic
+
+
+
+
+
+
+
+# # --------------------------- PID Proportional ---------------------------- #
+#   - platform: pid
+#     climate_id: ${climateId}
+#     id: ${device.id}_proportional_raw
+#     type: PROPORTIONAL  
+#     internal: True
+
+#   - platform: template
+#     id: ${device.id}_proportional
+#     name: "${device.name} Error Proportional" 
+#     device_id: ${device.id}
+#     icon: "mdi:sigma"
+#     state_class: measurement
+#     unit_of_measurement: "%"
+#     filters: 
+#       - clamp: 
+#           max_value: 100
+#           min_value: -100
+#           ignore_out_of_range: false
+#     lambda: |-
+#       return id(${device.id}_proportional_raw).state; 
+#     update_interval: ${updateInterval}  
+#     internal: ${disabled.error}
+#     entity_category: diagnostic
+
+
+
+
+
+
+
+# # ------------------------------ PID Integral ----------------------------- #
+#   - platform: pid
+#     climate_id: ${climateId}
+#     id: ${device.id}_integral_raw
+#     type: INTEGRAL  
+#     internal: True
+
+#   - platform: template
+#     id: ${device.id}_integral
+#     name: "${device.name} Error Integral" 
+#     device_id: ${device.id}
+#     icon: "mdi:math-integral"
+#     state_class: measurement
+#     unit_of_measurement: "%"
+#     filters: 
+#       - clamp: 
+#           max_value: 100
+#           min_value: -100
+#           ignore_out_of_range: false
+#     lambda: |-
+#       return id(${device.id}_integral_raw).state; 
+#     update_interval: ${updateInterval}
+#     internal: ${disabled.error}
+#     entity_category: diagnostic
+
+
+
+
+
+
+
+# # ----------------------------- PID Derivative ---------------------------- #
+#   - platform: pid
+#     climate_id: ${climateId}
+#     id: ${device.id}_derivative_raw
+#     type: DERIVATIVE  
+#     internal: True
+
+#   - platform: template
+#     id: ${device.id}_derivative
+#     name: "${device.name} Error Derivative" 
+#     device_id: ${device.id}
+#     icon: "mdi:chart-line"
+#     state_class: measurement
+#     unit_of_measurement: "%"
+#     filters: 
+#       - clamp: 
+#           max_value: 100
+#           min_value: -100
+#           ignore_out_of_range: false
+#     lambda: |-
+#       return id(${device.id}_derivative_raw).state; 
+#     update_interval: ${updateInterval}  
+#     internal: ${disabled.error}
+#     entity_category: diagnostic
+
+
+
+
+
+
+# # ------------------------------- PID Heat -------------------------------- #
+#   - platform: pid
+#     climate_id: ${climateId}
+#     id: ${device.id}_pid_heat_raw
+#     type: HEAT  
+#     internal: True
+
+#   - platform: template
+#     id: ${device.id}_pid_heat
+#     name: "${device.name} PID Output Heat" 
+#     device_id: ${device.id}
+#     unit_of_measurement: "%"
+#     state_class: measurement
+#     icon: "mdi:fire"
+#     filters: 
+#       - clamp: 
+#           max_value: 100
+#           min_value: 0
+#           ignore_out_of_range: false
+#     lambda: |-
+#       return id(${device.id}_pid_heat_raw).state; 
+#     update_interval: ${updateInterval} 
+#     internal: ${disabled.heatOutput}
+#     entity_category: diagnostic
+
+
+
+
+
+
+
+# # ------------------------------- PID Cool -------------------------------- #
+#   - platform: pid
+#     climate_id: ${climateId}
+#     id: ${device.id}_pid_cool_raw
+#     type: COOL  
+#     internal: True
+
+#   - platform: template
+#     id: ${device.id}_pid_cool
+#     name: "${device.name} PID Output Cool" 
+#     device_id: ${device.id}
+#     unit_of_measurement: "%"
+#     state_class: measurement
+#     icon: "mdi:snowflake"
+#     filters: 
+#       - clamp: 
+#           max_value: 100
+#           min_value: 0
+#           ignore_out_of_range: false
+#     lambda: |-
+#       return id(${device.id}_pid_cool_raw).state; 
+#     update_interval: ${updateInterval} 
+#     internal: ${disabled.coolOutput}
+#     entity_category: diagnostic
+
+
+
+
+
+
+
+# # -------------------------------- PID Kp --------------------------------- #
+#   - platform: pid
+#     climate_id: ${climateId}
+#     id: ${device.id}_kp_raw
+#     type: KP  
+#     internal: True
+
+#   - platform: template
+#     id: ${device.id}_kp
+#     name: "${device.name} Multiplier Proportional (Kp)" 
+#     device_id: ${device.id}
+#     unit_of_measurement: ""
+#     icon: "mdi:alpha-p-circle-outline"
+#     state_class: measurement
+#     accuracy_decimals: 5
+#     filters: 
+#       - clamp: 
+#           max_value: 100
+#           min_value: -100
+#           ignore_out_of_range: false
+#     lambda: |-
+#       return id(${device.id}_kp_raw).state; 
+#     update_interval: ${updateInterval} 
+#     internal: ${disabled.multiplier}
+#     entity_category: diagnostic
+
+
+
+
+
+
+
+# # -------------------------------- PID Ki --------------------------------- #
+#   - platform: pid     
+#     climate_id: ${climateId}
+#     id: ${device.id}_ki_raw
+#     type: KI
+#     internal: True
+
+#   - platform: template
+#     id: ${device.id}_ki
+#     name: "${device.name} Multiplier Integral (Ki)" 
+#     device_id: ${device.id}
+#     unit_of_measurement: ""
+#     icon: "mdi:alpha-i-circle-outline"
+#     state_class: measurement
+#     accuracy_decimals: 5
+#     filters: 
+#       - clamp: 
+#           max_value: 100
+#           min_value: -100
+#           ignore_out_of_range: false
+#     lambda: |-
+#       return id(${device.id}_ki_raw).state; 
+#     update_interval: ${updateInterval} 
+#     internal: ${disabled.multiplier}
+#     entity_category: diagnostic
+
+
+
+
+
+
+
+# # -------------------------------- PID Kd --------------------------------- #
+#   - platform: pid     
+#     climate_id: ${climateId}
+#     id: ${device.id}_kd_raw
+#     type: KD
+#     internal: True
+
+#   - platform: template
+#     id: ${device.id}_kd
+#     name: "${device.name} Multiplier Derivative (Kd)" 
+#     device_id: ${device.id}
+#     unit_of_measurement: ""
+#     icon: "mdi:alpha-d-circle-outline"
+#     state_class: measurement
+#     accuracy_decimals: 5
+#     filters: 
+#       - clamp: 
+#           max_value: 100
+#           min_value: -100
+#           ignore_out_of_range: false
+#     lambda: |-
+#       return id(${device.id}_kd_raw).state; 
+#     update_interval: ${updateInterval} 
+#     internal: ${disabled.multiplier}
+#     entity_category: diagnostic
