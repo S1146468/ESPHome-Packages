@@ -1,24 +1,24 @@
 esphome:
-  name: thermostaat
+  name: thermostat
   name_add_mac_suffix: false
-  friendly_name: Thermostaat
+  friendly_name: Thermostat
 
 
   devices:
-    - id: climate_stijn
-      name: "Climate Stijn"
-      area_id: kamer_stijn    
+    - id: climate_1
+      name: "Climate 1"
+      area_id: room_1   
 
-    - id: climate_nick
-      name: "Climate Nick"
-      area_id: kamer_nick 
+    - id: climate_2
+      name: "Climate 2"
+      area_id: room_2
 
   areas:
-    - id: kamer_stijn
-      name: "Kamer Stijn"
+    - id: room_1
+      name: "Room 1"
     
-    - id: kamer_nick
-      name: "Kamer Nick"
+    - id: room_2
+      name: "Room 2"
 
 esp32:
   board: esp32dev
@@ -36,7 +36,7 @@ ota:
 
 api:
   encryption:
-    key: !secret thermostaat_KEY
+    key: !secret thermostat_KEY
 
 wifi:
   ssid: !secret wifi_ssid
@@ -47,126 +47,161 @@ wifi:
     gateway: !secret gateway_IP
     subnet: !secret subnet
   ap:
-    ssid: "Thermostaat"
+    ssid: "Thermostat"
     password: ""
 
   domain: .local
 
+
+
+
+
+substitutions:
+  update_interval: 5s
+
 packages:
+  url: https://github.com/S1146468/ESPHome-Packages
+  ref: main
+  refresh: 0s
+  files:
 
 ########################################################################################
 # Opentherm 
 ########################################################################################
-  opentherm: !include
-    file: C:\VScode\EspHome\Test\Thermostat\OpenTherm.yaml
-    vars:
-      outputId: t_set
-      openthermPin:
-        ot_in: "21"
-        ot_out: "22"
+    - path: Thermostat/OpenTherm.yaml
+      vars:
+        outputId: t_set
+        boiler_enable: boiler_enable
+        boiler_active: boiler_active
+        openthermPin:
+          ot_in: 21
+          ot_out: 22
 
+########################################################################################
+# Output Calculation
+########################################################################################
+    - path: Thermostat/ThermostatOutputCalculation.yaml
+      vars:
+        water_temp:
+          min_temp: "40" 
+          max_temp: "70"
+        opentherm_update_interval: ${update_interval}
+        output_entity_name: t_set
+        boiler_enable: boiler_enable
+        outside_temp_sensor: sensor.temperature
+        pid_output:
+          room_1: pid_output_1
+          room_2: pid_output_2
 
 
 ########################################################################################
 # Room Climate Devices
 ########################################################################################
-  ClimateStijn: !include
-    file: C:\VScode\EspHome\Test\Thermostat\ClimatePID\ClimateDevice.yaml
-    vars:
-      device:
-        id: climate_stijn
-        name: "Climate Stijn"
-      climate:
-        id: verwarming_stijn
-        name: "Verwarming Stijn"
-        output: heater_output_stijn
-        interval: 5s
-      control:
-        pid:
-          kp: 1.0
-          ki: 0.05
-          kd: 0.5
-        deadband:
-          kp_multiplier: 0.0
-          ki_multiplier: 0.5
-          kd_multiplier: 0.0
-      sensor:
-        temperature: sensor.temp_sensor_kamer_stijn_temperature
-        humidity: sensor.temp_sensor_kamer_stijn_humidity
-        window: binary_sensor.raam_sensor_kamer_stijn_contact
-      master: climate.verwarming_stijn_master
+    - path: Thermostat/ClimatePID/ClimateDevice.yaml
+      vars:
+        device:
+          id: climate_1
+          name: "Climate 1"
+        climate:
+          id: heating_1
+          name: "Verwarming 1"
+          pid_output: pid_output_1
+          boiler_active: boiler_active
+          interval: ${update_interval}
+        control:
+          pid:
+            kp: 1.0 
+            ki: 1.0 
+            kd: 1.0 
+          clamp: 
+            i_min: 0.0
+            i_max: 1.0
+          averaging: 
+            derivative: 10
+            output: 1
+          deadband:
+            threshold: 
+              low: "-0.30°C"
+              high: "0.30°C"
+            multiplier: 
+              kp: 0.2
+              ki: 0.25
+              kd: 0.75
+            averaging: 
+              output: 28
+        sensor:
+          temperature: sensor.temperature_sensor_room_1
+          humidity: sensor.humidity_sensor_room_1
+          window: binary_sensor.window_contact_sensor_room_1
+        master: climate.master_home_assistant_generic_thermostat_1
 
-  ClimateNick: !include
-    file: C:\VScode\EspHome\Test\Thermostat\ClimatePID\ClimateDevice.yaml
-    vars:
-      device:
-        id: climate_nick
-        name: "Climate Nick"
-      climate:
-        id: verwarming_nick
-        name: "Verwarming Nick"
-        output: heater_output_nick
-        interval: 5s
-      control:
-        pid:
-          kp: 1.0
-          ki: 0.05
-          kd: 0.5
-        deadband:
-          kp_multiplier: 0.0
-          ki_multiplier: 0.5
-          kd_multiplier: 0.0
-      sensor:
-        temperature: sensor.temp_sensor_kamer_nick_temperature
-        humidity: sensor.temp_sensor_kamer_nick_humidity
-        window: binary_sensor.raam_sensor_kamer_nick_contact
-      master: climate.verwarming_nick_master
+
+    - path: Thermostat/ClimatePID/ClimateDevice.yaml
+      vars:
+        device:
+          id: climate_2
+          name: "Climate 2"
+        climate:
+          id: heating_2
+          name: "Heating 2"
+          pid_output: pid_output_2
+          boiler_active: boiler_active
+          interval: ${update_interval}
+        control:
+          pid:
+            kp: 1.0 
+            ki: 1.0 
+            kd: 1.0 
+          clamp: 
+            i_min: 0.0
+            i_max: 1.0
+          averaging: 
+            derivative: 10
+            output: 1
+          deadband:
+            threshold: 
+              low: "-0.30°C"
+              high: "0.30°C"
+            multiplier: 
+              kp: 0.2
+              ki: 0.25
+              kd: 0.75
+            averaging: 
+              output: 28
+        sensor:
+          temperature: sensor.temperature_sensor_room_2
+          humidity: sensor.humidity_sensor_room_2
+          window: binary_sensor.window_contact_sensor_room_2
+        master: climate.master_home_assistant_generic_thermostat_2
 
 
 ########################################################################################
 # Debug Sensors
 ########################################################################################
-  DebugStijn: !include
-    file: C:\VScode\EspHome\Test\Thermostat\ClimatePID\ClimateDebugSensors.yaml
-    vars:
-      device:
-        id: climate_stijn
-        name: "Climate Stijn"
-      climateId: verwarming_stijn
-      disabled:                
-        error: "false"
-        multiplier: "false"
-        heatOutput: "false"
-        coolOutput: "true"
-      updateInterval: 5s
+    - path: Thermostat/ClimatePID/ClimateDebugSensors.yaml
+      vars:
+        device:
+          id: climate_1
+          name: "Climate 1"
+        climateId: heating_1
+        disabled:                
+          error: "false"
+          multiplier: "false"
+          heatOutput: "false"
+          coolOutput: "true"
+        updateInterval: ${update_interval}
 
 
-
-  DebugNick: !include
-    file: C:\VScode\EspHome\Test\Thermostat\ClimatePID\ClimateDebugSensors.yaml
-    vars:
-      device:
-        id: climate_nick
-        name: "Climate Nick"
-      climateId: verwarming_nick
-      disabled:
-        error: "false"
-        multiplier: "false"
-        heatOutput: "false"
-        coolOutput: "true"
-      updateInterval: 5s
-
-
-  OutputCalculation: !include
-    file: C:\VScode\EspHome\Test\Thermostat\ThermostatOutputCalculation.yaml
-    vars:
-      water_temp:
-        min_temp: "30" 
-        max_temp: "80"
-      opentherm_update_interval: 5s
-      output_entity_name: t_set
-      outside_temp_sensor: sensor.temperature
-      heat_demand:
-        room_1: heater_output_stijn
-        room_2: heater_output_nick
-
+    - path: Thermostat/ClimatePID/ClimateDebugSensors.yaml
+      vars:
+        device:
+          id: climate_2
+          name: "Climate 2"
+        climateId: heating_2
+        disabled:
+          error: "false"
+          multiplier: "false"
+          heatOutput: "false"
+          coolOutput: "true"
+        updateInterval: ${update_interval}
+          
