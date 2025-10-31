@@ -7,9 +7,6 @@ substitutions:
         debugInternal: "true"
     output:
         icon: "mdi:sofa"
-        light_entity: ""
-
-
 
 binary_sensor:
 # ────────────────────────────────────────────────────────────────
@@ -54,21 +51,6 @@ binary_sensor:
     name: "Occupancy"
     device_class: occupancy
     icon: ${output.icon}
-    lambda: |-
-      if(output.light_entity != "")
-      {
-        if(x == true)
-        {
-          id(api).call_homeassistant_service("light.turn_on", {{"entity_id", ${output.light_entity}}});
-        }
-
-        if(x == false)
-        {
-          id(api).call_homeassistant_service("light.turn_off", {{"entity_id", ${output.light_entity}}});
-        }
-      } 
-      return;
-      
 # ────────────────────────────────────────────────────────────────
 
 script:
