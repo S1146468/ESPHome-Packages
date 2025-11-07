@@ -29,6 +29,10 @@ substitutions:
         kd: 0.0
       averaging: 
         output: 1
+    autotune:
+      noiseband: 0.25
+      positive_output: 1.0
+      negative_output: 0.0
   sensor:
     temperature: sensor.temperature
     humidity: sensor.humidity
@@ -118,7 +122,7 @@ script:
 globals:
   - id: ${device.id}_previous_setpoint
     type: float
-    initial_value: "22.0"
+    initial_value: "5.0"
 
   - id: ${device.id}_heat_output_level
     type: float
@@ -199,7 +203,7 @@ climate:
     device_id: ${device.id}    
     sensor: ${device.id}_temperature
     humidity_sensor: ${device.id}_humidity
-    default_target_temperature: 21°C
+    default_target_temperature: 5°C
     heat_output: ${device.id}_heat_output
     # cool_output: ${device.id}_cool_output
     internal: true
@@ -218,13 +222,13 @@ climate:
       starting_integral_term: 0.0
       derivative_averaging_samples: ${control.averaging.derivative}
       output_averaging_samples: ${control.averaging.output}
-    # deadband_parameters:
-    #   threshold_low: ${control.deadband.threshold.low}
-    #   threshold_high: ${control.deadband.threshold.high}
-    #   kp_multiplier: ${control.deadband.multiplier.kp}
-    #   ki_multiplier: ${control.deadband.multiplier.ki}
-    #   kd_multiplier: ${control.deadband.multiplier.kd}
-    #   deadband_output_averaging_samples: ${control.deadband.averaging.output}
+    deadband_parameters:
+      threshold_low: ${control.deadband.threshold.low}
+      threshold_high: ${control.deadband.threshold.high}
+      kp_multiplier: ${control.deadband.multiplier.kp}
+      ki_multiplier: ${control.deadband.multiplier.ki}
+      kd_multiplier: ${control.deadband.multiplier.kd}
+      deadband_output_averaging_samples: ${control.deadband.averaging.output}
 
 
 
