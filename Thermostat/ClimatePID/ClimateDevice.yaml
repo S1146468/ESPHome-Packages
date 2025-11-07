@@ -10,12 +10,12 @@ substitutions:
     interval: 15s
   control:
     pid:
-      kp: 0.0f
-      ki: 0.0f
-      kd: 0.0f
+      kp: 0.0
+      ki: 0.0
+      kd: 0.0
     clamp: 
-      i_min: 0.0f
-      i_max: 0.0f
+      i_min: 0.0
+      i_max: 0.0
     averaging: 
       derivative: 1
       output: 1
@@ -24,9 +24,9 @@ substitutions:
         low: "0.0°C"
         high: "0.0°C"
       multiplier: 
-        kp: 0.0f
-        ki: 0.0f
-        kd: 0.0f
+        kp: 0.0
+        ki: 0.0
+        kd: 0.0
       averaging: 
         output: 1
     autotune:
