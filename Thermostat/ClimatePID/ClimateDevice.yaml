@@ -69,9 +69,9 @@ script:
 
       - climate.pid.set_control_parameters:
           id: ${climate.id}
-          kp: 0.0f
-          ki: 0.0f
-          kd: 0.0f
+          kp: 0.0
+          ki: 0.0
+          kd: 0.0
 
       - climate.pid.reset_integral_term: ${climate.id}
 
