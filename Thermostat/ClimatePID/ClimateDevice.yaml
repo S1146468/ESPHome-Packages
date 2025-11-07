@@ -77,9 +77,9 @@ script:
 
       - climate.pid.autotune:
           id: ${climate.id}
-          noiseband: ${control.noiseband}
-          positive_output: ${control.positive_output}
-          negative_output: ${control.negative_output}
+          noiseband: ${control.autotune.noiseband}
+          positive_output: ${control.autotune.positive_output}
+          negative_output: ${control.autotune.negative_output}
           
   - id: ${device.id}_sync_target_and_hvac
     then:
