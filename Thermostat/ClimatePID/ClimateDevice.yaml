@@ -30,9 +30,9 @@ substitutions:
       averaging: 
         output: 1
     autotune:
-      noiseband: 0.25
-      positive_output: 1.0
-      negative_output: 0.0
+      noiseband: 25%
+      positive_output: 100%
+      negative_output: 0%
   sensor:
     temperature: sensor.temperature
     humidity: sensor.humidity
