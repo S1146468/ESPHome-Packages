@@ -30,7 +30,7 @@ substitutions:
       averaging: 
         output: 1
     autotune:
-      noiseband: 25%
+      noiseband: 50%
       positive_output: 100%
       negative_output: 0%
   sensor:
