@@ -76,7 +76,7 @@ number:
     device_id: ${device.id}
     optimistic: true
     icon: mdi:timer-refresh-outline
-    unit_of_measurement: "seconds"
+    unit_of_measurement: "s"
     mode: "slider"
     min_value: 0
     max_value: 3600
