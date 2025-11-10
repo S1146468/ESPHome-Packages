@@ -4,14 +4,11 @@ substitutions:
     config:
         sensor_1: 
             entityId: binary_sensor.occupancy 
-            timeout: 60s
             debugInternal: "true"
         sensor_2: 
             entityId: binary_sensor.occupancy 
-            timeout: 60s
             debugInternal: "true"
     output:
-        timeout: 30s
         icon: "mdi:sofa"
 
 
@@ -26,7 +23,7 @@ binary_sensor:
     entity_id: ${config.sensor_1.entityId}
     internal: true
     filters:
-      - delayed_off: ${config.sensor_1.timeout}
+      - delayed_off: ${device.id}_occupancy_input_timeout_1
     on_state_change: 
       then:
         - script.execute: ${device.id}_check_for_occupancy
@@ -39,7 +36,7 @@ binary_sensor:
     entity_id: ${config.sensor_2.entityId}
     internal: true
     filters:
-      - delayed_off: ${config.sensor_2.timeout}
+      - delayed_off: ${device.id}_occupancy_input_timeout_2
     on_state_change: 
       then:
         - script.execute: ${device.id}_check_for_occupancy
@@ -83,7 +80,7 @@ binary_sensor:
     device_class: occupancy
     icon: ${output.icon}
     filters:
-      - delayed_off: ${output.timeout}
+      - delayed_off: ${device.id}_occupancy_output_timeout
 # ────────────────────────────────────────────────────────────────
 
 
@@ -113,12 +110,12 @@ interval:
 number:
   - platform: template
     id: ${device.id}_occupancy_input_timeout_1
-    name: "Occupancy 1 Timeout"
+    name: "Timeout 1"
     device_id: ${device.id}
     optimistic: true
     icon: mdi:timer-refresh-outline
     unit_of_measurement: "seconds"
-    mode: "box"
+    mode: "slider"
     min_value: 0
     max_value: 3600
     step: 15
@@ -127,12 +124,25 @@ number:
 
   - platform: template
     id: ${device.id}_occupancy_input_timeout_2
-    name: "Occupancy 2 Timeout"
+    name: "Timeout 2"
     device_id: ${device.id}
     optimistic: true
     icon: mdi:timer-refresh-outline
     unit_of_measurement: "seconds"
-    mode: "box"
+    mode: "slider"
+    min_value: 0
+    max_value: 3600
+    step: 15
+    restore_value: true
+
+  - platform: template
+    id: ${device.id}_occupancy_output_timeout
+    name: "Timeout Occupancy"
+    device_id: ${device.id}
+    optimistic: true
+    icon: mdi:timer-refresh-outline
+    unit_of_measurement: "seconds"
+    mode: "slider"
     min_value: 0
     max_value: 3600
     step: 15
