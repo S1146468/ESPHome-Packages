@@ -111,17 +111,29 @@ interval:
       - script.execute: ${device.id}_check_for_occupancy
       
 number:
-  - id: occupancy_input_timeout_1
+  - platform: template
+    id: occupancy_input_timeout_1
     name: "Occupancy 1 Timeout"
     device_id: ${device.id}
+    optimistic: true
     icon: mdi:timer-refresh-outline
-    unit_of_measurement: "sec"
+    unit_of_measurement: "seconds"
     mode: "box"
+    min_value: 0
+    max_value: 3600
+    step: 15
+    restore_value: true
+  
 
-
-  - id: occupancy_input_timeout_2
+  - platform: template
+    id: occupancy_input_timeout_2
     name: "Occupancy 2 Timeout"
     device_id: ${device.id}
+    optimistic: true
     icon: mdi:timer-refresh-outline
-    unit_of_measurement: "sec"
+    unit_of_measurement: "seconds"
     mode: "box"
+    min_value: 0
+    max_value: 3600
+    step: 15
+    restore_value: true
