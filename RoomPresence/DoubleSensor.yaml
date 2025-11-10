@@ -23,7 +23,7 @@ binary_sensor:
     entity_id: ${config.sensor_1.entityId}
     internal: true
     filters:
-      - delayed_off: ${device.id}_occupancy_input_timeout_1
+      - delayed_off: !lambda 'return id(${device.id}_occupancy_input_timeout_1).state;'
     on_state_change: 
       then:
         - script.execute: ${device.id}_check_for_occupancy
@@ -36,7 +36,7 @@ binary_sensor:
     entity_id: ${config.sensor_2.entityId}
     internal: true
     filters:
-      - delayed_off: ${device.id}_occupancy_input_timeout_2
+      - delayed_off: !lambda 'return id(${device.id}_occupancy_input_timeout_2).state;'
     on_state_change: 
       then:
         - script.execute: ${device.id}_check_for_occupancy
@@ -80,7 +80,7 @@ binary_sensor:
     device_class: occupancy
     icon: ${output.icon}
     filters:
-      - delayed_off: ${device.id}_occupancy_output_timeout
+      - delayed_off: !lambda 'return id(${device.id}_occupancy_output_timeout).state;'
 # ────────────────────────────────────────────────────────────────
 
 
