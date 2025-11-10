@@ -80,5 +80,6 @@ number:
     mode: "slider"
     min_value: 0
     max_value: 3600
+    
     step: 15
     restore_value: true
