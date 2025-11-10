@@ -110,3 +110,18 @@ interval:
     then: 
       - script.execute: ${device.id}_check_for_occupancy
       
+number:
+  - id: occupancy_input_timeout_1
+    name: "Occupancy 1 Timeout"
+    device_id: ${device.id}
+    icon: mdi:timer-refresh-outline
+    unit_of_measurement: "sec"
+    mode: "box"
+
+
+  - id: occupancy_input_timeout_2
+    name: "Occupancy 2 Timeout"
+    device_id: ${device.id}
+    icon: mdi:timer-refresh-outline
+    unit_of_measurement: "sec"
+    mode: "box"
