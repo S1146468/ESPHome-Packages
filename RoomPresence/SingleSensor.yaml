@@ -3,7 +3,6 @@ substitutions:
         id: singleSensor
     config:
         sensorId: binary_sensor.occupancy
-        sensorTimeOut: 60s
         debugInternal: "true"
     output:
         icon: "mdi:sofa"
@@ -17,7 +16,7 @@ binary_sensor:
     entity_id: ${config.sensorId}
     internal: true
     filters:
-      - delayed_off: ${config.sensorTimeOut}
+      - delayed_off: ${device.id}_occupancy_output_timeout
     on_state_change: 
       then:
         - script.execute: ${device.id}_check_for_occupancy
@@ -69,3 +68,17 @@ interval:
     interval: 1min
     then: 
       - script.execute: ${device.id}_check_for_occupancy
+
+number:
+  - platform: template
+    id: ${device.id}_occupancy_output_timeout
+    name: "Timeout Occupancy"
+    device_id: ${device.id}
+    optimistic: true
+    icon: mdi:timer-refresh-outline
+    unit_of_measurement: "seconds"
+    mode: "slider"
+    min_value: 0
+    max_value: 3600
+    step: 15
+    restore_value: true
