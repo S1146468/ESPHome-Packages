@@ -112,7 +112,7 @@ interval:
       
 number:
   - platform: template
-    id: occupancy_input_timeout_1
+    id: ${device.id}_occupancy_input_timeout_1
     name: "Occupancy 1 Timeout"
     device_id: ${device.id}
     optimistic: true
@@ -126,7 +126,7 @@ number:
   
 
   - platform: template
-    id: occupancy_input_timeout_2
+    id: ${device.id}_occupancy_input_timeout_2
     name: "Occupancy 2 Timeout"
     device_id: ${device.id}
     optimistic: true
