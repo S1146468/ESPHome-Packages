@@ -350,6 +350,6 @@ sensor:
       - round: 0
     update_interval: ${climate.interval}
     lambda: |- 
-      float x = id(${device.id}_heat_output_level);
+      float x = 100.0 - id(${device.id}_heat_output_level);
       return x;
 # b
