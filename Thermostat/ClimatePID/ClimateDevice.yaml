@@ -348,8 +348,10 @@ sensor:
           min_value: 0.0
           ignore_out_of_range: false
       - round: 0
+      - multiply: -1.0 
+      - offset: 100.0
     update_interval: ${climate.interval}
     lambda: |- 
-      float x = 100.0 - id(${device.id}_heat_output_level);
+      float x = id(${device.id}_heat_output_level);
       return x;
 # b
