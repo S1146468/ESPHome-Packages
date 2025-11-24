@@ -334,6 +334,7 @@ sensor:
           min_value: 0.0
           ignore_out_of_range: false
       - round: 0
+      
     lambda: |- 
       float x = id(${climate.pid_output}).state;
       return x;
