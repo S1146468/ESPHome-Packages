@@ -315,39 +315,41 @@ sensor:
       // }
       
       return x;
+# #
 
-  - platform: template
-    name: "Valve Opening Degree"
-    id: ${device.id}_valve_opening_degree
-    device_id: ${device.id}
-    unit_of_measurement: "%"
-    state_class: measurement
-    icon: "mdi:heat-wave"
-    filters: 
-      - clamp: 
-          max_value: 100.0
-          min_value: 0.0
-          ignore_out_of_range: false
-      - round: 0
-    update_interval: ${climate.interval}
-    lambda: |- 
-      float x = id(${device.id}_heat_output_level);
-      return x;
+#   - platform: template
+#     name: "Valve Opening Degree"
+#     id: ${device.id}_valve_opening_degree
+#     device_id: ${device.id}
+#     unit_of_measurement: "%"
+#     state_class: measurement
+#     icon: "mdi:heat-wave"
+#     filters: 
+#       - clamp: 
+#           max_value: 100.0
+#           min_value: 0.0
+#           ignore_out_of_range: false
+#       - round: 0
+#     update_interval: ${climate.interval}
+#     lambda: |- 
+#       float x = id(${device.id}_heat_output_level);
+#       return x;
 
-  - platform: template
-    name: "Valve Closing Degree"
-    id: ${device.id}_valve_closing_degree
-    device_id: ${device.id}
-    unit_of_measurement: "%"
-    state_class: measurement
-    icon: "mdi:heat-wave"
-    filters: 
-      - clamp: 
-          max_value: 100.0
-          min_value: 0.0
-          ignore_out_of_range: false
-      - round: 0
-    update_interval: ${climate.interval}
-    lambda: |- 
-      float x = id(${device.id}_heat_output_level);
-      return x;
+#   - platform: template
+#     name: "Valve Closing Degree"
+#     id: ${device.id}_valve_closing_degree
+#     device_id: ${device.id}
+#     unit_of_measurement: "%"
+#     state_class: measurement
+#     icon: "mdi:heat-wave"
+#     filters: 
+#       - clamp: 
+#           max_value: 100.0
+#           min_value: 0.0
+#           ignore_out_of_range: false
+#       - round: 0
+#     update_interval: ${climate.interval}
+#     lambda: |- 
+#       float x = id(${device.id}_heat_output_level);
+#       return x;
+# # b
