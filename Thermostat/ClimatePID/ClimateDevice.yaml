@@ -332,7 +332,7 @@ sensor:
       - round: 0
     update_interval: ${climate.interval}
     lambda: |- 
-      float x = id(${device.id}_heat_output_level);
+      float x = id(${climate.pid_output});
       return x;
 
   - platform: template
@@ -352,6 +352,6 @@ sensor:
       - offset: 100.0
     update_interval: ${climate.interval}
     lambda: |- 
-      float x = id(${device.id}_heat_output_level);
+      float x = id(${climate.pid_output});
       return x;
 # b
