@@ -231,6 +231,8 @@ climate:
       kd_multiplier: ${control.deadband.multiplier.kd}
       deadband_output_averaging_samples: ${control.deadband.averaging.output}
 
+            
+
 
 
 
@@ -248,7 +250,6 @@ binary_sensor:
     id: ${device.id}_window_kamer_template
     device_id: ${device.id}
     device_class: window
-    update_interval: 10s
     lambda: |-
       return id(${device.id}_window).state;
     
