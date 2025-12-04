@@ -248,6 +248,7 @@ binary_sensor:
     id: ${device.id}_window_kamer_template
     device_id: ${device.id}
     device_class: window
+    update_interval: 10s
     lambda: |-
       return id(${device.id}_window).state;
     
