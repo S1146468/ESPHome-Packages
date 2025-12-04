@@ -71,8 +71,8 @@ binary_sensor:
   - platform: template
     id: any_valve_open
     lambda: |-
-      return (id(${pid_output.room_1}).state => 1.0f) || (id(${pid_output.room_2}).state => 1.0f);
-
+      return (id(${pid_output.room_1}).state >= 1.0f) || (id(${pid_output.room_2}).state >= 1.0f);
+ 
 # --- CH enable logic
   - platform: template
     id: ch_should_enable
