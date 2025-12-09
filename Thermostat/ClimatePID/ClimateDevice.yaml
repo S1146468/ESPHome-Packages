@@ -307,8 +307,8 @@ sensor:
     update_interval: ${climate.interval}
     lambda: |-
       float filter = 0.1f;
-      float newVal = x;
-      float currentVal = id(${device.id}_temperature).state;
+      float newVal = id(${device.id}_temperature).state;
+      float currentVal = id(${device.id}_temperature_temp).state;
 
       if (currentVal == NAN)
       { 
@@ -316,11 +316,11 @@ sensor:
         {
           return 0.0;
         }else{
-          return x;
+          return newVal;
         }
       }
 
-      return currentVal * (1.0 - filter) + x * filter;
+      return currentVal * (1.0 - filter) + newVal * filter;
 
 
   - platform: template
