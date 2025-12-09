@@ -316,13 +316,13 @@ sensor:
       {
         newVal = 0.0f;
       }
-      return newVal;
+
       if (currentVal == NAN)
       { 
         currentVal = newVal;
       }
-
-      return currentVal * (1.0f - filter) + newVal * filter;
+      return currentVal * 0.9f + newVal * 0.1;
+      // return currentVal * (1.0f - filter) + newVal * filter;
 
 
   - platform: template
