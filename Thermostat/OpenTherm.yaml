@@ -2,6 +2,7 @@ substitutions:
   outputId: t_set
   boiler_enable: boiler_enable
   boiler_active: ch_active
+  maxWaterTemp: 70.0
   openthermPin:
     ot_in: 0
     ot_out: 0
@@ -40,7 +41,7 @@ output:
       id: ${outputId}
       step: 1.0
       min_value: 0.0
-      max_value: 70.0
+      max_value: ${maxWaterTemp}
       zero_means_zero: true
 
 button:
