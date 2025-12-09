@@ -307,7 +307,7 @@ sensor:
     device_id: ${device.id}
     update_interval: ${climate.interval}
     lambda: |- 
-      float x = id(${device.id}_temperature);
+      return id(${device.id}_temperature);
 
 
   - platform: template
