@@ -162,15 +162,15 @@ output:
 
 
 interval:
-  - interval: ${climate.interval}
-    then:
-      lambda: |-
-        auto climate = id(${climate.id});  // Access the climate object
-        float current_setpoint = climate->target_temperature;
-        if (current_setpoint != id(${device.id}_previous_setpoint)) {
-          id(${device.id}_previous_setpoint) = current_setpoint;
-          id(${device.id}_reset_integral).press();
-        }
+  # - interval: ${climate.interval}
+  #   then:
+  #     lambda: |-
+  #       auto climate = id(${climate.id});  // Access the climate object
+  #       float current_setpoint = climate->target_temperature;
+  #       if (current_setpoint != id(${device.id}_previous_setpoint)) {
+  #         id(${device.id}_previous_setpoint) = current_setpoint;
+  #         id(${device.id}_reset_integral).press();
+  #       }
   
   - interval: ${climate.interval}
     then:
@@ -203,7 +203,7 @@ climate:
     name: ${climate.name}
     device_id: ${device.id}    
     sensor: ${device.id}_temperature
-    humidity_sensor: ${device.id}_humidity
+    # humidity_sensor: ${device.id}_humidity
     default_target_temperature: 5°C
     heat_output: ${device.id}_heat_output
     # cool_output: ${device.id}_cool_output
@@ -230,6 +230,10 @@ climate:
       ki_multiplier: ${control.deadband.multiplier.ki}
       kd_multiplier: ${control.deadband.multiplier.kd}
       deadband_output_averaging_samples: ${control.deadband.averaging.output}
+    on_control:
+      - climate.pid.reset_integral_term: ${climate.id}
+    on_state:
+      - logger.log: "${climate.name} State updated!"
 
             
 
