@@ -233,13 +233,12 @@ climate:
     on_control:
       - climate.pid.reset_integral_term: ${climate.id}
       - logger.log:
-        format: "${climate.name} Integral resetted"
-        level: ERROR
+          format: "${climate.name} Integral resetted"
+          level: ERROR
     on_state:
-      - logger.log: "State updated!"
       - logger.log:
-        format: "${climate.name} State updated"
-        level: ERROR
+          format: "${climate.name} State updated"
+          level: ERROR
 
             
 
