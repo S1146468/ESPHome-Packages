@@ -40,7 +40,8 @@ output:
       id: ${outputId}
       step: 0.5
       min_value: 0.0
-      auto_max_value: true
+      max_value: 60.0
+      # auto_max_value: true
       zero_means_zero: true
 
 button:
