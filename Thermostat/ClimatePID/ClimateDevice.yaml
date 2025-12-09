@@ -207,7 +207,7 @@ climate:
     default_target_temperature: 5°C
     heat_output: ${device.id}_heat_output
     # cool_output: ${device.id}_cool_output
-    internal: true
+    # internal: true
     visual:
       min_temperature: 4
       max_temperature: 35
