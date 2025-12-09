@@ -312,12 +312,11 @@ sensor:
       float newVal = id(${device.id}_temperature).state;
       float currentVal = id(${device.id}_temperature_temp).state;
 
-      return newVal;
       if(newVal == NAN) 
       {
         newVal = 0.0f;
       }
-
+      return newVal;
       if (currentVal == NAN)
       { 
         currentVal = newVal;
