@@ -232,9 +232,14 @@ climate:
       deadband_output_averaging_samples: ${control.deadband.averaging.output}
     on_control:
       - climate.pid.reset_integral_term: ${climate.id}
-      - logger.log: "Integral reset!"
+      - logger.log:
+        format: "${climate.name} Integral resetted"
+        level: ERROR
     on_state:
       - logger.log: "State updated!"
+      - logger.log:
+        format: "${climate.name} State updated"
+        level: ERROR
 
             
 
@@ -247,7 +252,7 @@ binary_sensor:
     id: ${device.id}_window
     on_release: 
       then:
-        - button.press: ${device.id}_reset_integral
+        - climate.pid.reset_integral_term: ${climate.id}
         - script.execute: ${device.id}_sync_target_and_hvac
     
   - platform: template
