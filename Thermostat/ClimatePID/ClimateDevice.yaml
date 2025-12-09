@@ -304,13 +304,17 @@ sensor:
     name: "temp"
     id: ${device.id}_temperature_temp
     device_id: ${device.id}
+    accuracy_decimals: 5
+    device_class: temperature
     update_interval: ${climate.interval}
     lambda: |-
       float filter = 0.1f;
       float newVal = id(${device.id}_temperature).state;
       float currentVal = id(${device.id}_temperature_temp).state;
 
-      if(newVal == NAN) {
+      return newVal;
+      if(newVal == NAN) 
+      {
         newVal = 0.0f;
       }
 
