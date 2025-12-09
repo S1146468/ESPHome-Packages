@@ -38,10 +38,9 @@ output:
   - platform: opentherm
     t_set:
       id: ${outputId}
-      step: 0.5
+      step: 1.0
       min_value: 0.0
-      max_value: 60.0
-      # auto_max_value: true
+      max_value: 70.0
       zero_means_zero: true
 
 button:

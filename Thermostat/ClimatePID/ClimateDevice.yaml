@@ -233,6 +233,7 @@ climate:
     on_control:
       - climate.pid.reset_integral_term: ${climate.id}
     on_state:
+      - 
       - logger.log: "${climate.name} State updated!"
 
             
