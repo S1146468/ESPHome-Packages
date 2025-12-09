@@ -301,7 +301,13 @@ sensor:
       - lambda: return id(${device.id}_humidity).state * 0.9 + x * 0.1;
 
    
-
+  - platform: template
+    name: "temp"
+    id: ${device.id}_temperature_temp
+    device_id: ${device.id}
+    update_interval: ${climate.interval}
+    lambda: |- 
+      float x = id(${device.id}_temperature);
 
 
   - platform: template
