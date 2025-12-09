@@ -295,11 +295,14 @@ sensor:
           float newVal = x;
           float currentVal = id(${device.id}_temperature).state;
 
-          if (currentVal == NAN){ 
-            currentVal = newVal;
-          }
-          if (currentVal == NAN){
-            currentVal = 0.0;
+          if (currentVal == NAN)
+          { 
+            if(newVal == NAN)
+            {
+              return 0.0;
+            }else{
+              return x;
+            }
           }
 
           return currentVal * (1.0 - filter) + x * filter;
@@ -315,11 +318,14 @@ sensor:
           float newVal = x;
           float currentVal = id(${device.id}_humidity).state;
 
-          if (currentVal == NAN){ 
-            currentVal = newVal;
-          }
-          if (currentVal == NAN){
-            currentVal = 0.0;
+          if (currentVal == NAN)
+          { 
+            if(newVal == NAN)
+            {
+              return 0.0;
+            }else{
+              return x;
+            }
           }
 
           return currentVal * (1.0 - filter) + x * filter;
