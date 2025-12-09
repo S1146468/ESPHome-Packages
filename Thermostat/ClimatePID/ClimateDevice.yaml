@@ -298,22 +298,6 @@ sensor:
     id: ${device.id}_humidity
     filters: 
       - heartbeat: ${climate.interval}
-      - lambda: |-
-          float filter = 0.1f;
-          float newVal = x;
-          float currentVal = id(${device.id}_humidity).state;
-
-          if (currentVal == NAN)
-          { 
-            if(newVal == NAN)
-            {
-              return 0.0;
-            }else{
-              return x;
-            }
-          }
-
-          return currentVal * (1.0 - filter) + x * filter;
 
    
   - platform: template
