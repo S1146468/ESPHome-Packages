@@ -232,9 +232,9 @@ climate:
       deadband_output_averaging_samples: ${control.deadband.averaging.output}
     on_control:
       - climate.pid.reset_integral_term: ${climate.id}
+      - logger.log: "Integral reset!"
     on_state:
-      - 
-      - logger.log: "${climate.name} State updated!"
+      - logger.log: "State updated!"
 
             
 
