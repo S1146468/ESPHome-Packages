@@ -310,17 +310,16 @@ sensor:
       float newVal = id(${device.id}_temperature).state;
       float currentVal = id(${device.id}_temperature_temp).state;
 
-      if (currentVal == NAN)
-      { 
-        if(newVal == NAN)
-        {
-          return 0.0;
-        }else{
-          return newVal;
-        }
+      if(newVal == NAN) {
+        newVal = 0.0f;
       }
 
-      return currentVal * (1.0 - filter) + newVal * filter;
+      if (currentVal == NAN)
+      { 
+        currentVal = newVal;
+      }
+
+      return currentVal * (1.0f - filter) + newVal * filter;
 
 
   - platform: template
