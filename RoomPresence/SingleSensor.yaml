@@ -16,7 +16,7 @@ binary_sensor:
     entity_id: ${config.sensorId}
     internal: true
     filters:
-      - delayed_off: !lambda 'return id(${device.id}_occupancy_output_timeout).state;'
+      - delayed_off: !lambda 'return (uint32_t) (id(${device.id}_occupancy_output_timeout).state * 60000.0f);'
     on_state_change: 
       then:
         - script.execute: ${device.id}_check_for_occupancy
