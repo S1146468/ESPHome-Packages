@@ -308,21 +308,14 @@ sensor:
     device_class: temperature
     update_interval: ${climate.interval}
     lambda: |-
-      float filter = 0.1f;
-      float newVal = id(${device.id}_temperature).state;
-      float currentVal = id(${device.id}_temperature_temp).state;
-
-      if(newVal == NAN) 
-      {
-        newVal = 0.0f;
-      }
-
-      if (currentVal == NAN)
-      { 
-        currentVal = newVal;
-      }
-      return currentVal * 0.9f + newVal * 0.1f;
-      // return currentVal * (1.0f - filter) + newVal * filter;
+      float v = id(${device.id}_temperature).state;
+      if (isnan(v)) return {};
+      return v;
+    filters:
+    - exponential_moving_average:
+        alpha: 0.1
+        send_every: 1
+    
 
 
   - platform: template
