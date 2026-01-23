@@ -230,15 +230,15 @@ climate:
       ki_multiplier: ${control.deadband.multiplier.ki}
       kd_multiplier: ${control.deadband.multiplier.kd}
       deadband_output_averaging_samples: ${control.deadband.averaging.output}
-    on_control:
-      - climate.pid.reset_integral_term: ${climate.id}
-      - logger.log:
-          format: "${climate.name} Integral resetted"
-          level: ERROR
-    on_state:
-      - logger.log:
-          format: "${climate.name} State updated"
-          level: ERROR
+    # on_control:
+    #   - climate.pid.reset_integral_term: ${climate.id}
+    #   - logger.log:
+    #       format: "${climate.name} Integral resetted"
+    #       level: ERROR
+    # on_state:
+    #   - logger.log:
+    #       format: "${climate.name} State updated"
+    #       level: ERROR
 
             
 
@@ -251,7 +251,7 @@ binary_sensor:
     id: ${device.id}_window
     on_release: 
       then:
-        - climate.pid.reset_integral_term: ${climate.id}
+        # - climate.pid.reset_integral_term: ${climate.id}
         - script.execute: ${device.id}_sync_target_and_hvac
     
   - platform: template
@@ -321,7 +321,7 @@ sensor:
       { 
         currentVal = newVal;
       }
-      return currentVal * 0.9f + newVal * 0.1;
+      return currentVal * 0.9f + newVal * 0.1f;
       // return currentVal * (1.0f - filter) + newVal * filter;
 
 
