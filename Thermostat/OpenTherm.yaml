@@ -39,7 +39,7 @@ output:
   - platform: opentherm
     t_set:
       id: ${outputId}
-      step: 1.0
+      #step: 1.0
       min_value: 0.0
       max_value: ${maxWaterTemp}
       zero_means_zero: true
