@@ -156,9 +156,10 @@ output:
     write_action:
       lambda: |-
         // Window control
-        if(isnan(id(${device.id}_window).state))    { id(${device.id}_heat_output_level) = state; return; } // Turn on heating control when window state is unavailable
-        if(id(${device.id}_window).state == 1.0)    { id(${device.id}_heat_output_level) = 0.0;   return; } // Turn off heating control when window is open       
-        if(id(${device.id}_window).state == 0.0)    { id(${device.id}_heat_output_level) = state; return; } // Turn on heating control when window is closed
+        if(isnan(id(${device.id}_window).state))    { id(${device.id}_heat_output_level) = state; return; } // Window unavailable: fail operational. Ignore window protection and keep PID heating control.
+        if(id(${device.id}_window).state == 1.0)    { id(${device.id}_heat_output_level) = 0.0;   return; } // Window open: force heating off. 
+        if(id(${device.id}_window).state == 0.0)    { id(${device.id}_heat_output_level) = state; return; } // Window closed: normal PID heating control.
+
 
 
 interval:
