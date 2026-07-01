@@ -60,7 +60,7 @@ sensor:
 
   - platform: template
     id: ${device.id}_output
-    name: "Average Temp"
+    name: "Average Temperature"
     device_id: ${device.id}
     accuracy_decimals: 1
     unit_of_measurement: "°C"
