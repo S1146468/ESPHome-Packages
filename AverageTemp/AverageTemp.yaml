@@ -5,8 +5,7 @@ substitutions:
     config:
         sensor: 
             entityId: sensor.temperature 
-        interval:
-            time: 60s
+
 
 
 globals:
@@ -14,7 +13,7 @@ globals:
     type: double
     restore_value: true
     initial_value: "NAN"
-
+    update_interval: 10min
 
 number:
   - platform: template
@@ -32,7 +31,7 @@ number:
     initial_value: 2
 
 interval:
-  - interval: ${config.interval.time}
+  - interval: 60s
     then:
       - lambda: |-
           double days = id(${device.id}_seasonal_average_days).state;
@@ -55,18 +54,18 @@ sensor:
     id: ${device.id}_temp
     device_id: ${device.id}
     entity_id: ${config.sensor.entityId}
-    unit_of_measurement: °C
+    unit_of_measurement: "°C"
     device_class: temperature
     state_class: measurement
 
   - platform: template
     id: ${device.id}_output
-    name: "AVG Temp ${device.name}"
+    name: "Average Temp"
     device_id: ${device.id}
     accuracy_decimals: 1
-    unit_of_measurement: °C
+    unit_of_measurement: "°C"
     device_class: temperature
     state_class: measurement
-    update_interval: ${config.interval.time}
+    update_interval: 60s
     lambda: |-
       return id(${device.id}_var);
