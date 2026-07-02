@@ -28,25 +28,27 @@ number:
     max_value: 365
     step: 0.1
     restore_value: true
-    initial_value: 7
+    initial_value: 3
 
 interval:
   - interval: 60s
     then:
       - lambda: |-
           double days = id(${device.id}_seasonal_average_days).state;
+          double temp = id(${device.id}_temp).state;
+          double var = id(${device.id}_var);
 
           if (isnan(days) || days < 0.1) {
-            days = 7.0;
+            days = 3.0;
           }
           
+          if(isnan(temp)) return;
+
           double factor = 1.0 / (days * 24.0 * 60.0);
+                    
+          if(isnan(var)) var = temp;
+          id(${device.id}_var) = var * (1.0 - factor) + temp * factor;
           
-          if(!isnan(id(${device.id}_temp).state)) 
-          {
-            if(isnan(id(${device.id}_var))) id(${device.id}_var) = id(${device.id}_temp).state;
-            id(${device.id}_var) = id(${device.id}_var) * (1.0 - factor) + id(${device.id}_temp).state * factor;
-          }
 
 
 sensor:
