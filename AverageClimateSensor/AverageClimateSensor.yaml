@@ -1,6 +1,6 @@
 substitutions:
   device:
-    id: AverageTemp
+    id: AverageClimateSensor
     name: "Average Temperature & Humidity"
 
   config:
