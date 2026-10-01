@@ -1,0 +1,161 @@
+substitutions:
+  device:
+    id: AverageTemp
+    name: "Average Temperature & Humidity"
+
+  config:
+    sensor:
+      # Temperature input from Home Assistant
+      temperatureEntityId: sensor.temperature
+
+      # Humidity input from Home Assistant
+      humidityEntityId: sensor.humidity
+
+
+# ============================================================
+# SHARED SETTINGS
+# ============================================================
+
+number:
+  - platform: template
+    id: ${device.id}_seasonal_average_days
+    name: "Seasonal Average Time"
+    device_id: ${device.id}
+    optimistic: true
+    icon: mdi:timer-refresh-outline
+    mode: "box"
+    unit_of_measurement: "days"
+    min_value: 0.1
+    max_value: 365
+    step: 0.1
+    restore_value: true
+    initial_value: 3
+
+
+# ============================================================
+# STORED AVERAGE VALUES
+# ============================================================
+
+globals:
+  # Temperature average
+  - id: ${device.id}_temperature_var
+    type: double
+    restore_value: true
+    initial_value: "NAN"
+    update_interval: 10min
+
+  # Humidity average
+  - id: ${device.id}_humidity_var
+    type: double
+    restore_value: true
+    initial_value: "NAN"
+    update_interval: 10min
+
+
+# ============================================================
+# AVERAGING LOGIC
+# Both temperature and humidity use the same Seasonal Average Time
+# ============================================================
+
+interval:
+  - interval: 60s
+    then:
+      - lambda: |-
+          double days = id(${device.id}_seasonal_average_days).state;
+
+          if (isnan(days) || days < 0.1) {
+            days = 3.0;
+          }
+
+          double factor = 1.0 / (days * 24.0 * 60.0);
+
+
+          // --------------------------------------------------
+          // TEMPERATURE
+          // --------------------------------------------------
+
+          double temperature = id(${device.id}_temperature).state;
+          double temperature_var = id(${device.id}_temperature_var);
+
+          if (!isnan(temperature)) {
+            if (isnan(temperature_var)) {
+              temperature_var = temperature;
+            }
+
+            id(${device.id}_temperature_var) =
+              temperature_var * (1.0 - factor) +
+              temperature * factor;
+          }
+
+
+          // --------------------------------------------------
+          // HUMIDITY
+          // --------------------------------------------------
+
+          double humidity = id(${device.id}_humidity).state;
+          double humidity_var = id(${device.id}_humidity_var);
+
+          if (!isnan(humidity)) {
+            if (isnan(humidity_var)) {
+              humidity_var = humidity;
+            }
+
+            id(${device.id}_humidity_var) =
+              humidity_var * (1.0 - factor) +
+              humidity * factor;
+          }
+
+
+# ============================================================
+# TEMPERATURE SENSORS
+# ============================================================
+
+sensor:
+  # Temperature input
+  - platform: homeassistant
+    id: ${device.id}_temperature
+    device_id: ${device.id}
+    entity_id: ${config.sensor.temperatureEntityId}
+    unit_of_measurement: "°C"
+    device_class: temperature
+    state_class: measurement
+
+  # Temperature average output
+  - platform: template
+    id: ${device.id}_temperature_output
+    name: "Average Temperature"
+    device_id: ${device.id}
+    accuracy_decimals: 1
+    unit_of_measurement: "°C"
+    device_class: temperature
+    state_class: measurement
+    update_interval: 60s
+    lambda: |-
+      return id(${device.id}_temperature_var);
+
+
+  # ==========================================================
+  # HUMIDITY SENSORS
+  # ==========================================================
+
+  # Humidity input
+  - platform: homeassistant
+    id: ${device.id}_humidity
+    device_id: ${device.id}
+    entity_id: ${config.sensor.humidityEntityId}
+    unit_of_measurement: "%"
+    device_class: humidity
+    state_class: measurement
+
+  # Humidity average output
+  - platform: template
+    id: ${device.id}_humidity_output
+    name: "Average Humidity"
+    device_id: ${device.id}
+    accuracy_decimals: 1
+    unit_of_measurement: "%"
+    device_class: humidity
+    state_class: measurement
+    update_interval: 60s
+    lambda: |-
+      return id(${device.id}_humidity_var);
