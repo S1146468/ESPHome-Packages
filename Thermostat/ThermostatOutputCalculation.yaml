@@ -26,7 +26,6 @@ sensor:
     restore: true
     
    # Final target exposed for writer
-sensor:
   - platform: template
     id: target_water_temperature
     name: "Target Water Temperature"
