@@ -17,48 +17,98 @@ sensor:
     entity_id: ${outside_temp_sensor}
     internal: false
 
+  - platform: exponential_moving_average
+    id: outside_temperature_smoothed
+    name: "Outside Temperature Smoothed"
+    sensor: outside_temperature_sensor
+    time_constant: 6h
+    time_weighting: previous
+    restore: true
+    
    # Final target exposed for writer
+sensor:
   - platform: template
     id: target_water_temperature
     name: "Target Water Temperature"
+
     unit_of_measurement: "°C"
     accuracy_decimals: 1
     icon: mdi:coolant-temperature
+
     update_interval: ${opentherm_update_interval}
+
     filters:
       - round: 0
+
     lambda: |-
-      // When it's VERY cold outside:
-      const float t_out_cold    = 0.0; // °C outside
-      const float t_supply_max  = ${water_temp.max_temp};  // °C CV flow target
+      // ==========================================
+      // Weather compensation configuration
+      // ==========================================
 
-      // When it's mild outside:
-      const float t_out_warm    = 15.0;  // °C outside
-      const float t_supply_min  = ${water_temp.min_temp};  // °C CV flow target
+      // Outside temperature reference points
+      const float T_OUT_COLD = 0.0f;
+      const float T_OUT_WARM = 15.0f;
 
-      // Hard safety clamp so we never request insane values
-      const float t_supply_floor   = t_supply_min; // don't go below this
-      const float t_supply_ceiling = t_supply_max; // don't go above this
+      // Flow temperature limits
+      const float T_SUPPLY_MIN = ${water_temp.min_temp};
+      const float T_SUPPLY_MAX = ${water_temp.max_temp};
 
-      // --- READ OUTDOOR SENSOR ---
-      float outdoor = id(outside_temperature_sensor).state;
+      // Fallback flow temperature
+      const float T_FALLBACK = 60.0f;
 
-      // Fallback if sensor is not valid
-      if (isnan(outdoor)) {
-        // safe middle value
-        return 60.0;
+      // Plausible outside temperature range
+      const float T_OUT_MIN_VALID = -30.0f;
+      const float T_OUT_MAX_VALID = 45.0f;
+
+      // ==========================================
+      // Read outside temperature
+      // ==========================================
+
+      const float outdoor =
+          id(outside_temperature_smoothed).state;
+
+      // ==========================================
+      // Validate sensor
+      // ==========================================
+
+      if (!id(outside_temperature_smoothed).has_state() ||
+          !std::isfinite(outdoor) ||
+          outdoor < T_OUT_MIN_VALID ||
+          outdoor > T_OUT_MAX_VALID) {
+
+        // Clamp fallback to configured limits
+        float fallback = T_FALLBACK;
+
+        if (fallback < T_SUPPLY_MIN)
+          fallback = T_SUPPLY_MIN;
+
+        if (fallback > T_SUPPLY_MAX)
+          fallback = T_SUPPLY_MAX;
+
+        return fallback;
       }
 
-      // --- LINEAR INTERPOLATION ---
-      // slope = (min - max) / (warm - cold)
-      float slope = (t_supply_min - t_supply_max) / (t_out_warm - t_out_cold);
+      // ==========================================
+      // Linear weather compensation
+      // ==========================================
 
-      // target = max + slope * (Toutdoor - Tcold)
-      float target = t_supply_max + slope * (outdoor - t_out_cold);
+      const float slope =
+          (T_SUPPLY_MIN - T_SUPPLY_MAX) /
+          (T_OUT_WARM - T_OUT_COLD);
 
-      // --- CLAMP RESULT ---
-      if (target < t_supply_floor)   target = t_supply_floor;
-      if (target > t_supply_ceiling) target = t_supply_ceiling;
+      float target =
+          T_SUPPLY_MAX +
+          slope * (outdoor - T_OUT_COLD);
+
+      // ==========================================
+      // Clamp target flow temperature
+      // ==========================================
+
+      if (target < T_SUPPLY_MIN)
+        target = T_SUPPLY_MIN;
+
+      if (target > T_SUPPLY_MAX)
+        target = T_SUPPLY_MAX;
 
       return target;
 
