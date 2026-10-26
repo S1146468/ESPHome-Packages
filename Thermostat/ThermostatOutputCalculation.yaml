@@ -21,6 +21,8 @@ sensor:
     id: outside_temperature_smoothed
     name: "Outside Temperature Smoothed"
     sensor: outside_temperature_sensor
+    unit_of_measurement: "°C"
+    icon: mdi:coolant-temperature
     time_constant: 6h
     time_weighting: previous
     restore: true
