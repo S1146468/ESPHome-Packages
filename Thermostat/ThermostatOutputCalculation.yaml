@@ -97,7 +97,7 @@ interval:
 
           if (!isnan(target)) {
             if (enable) {
-              id(${output_entity_name}).set_level(target);
+              id(${output_entity_name}).set_level(target / 70.0f);
             } else {
               id(${output_entity_name}).set_level(0.0f);
             }
