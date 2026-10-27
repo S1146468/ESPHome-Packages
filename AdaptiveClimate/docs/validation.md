@@ -1,4 +1,38 @@
-# Standalone validation
+# Validation
+
+## Sub-device change — 2026-10-27
+
+Source commit `5c0a6070a5c3efb2ac1ecba2c8e8afffe02806ec` passed
+[GitHub Actions run 40484375248](https://github.com/S1146468/ESPHome-Packages/actions/runs/40484375248).
+All **32 Python tests**, including real ESPHome configuration validation, and the
+unchanged **C++ numerical tests** passed locally and in CI. All three firmware
+builds compiled and linked with **ESPHome 2026.10.0, ESP32 esp32dev, ESP-IDF**:
+
+| Example | Reported image size | Reported static RAM |
+| --- | ---: | ---: |
+| Single room | 194,995 bytes | 22,284 bytes |
+| Two independent rooms | 738,911 bytes | 45,508 bytes |
+| Stijn with existing PID/OpenTherm packages | 811,319 bytes | 52,588 bytes |
+
+These are complete example sizes, not incremental costs or runtime heap measurements.
+The Stijn fixture is compile-only, with placeholder controller settings; use
+[the merge snippet](../examples/stijn_integration.yaml) for your working thermostat.
+
+Tests verify all six numeric outputs and the status text sensor have the intended
+device ID, valid unique IDs/names, metadata and declared room areas. They reject
+missing device/area references, check all seven generated native C++ device
+assignments, and compare the original PID/OpenTherm configuration with and without
+the observer. The original Thermostat files, all four component source files and
+the numerical tests have no changes from reviewed commit `c9b98da`.
+
+Only this validation record was added after the successful run. No firmware was
+deployed and no live Home Assistant registry migration was tested. Follow the
+[migration verification instructions](subdevices.md#identity-and-home-assistant-migration)
+to check entity IDs, history and area assignment after installation. Native
+sub-device grouping changes the device-aware integration unique ID; retaining
+entity registry entries depends on Home Assistant's migration handling.
+
+## Original standalone extraction (historical results)
 
 Verified build target: ESPHome 2026.10.0, ESP32 `esp32dev`, ESP-IDF, with no PSRAM
 configuration. Both extracted examples compiled and linked successfully in
