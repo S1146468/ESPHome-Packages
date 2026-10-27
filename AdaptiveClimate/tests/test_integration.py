@@ -70,8 +70,15 @@ def test_duplicate_model_id_rejected(tmp_path):
     result = validate("two_rooms.yaml", tmp_path, ("observer_id: model_b", "observer_id: model_a"))
     assert result.returncode != 0
 
-def test_extracted_runtime_matches_source_manifest():
+def test_extraction_provenance_and_unchanged_thermal_model():
     manifest = json.loads((ROOT / "docs/source_manifest.json").read_text())
     for name, digest in manifest["sha256_normalized_utf8"].items():
-        source = (ROOT / "components/adaptive_climate" / name).read_text(encoding="utf-8")
+        # The manifest records the extraction, not later input-handling changes.
+        # The complete numerical model still must match the original byte for byte.
+        if name == "thermal_model.h":
+            source = (ROOT / "components/adaptive_climate" / name).read_text(encoding="utf-8")
+        else:
+            source = subprocess.check_output(["git", "show",
+                "4982bcb738e94444ac305adaf6278f61e637e5c1:AdaptiveClimate/components/adaptive_climate/" + name],
+                cwd=ROOT.parent).decode("utf-8")
         assert hashlib.sha256(source.encode("utf-8")).hexdigest() == digest

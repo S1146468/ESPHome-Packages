@@ -9,6 +9,11 @@ Targets ESPHome **2026.10.0** and ESP32 with ESP-IDF. Neither PID, OpenTherm nor
 Home Assistant is a mandatory component dependency. The observer uses existing
 ESPHome numeric sensors and binary sensors, whatever supplies them.
 
+For event-driven temperatures, configure per-input freshness explicitly. Strict
+expiry remains the default; held mode keeps valid last-known state while exposing
+its receipt age and uncertainty. See [freshness policies and limitations](docs/freshness.md)
+and the [exact Stijn + Nick merge snippet](examples/thermostaat_freshness.yaml).
+
 ## Contents
 
 ```text
@@ -50,14 +55,14 @@ external_components:
   - source:
       type: git
       url: https://github.com/S1146468/ESPHome-Packages
-      ref: feature/adaptive-climate-subdevices
+      ref: feature/adaptive-climate-freshness
       path: AdaptiveClimate/components
     components: [adaptive_climate]
 
 packages:
   room_observer:
     url: https://github.com/S1146468/ESPHome-Packages
-    ref: feature/adaptive-climate-subdevices
+    ref: feature/adaptive-climate-freshness
     files:
       - path: AdaptiveClimate/ObserveRoom.yaml
         vars:
@@ -90,12 +95,14 @@ or the observer's component ID. `device.name` mirrors the main configuration's
 display name for the established package convention; it does not rename entities
 or create a device. The device display name comes from `esphome.devices`.
 Keep `observer_id` and `observer_name` unchanged when upgrading an existing
-observer. All seven outputs explicitly use `device_id: ${device.id}`; input sensors
+observer. All twelve outputs explicitly use `device_id: ${device.id}`; input sensors
 retain their existing ownership. A missing or unknown device reference fails
 configuration validation instead of silently using the main device.
 
 For your existing thermostat, use the [exact Stijn-only merge snippet](examples/stijn_integration.yaml)
-and [migration/checklist instructions](docs/subdevices.md). Do not deploy the
+and [migration/checklist instructions](docs/subdevices.md) for the older Stijn-only
+layout. For your current two-observer configuration use the freshness snippet above.
+Do not deploy the
 `stijn_device_check.yaml` regression fixture: its controller settings are placeholders.
 
 ## Required input contract
@@ -121,15 +128,20 @@ state to the heating circuit being observed and document its meaning.
 
 The component captures **raw, pre-filter numeric publications**. Required units
 and calibration must already be correct at that point; downstream conversion,
-inversion or calibration filters are not applied to the observer. If conversion
-is needed, make a separate event-driven sensor that publishes correctly scaled
+inversion or calibration filters are not applied to the observer. The explicit
+`valve_command_scale` (package var `observer_valve_command_scale`) can be 100 for
+raw 0–1 commands or 1 (default) for raw percent. Other conversion
+needs a separate event-driven sensor that publishes correctly scaled
 values only when its real source updates, and pass that ID. Do not alter existing
 control sensors or periodically republish a cached value to bypass freshness.
 
-`observer_stale_after` defaults to 15 minutes and accepts 1–60 minutes. It applies
-to all four numeric inputs independently. Unchanged inputs that are not republished
-can expire; a history change event or retained HA state is not evidence of a live
-physical sensor. Choose a timeout based on real source reporting behaviour.
+`observer_stale_after` defaults to 15 minutes and accepts 1–60 minutes. It is the
+fallback deadline for all four numeric inputs. `observer_input_freshness` can
+override each deadline and select `strict` (default) or `event_driven` mode.
+Strict inputs expire; event-driven inputs remain usable but become visibly
+`held_unconfirmed`. Missing, invalid and known-unavailable inputs block both modes.
+Retained HA state is not evidence of a live physical sensor. Choose policies based
+on verified reporting behaviour, not simply to suppress warnings.
 Binary inputs require a known state but are latched, without freshness timestamps.
 Upstream availability remains a limitation; see below.
 
@@ -199,9 +211,11 @@ during reported heating-off periods, which can still teach cooling dynamics.
 | Model Training Samples | Accepted training intervals, not raw sensor publications |
 | Model Heating Excitation | Range of the dimensionless training heat proxy; not an identifiability proof or confidence percentage |
 | Model Status | Collection or suspension reason, described below |
+| Room/Outdoor/Valve/Supply Input Age | Seconds since raw receipt, not physical measurement age; unknown before first publication |
+| Input Freshness Status | Per-input recent, held, expired, invalid or missing state; API guard failure when enabled |
 
 Statuses include `waiting_for_inputs`, `collecting_data`,
-`missing_or_stale_input`, `missing_operating_state`, `invalid_input`, `window_open`,
+`missing_or_stale_input`, `missing_operating_state`, `invalid_input`, `input_unavailable`, `api_disconnected`, `window_open`,
 `domestic_hot_water`, `timing_gap`, `disturbance_rejected`, `low_excitation`, and
 `learning_unvalidated`. `low_excitation` can still publish diagnostic forecasts;
 it is not approval to use them for control. No status asserts validated accuracy.
@@ -236,9 +250,12 @@ python -m pip install -r AdaptiveClimate/requirements-test.txt
 python -m pytest AdaptiveClimate/tests -q
 g++ -std=c++17 -O2 -Wall -Wextra -pedantic AdaptiveClimate/tests/test_thermal_model.cpp -o thermal-tests
 ./thermal-tests
+g++ -std=c++17 -O2 -Wall -Wextra -pedantic -DUSE_API -IAdaptiveClimate/tests/stubs AdaptiveClimate/tests/test_input_handling.cpp AdaptiveClimate/components/adaptive_climate/adaptive_climate.cpp -o input-tests
+./input-tests
 esphome compile AdaptiveClimate/examples/single_room.yaml
 esphome compile AdaptiveClimate/examples/two_rooms.yaml
 esphome compile AdaptiveClimate/examples/stijn_device_check.yaml
+esphome compile AdaptiveClimate/examples/rooms_device_check.yaml
 ```
 
 The single-room example deliberately uses uninitialised input stubs and will not

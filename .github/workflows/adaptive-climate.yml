@@ -1,7 +1,7 @@
 name: Adaptive Climate
 on:
   push:
-    branches: [feature/adaptive-climate-standalone, feature/adaptive-climate-subdevices, main]
+    branches: [feature/adaptive-climate-standalone, feature/adaptive-climate-subdevices, feature/adaptive-climate-freshness, main]
     paths: ['AdaptiveClimate/**', '.github/workflows/adaptive-climate.yml']
   pull_request:
     paths: ['AdaptiveClimate/**', '.github/workflows/adaptive-climate.yml']
@@ -22,6 +22,8 @@ jobs:
       - run: pip install -r AdaptiveClimate/requirements-test.txt
       - run: python -m pytest AdaptiveClimate/tests -q
       - run: g++ -std=c++17 -O2 -Wall -Wextra -pedantic AdaptiveClimate/tests/test_thermal_model.cpp -o /tmp/thermal-tests && /tmp/thermal-tests
+      - run: g++ -std=c++17 -O2 -Wall -Wextra -pedantic -DUSE_API -IAdaptiveClimate/tests/stubs AdaptiveClimate/tests/test_input_handling.cpp AdaptiveClimate/components/adaptive_climate/adaptive_climate.cpp -o /tmp/input-tests && /tmp/input-tests
       - run: esphome compile AdaptiveClimate/examples/single_room.yaml
       - run: esphome compile AdaptiveClimate/examples/two_rooms.yaml
       - run: esphome compile AdaptiveClimate/examples/stijn_device_check.yaml
+      - run: esphome compile AdaptiveClimate/examples/rooms_device_check.yaml

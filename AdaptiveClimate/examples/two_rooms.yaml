@@ -51,6 +51,10 @@ packages:
       device:
         id: adaptive_a
         name: Adaptive Room A
+      observer_require_api_connection: "true"
+      observer_input_freshness:
+        room_temperature: {mode: event_driven}
+        outdoor_temperature: {mode: event_driven}
       observer_id: model_a
       observer_name: Room A
       room_temperature_id: temperature_a
@@ -66,6 +70,10 @@ packages:
       device:
         id: adaptive_b
         name: Adaptive Room B
+      observer_require_api_connection: "true"
+      observer_input_freshness:
+        room_temperature: {mode: event_driven}
+        outdoor_temperature: {mode: event_driven}
       observer_id: model_b
       observer_name: Room B
       room_temperature_id: temperature_b

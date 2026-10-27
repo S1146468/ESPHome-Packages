@@ -1,0 +1,77 @@
+# MERGE ONLY: replace external_components source ref and packages.observer.
+# Keep packages.thermostat_package and all other thermostat configuration unchanged.
+# Existing Stijn/Nick observer IDs, names, input IDs and sub-devices are preserved.
+external_components:
+- source:
+    type: git
+    url: https://github.com/S1146468/ESPHome-Packages
+    ref: feature/adaptive-climate-freshness
+    path: AdaptiveClimate/components
+  components:
+  - adaptive_climate
+packages:
+  observer:
+    url: https://github.com/S1146468/ESPHome-Packages
+    ref: feature/adaptive-climate-freshness
+    refresh: always
+    files:
+    - path: AdaptiveClimate/ObserveRoom.yaml
+      vars:
+        device:
+          id: adaptive_climate_stijn
+          name: Adaptive Climate Stijn
+        observer_id: stijn_thermal_model
+        observer_name: Stijn
+        room_temperature_id: climate_stijn_temperature
+        outdoor_temperature_id: outside_temperature_sensor
+        valve_command_id: pid_output_stijn
+        supply_temperature_id: ch_temperature
+        heating_active_id: boiler_active
+        window_open_id: climate_stijn_window
+        dhw_active_id: dhw_active
+        observer_stale_after: 15min
+        observer_input_freshness:
+          room_temperature:
+            mode: event_driven
+            stale_after: 15min
+          outdoor_temperature:
+            mode: event_driven
+            stale_after: 15min
+          valve_command:
+            mode: strict
+            stale_after: 1min
+          supply_temperature:
+            mode: strict
+            stale_after: 15min
+        observer_require_api_connection: 'true'
+        observer_valve_command_scale: '100.0'
+    - path: AdaptiveClimate/ObserveRoom.yaml
+      vars:
+        device:
+          id: adaptive_climate_nick
+          name: Adaptive Climate Nick
+        observer_id: nick_thermal_model
+        observer_name: Nick
+        room_temperature_id: climate_nick_temperature
+        outdoor_temperature_id: outside_temperature_sensor
+        valve_command_id: pid_output_nick
+        supply_temperature_id: ch_temperature
+        heating_active_id: boiler_active
+        window_open_id: climate_nick_window
+        dhw_active_id: dhw_active
+        observer_stale_after: 15min
+        observer_input_freshness:
+          room_temperature:
+            mode: event_driven
+            stale_after: 15min
+          outdoor_temperature:
+            mode: event_driven
+            stale_after: 15min
+          valve_command:
+            mode: strict
+            stale_after: 1min
+          supply_temperature:
+            mode: strict
+            stale_after: 15min
+        observer_require_api_connection: 'true'
+        observer_valve_command_scale: '100.0'

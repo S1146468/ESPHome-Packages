@@ -7,6 +7,9 @@
 # Load components/adaptive_climate once in the containing configuration.
 substitutions:
   observer_stale_after: 15min
+  observer_input_freshness: {}
+  observer_require_api_connection: "false"
+  observer_valve_command_scale: "1.0"
 
 adaptive_climate:
   - id: ${observer_id}
@@ -19,6 +22,9 @@ adaptive_climate:
     window_open: ${window_open_id}
     dhw_active: ${dhw_active_id}
     stale_after: ${observer_stale_after}
+    input_freshness: ${observer_input_freshness}
+    require_api_connection: ${observer_require_api_connection}
+    valve_command_scale: ${observer_valve_command_scale}
     prediction_15min:
       id: ${observer_id}_prediction_15min
       device_id: ${device.id}
@@ -76,3 +82,24 @@ adaptive_climate:
       entity_category: diagnostic
       icon: mdi:information-outline
       name: "${observer_name} Model Status"
+    room_temperature_age:
+      id: ${observer_id}_room_temperature_age
+      device_id: ${device.id}
+      name: "${observer_name} Room Temperature Input Age"
+    outdoor_temperature_age:
+      id: ${observer_id}_outdoor_temperature_age
+      device_id: ${device.id}
+      name: "${observer_name} Outdoor Temperature Input Age"
+    valve_command_age:
+      id: ${observer_id}_valve_command_age
+      device_id: ${device.id}
+      name: "${observer_name} Valve Command Input Age"
+    supply_temperature_age:
+      id: ${observer_id}_supply_temperature_age
+      device_id: ${device.id}
+      name: "${observer_name} Supply Temperature Input Age"
+    input_status:
+      id: ${observer_id}_input_status
+      device_id: ${device.id}
+      name: "${observer_name} Input Freshness Status"
+      icon: mdi:information-outline

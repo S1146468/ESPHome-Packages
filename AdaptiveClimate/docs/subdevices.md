@@ -1,5 +1,11 @@
 # Stijn learner as an ESPHome sub-device
 
+This page records the earlier seven-entity grouping change. The subsequent
+[freshness update](freshness.md) preserves those seven entities and adds five
+input diagnostics, bringing each observer to twelve. Use its two-room merge
+snippet for the current Stijn/Nick installation; the original migration guidance
+below applies only when moving entities between devices.
+
 This is entity grouping only, based on reviewed commit
 `c9b98da68d882c1f12a2bafd5714ce67ed4a7096`. All Python/C++ component files and the
 numerical tests remain unchanged. The learning interval, freshness default,
