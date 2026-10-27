@@ -1,0 +1,56 @@
+# Compile fixture with uninitialised input stubs. No HA, PID or OpenTherm needed.
+# In your existing thermostat, keep its sensor definitions and add only the
+# external_components and packages entries, mapped to your existing IDs.
+esphome:
+  name: adaptive-climate-single
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+logger:
+
+external_components:
+  - source:
+      type: local
+      path: ../components
+    components: [adaptive_climate]
+
+packages:
+  observer: !include
+    file: ../ObserveRoom.yaml
+    vars:
+      observer_id: room_model
+      observer_name: Room
+      room_temperature_id: room_measurement
+      outdoor_temperature_id: outdoor_measurement
+      valve_command_id: valve_requested_percent
+      supply_temperature_id: water_measurement
+      heating_active_id: heat_available
+      window_open_id: window_contact
+      dhw_active_id: hot_water_active
+
+# Build-only stubs deliberately publish no values, so learning stays suspended.
+# Do not replace your real input sources with these stubs.
+sensor:
+  - platform: template
+    id: room_measurement
+    lambda: return {};
+  - platform: template
+    id: outdoor_measurement
+    lambda: return {};
+  - platform: template
+    id: valve_requested_percent
+    lambda: return {};
+  - platform: template
+    id: water_measurement
+    lambda: return {};
+binary_sensor:
+  - platform: template
+    id: heat_available
+    lambda: return {};
+  - platform: template
+    id: window_contact
+    lambda: return {};
+  - platform: template
+    id: hot_water_active
+    lambda: return {};

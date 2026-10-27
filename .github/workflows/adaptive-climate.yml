@@ -1,0 +1,24 @@
+name: Adaptive Climate
+on:
+  push:
+    branches: [feature/adaptive-climate-standalone, main]
+    paths: ['AdaptiveClimate/**', '.github/workflows/adaptive-climate.yml']
+  pull_request:
+    paths: ['AdaptiveClimate/**', '.github/workflows/adaptive-climate.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: pip install -r AdaptiveClimate/requirements-test.txt
+      - run: python -m pytest AdaptiveClimate/tests -q
+      - run: g++ -std=c++17 -O2 -Wall -Wextra -pedantic AdaptiveClimate/tests/test_thermal_model.cpp -o /tmp/thermal-tests && /tmp/thermal-tests
+      - run: esphome compile AdaptiveClimate/examples/single_room.yaml
+      - run: esphome compile AdaptiveClimate/examples/two_rooms.yaml

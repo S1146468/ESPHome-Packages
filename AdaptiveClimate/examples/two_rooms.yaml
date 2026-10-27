@@ -1,0 +1,93 @@
+# Read-only HA observer. Replace the generic HA entity substitutions below.
+# To integrate on your thermostat ESP, reuse its existing sensor IDs instead of
+# importing duplicates; only the observer and external component are additions.
+substitutions:
+  room_a_temperature_entity: sensor.room_a_temperature
+  room_b_temperature_entity: sensor.room_b_temperature
+  outdoor_entity: sensor.outdoor_temperature
+  room_a_valve_entity: sensor.room_a_valve_command
+  room_b_valve_entity: sensor.room_b_valve_command
+  supply_entity: sensor.actual_heating_supply_temperature
+  heating_entity: binary_sensor.heating_active
+  room_a_window_entity: binary_sensor.room_a_window
+  room_b_window_entity: binary_sensor.room_b_window
+  dhw_entity: binary_sensor.domestic_hot_water_active
+
+esphome:
+  name: adaptive-climate-two
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+logger:
+api:
+  encryption: {}
+wifi:
+  ssid: CHANGE_ME
+  password: CHANGE_ME_PASSWORD
+
+external_components:
+  - source:
+      type: local
+      path: ../components
+    components: [adaptive_climate]
+
+packages:
+  observer_a: !include
+    file: ../ObserveRoom.yaml
+    vars:
+      observer_id: model_a
+      observer_name: Room A
+      room_temperature_id: temperature_a
+      outdoor_temperature_id: outdoor
+      valve_command_id: command_a
+      supply_temperature_id: supply
+      heating_active_id: heating
+      window_open_id: window_a
+      dhw_active_id: dhw
+  observer_b: !include
+    file: ../ObserveRoom.yaml
+    vars:
+      observer_id: model_b
+      observer_name: Room B
+      room_temperature_id: temperature_b
+      outdoor_temperature_id: outdoor
+      valve_command_id: command_b
+      supply_temperature_id: supply
+      heating_active_id: heating
+      window_open_id: window_b
+      dhw_active_id: dhw
+      observer_stale_after: 20min
+
+sensor:
+  - platform: homeassistant
+    id: temperature_a
+    entity_id: ${room_a_temperature_entity}
+  - platform: homeassistant
+    id: temperature_b
+    entity_id: ${room_b_temperature_entity}
+  - platform: homeassistant
+    id: outdoor
+    entity_id: ${outdoor_entity}
+  - platform: homeassistant
+    id: command_a
+    entity_id: ${room_a_valve_entity}
+  - platform: homeassistant
+    id: command_b
+    entity_id: ${room_b_valve_entity}
+  - platform: homeassistant
+    id: supply
+    entity_id: ${supply_entity}
+binary_sensor:
+  - platform: homeassistant
+    id: heating
+    entity_id: ${heating_entity}
+  - platform: homeassistant
+    id: window_a
+    entity_id: ${room_a_window_entity}
+  - platform: homeassistant
+    id: window_b
+    entity_id: ${room_b_window_entity}
+  - platform: homeassistant
+    id: dhw
+    entity_id: ${dhw_entity}

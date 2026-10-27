@@ -1,0 +1,11 @@
+{
+  "repository": "S1146468/ESPHome-Packages",
+  "source_commit": "5153b6287faedd810d105b53f71a0b489f0c22a0",
+  "source_path": "Adaptive Thermostat/components/adaptive_climate",
+  "sha256_normalized_utf8": {
+    "__init__.py": "ac6fef36cb488ea61c97cb732bb15ccdaf84798c678a2cc64affc9d9b9e6fd4e",
+    "adaptive_climate.h": "9ffe1cb1513dddacd1f02a716b6d46cbd79607a9a1be36a7d6a5c6fad02b1854",
+    "adaptive_climate.cpp": "9aa9a94dbe2a27819b0c2c35ee45d0b18c69224e7f2ec0a9613edee324cdedba",
+    "thermal_model.h": "2c59a82c226f89bcc38ad49da83bf5739b1bbfff739a108b87ada7a6941cdd62"
+  }
+}

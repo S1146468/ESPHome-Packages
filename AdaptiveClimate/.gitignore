@@ -1,0 +1,8 @@
+**/.esphome/
+**/__pycache__/
+**/.pytest_cache/
+build/
+secrets.yaml
+*.exe
+*.obj
+*.o
