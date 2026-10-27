@@ -1,5 +1,38 @@
 # Validation
 
+## Per-input freshness — 2026-10-27
+
+Source commit `7c751f77fae6917c49a6cf78e3b136f5dec0365e` passed
+[GitHub Actions run 40564081205](https://github.com/S1146468/ESPHome-Packages/actions/runs/40564081205).
+All **52 Python tests**, the unchanged **C++ numerical tests**, and the new
+**C++ input-handling tests** passed locally and on Linux CI. All four firmware
+builds compiled and linked successfully with **ESPHome 2026.10.0, ESP32 esp32dev,
+ESP-IDF**:
+
+| Example | Reported image size | Reported static RAM |
+| --- | ---: | ---: |
+| Single room, no API | 197,087 bytes | 22,636 bytes |
+| Generic two-room HA observer | 741,527 bytes | 46,212 bytes |
+| Original Stijn-only thermostat fixture | 813,311 bytes | 52,988 bytes |
+| Stijn + Nick thermostat fixture, explicit freshness policies | 814,447 bytes | 53,964 bytes |
+
+The input tests compile the actual wrapper implementation with controlled-clock
+ESPHome test doubles. They cover a stable hour, mixed strict/held inputs, immediate
+raw updates, invalid/NaN/out-of-range readings, startup without data, strict expiry,
+independent rooms, health/API guards, window/DHW, filtered heartbeat exclusion,
+long-uptime age tracking and raw valve scaling. Python tests verify upstream
+ESPHome raw/heartbeat/HA conversion contracts, real configuration/code generation,
+all 24 diagnostic assignments, and unchanged PID/OpenTherm configuration.
+
+The complete `thermal_model.h`, existing numerical tests, `Thermostat/` and root
+`Thermostat.yaml` have no diff from `4982bcb`. The extraction manifest is preserved
+as historical provenance; the wrapper/schema now intentionally differ from it.
+
+These are complete fixture sizes, not incremental costs or runtime heap results.
+The final validation-record commit changes documentation only. No firmware was
+deployed, no live HA device registry was changed, and physical sensor reporting or
+availability was not tested. See [the exact integration changes and limitations](freshness.md).
+
 ## Sub-device change — 2026-10-27
 
 Source commit `5c0a6070a5c3efb2ac1ecba2c8e8afffe02806ec` passed
