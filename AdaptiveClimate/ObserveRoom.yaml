@@ -1,7 +1,9 @@
-# Required include vars: observer_id, observer_name, room_temperature_id,
+# Required include vars: device.id, observer_id, observer_name, room_temperature_id,
 # outdoor_temperature_id, valve_command_id, supply_temperature_id,
 # heating_active_id, window_open_id, dhw_active_id.
 # All input references are existing ESPHome IDs, not Home Assistant entity IDs.
+# Define device.id under esphome.devices in the main configuration.
+# device.name may mirror that display name; observer_name preserves entity names.
 # Load components/adaptive_climate once in the containing configuration.
 substitutions:
   observer_stale_after: 15min
@@ -18,16 +20,59 @@ adaptive_climate:
     dhw_active: ${dhw_active_id}
     stale_after: ${observer_stale_after}
     prediction_15min:
+      id: ${observer_id}_prediction_15min
+      device_id: ${device.id}
+      entity_category: diagnostic
+      icon: mdi:thermometer
+      accuracy_decimals: 3
+      unit_of_measurement: "°C"
+      device_class: temperature
       name: "${observer_name} Forecast 15min"
     prediction_30min:
+      id: ${observer_id}_prediction_30min
+      device_id: ${device.id}
+      entity_category: diagnostic
+      icon: mdi:thermometer
+      accuracy_decimals: 3
+      unit_of_measurement: "°C"
+      device_class: temperature
       name: "${observer_name} Forecast 30min"
     prediction_60min:
+      id: ${observer_id}_prediction_60min
+      device_id: ${device.id}
+      entity_category: diagnostic
+      icon: mdi:thermometer
+      accuracy_decimals: 3
+      unit_of_measurement: "°C"
+      device_class: temperature
       name: "${observer_name} Forecast 60min"
     residual_rmse:
+      id: ${observer_id}_residual_rmse
+      device_id: ${device.id}
+      entity_category: diagnostic
+      icon: mdi:chart-bell-curve
+      accuracy_decimals: 3
+      unit_of_measurement: "°C"
       name: "${observer_name} Model Residual RMSE"
     training_samples:
+      id: ${observer_id}_training_samples
+      device_id: ${device.id}
+      entity_category: diagnostic
+      icon: mdi:counter
+      accuracy_decimals: 0
+      unit_of_measurement: ""
       name: "${observer_name} Model Training Samples"
     heating_excitation:
+      id: ${observer_id}_heating_excitation
+      device_id: ${device.id}
+      entity_category: diagnostic
+      icon: mdi:chart-line
+      accuracy_decimals: 3
+      unit_of_measurement: ""
       name: "${observer_name} Model Heating Excitation"
     status:
+      id: ${observer_id}_status
+      device_id: ${device.id}
+      entity_category: diagnostic
+      icon: mdi:information-outline
       name: "${observer_name} Model Status"

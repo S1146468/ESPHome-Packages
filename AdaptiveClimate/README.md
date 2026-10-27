@@ -31,23 +31,39 @@ Add the following to your existing YAML, **merging** the entries into any existi
 `external_components:` and `packages:` mappings. Keep all existing heating,
 sensor, API and network definitions unchanged. Replace the seven example IDs with
 your existing ESPHome input IDs. No extra sensor or thermostat definition is needed.
+Define one logical sub-device under `esphome.devices` and pass its ID through
+the nested `device.id` package variable. This stays on the same physical ESP32
+and the same Home Assistant ESPHome integration. It does not create a new node.
 
 ```yaml
+esphome:
+  # Append to your existing lists, do not replace them.
+  areas:
+    - id: living_room_area
+      name: Living Room
+  devices:
+    - id: adaptive_living_room
+      name: Adaptive Living Room
+      area_id: living_room_area
+
 external_components:
   - source:
       type: git
       url: https://github.com/S1146468/ESPHome-Packages
-      ref: feature/adaptive-climate-standalone
+      ref: feature/adaptive-climate-subdevices
       path: AdaptiveClimate/components
     components: [adaptive_climate]
 
 packages:
   room_observer:
     url: https://github.com/S1146468/ESPHome-Packages
-    ref: feature/adaptive-climate-standalone
+    ref: feature/adaptive-climate-subdevices
     files:
       - path: AdaptiveClimate/ObserveRoom.yaml
         vars:
+          device:
+            id: adaptive_living_room
+            name: Adaptive Living Room
           observer_id: living_room_model
           observer_name: Living Room
           room_temperature_id: existing_room_temperature
@@ -68,6 +84,19 @@ and `../ObserveRoom.yaml` because they live inside `examples/`.
 
 Use the same inspected branch/commit for package and component. Pin a commit for
 reproducible use. Loading the component alone does not add an observer instance.
+
+`device.id` is a required reference to a declared sub-device, not an input sensor
+or the observer's component ID. `device.name` mirrors the main configuration's
+display name for the established package convention; it does not rename entities
+or create a device. The device display name comes from `esphome.devices`.
+Keep `observer_id` and `observer_name` unchanged when upgrading an existing
+observer. All seven outputs explicitly use `device_id: ${device.id}`; input sensors
+retain their existing ownership. A missing or unknown device reference fails
+configuration validation instead of silently using the main device.
+
+For your existing thermostat, use the [exact Stijn-only merge snippet](examples/stijn_integration.yaml)
+and [migration/checklist instructions](docs/subdevices.md). Do not deploy the
+`stijn_device_check.yaml` regression fixture: its controller settings are placeholders.
 
 ## Required input contract
 
@@ -114,6 +143,9 @@ Include `ObserveRoom.yaml` once per room, each with a unique `observer_id` and
 diagnostic `observer_name`. Each instance owns its model, observation history and
 fault state. Shared outdoor/supply/operating-state IDs are allowed when physically
 appropriate. There is no two-room hard limit; device resources limit total instances.
+Declare a separate `esphome.devices` entry for each learner and pass its `device.id`
+to that room's include. The generic two-room example demonstrates this; the Stijn
+integration enables only Stijn and does not add a learner for Nick.
 
 The package is optional. The same external component accepts direct configuration:
 
@@ -131,13 +163,19 @@ adaptive_climate:
     stale_after: 15min
     prediction_30min:
       name: Room Forecast 30min
+      device_id: adaptive_living_room
     status:
       name: Room Model Status
+      device_id: adaptive_living_room
 ```
 
 `ObserveRoom.yaml` exposes all six numeric diagnostics and status. Direct
 configuration allows selecting just the diagnostics you need. Only `mode: observe`
 is accepted; no actuator/output binding exists.
+With direct configuration, assign `device_id` on each numeric/text diagnostic
+you enable, referencing your declared device. The package supplies these bindings
+for all seven outputs automatically. ESPHome's standard sensor/text-sensor schema
+and registration already support this; the Python schema and C++ are unchanged.
 
 ## Interpreting learning and predictions
 
@@ -200,6 +238,7 @@ g++ -std=c++17 -O2 -Wall -Wextra -pedantic AdaptiveClimate/tests/test_thermal_mo
 ./thermal-tests
 esphome compile AdaptiveClimate/examples/single_room.yaml
 esphome compile AdaptiveClimate/examples/two_rooms.yaml
+esphome compile AdaptiveClimate/examples/stijn_device_check.yaml
 ```
 
 The single-room example deliberately uses uninitialised input stubs and will not

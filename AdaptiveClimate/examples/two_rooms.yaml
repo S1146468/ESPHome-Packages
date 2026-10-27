@@ -15,6 +15,18 @@ substitutions:
 
 esphome:
   name: adaptive-climate-two
+  areas:
+    - id: area_a
+      name: Room A
+    - id: area_b
+      name: Room B
+  devices:
+    - id: adaptive_a
+      name: Adaptive Room A
+      area_id: area_a
+    - id: adaptive_b
+      name: Adaptive Room B
+      area_id: area_b
 esp32:
   board: esp32dev
   framework:
@@ -36,6 +48,9 @@ packages:
   observer_a: !include
     file: ../ObserveRoom.yaml
     vars:
+      device:
+        id: adaptive_a
+        name: Adaptive Room A
       observer_id: model_a
       observer_name: Room A
       room_temperature_id: temperature_a
@@ -48,6 +63,9 @@ packages:
   observer_b: !include
     file: ../ObserveRoom.yaml
     vars:
+      device:
+        id: adaptive_b
+        name: Adaptive Room B
       observer_id: model_b
       observer_name: Room B
       room_temperature_id: temperature_b

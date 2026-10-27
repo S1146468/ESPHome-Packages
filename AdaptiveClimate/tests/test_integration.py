@@ -16,15 +16,19 @@ class ConfigLoader(yaml.SafeLoader):
 
 ConfigLoader.add_constructor("!lambda", lambda loader, node: loader.construct_scalar(node))
 
-def validate(example, tmp_path, replacement=None):
+def validate(example, tmp_path, replacement=None, transform=None, generate=False):
     text = (ROOT / "examples" / example).read_text(encoding="utf-8")
     text = text.replace("../components", (ROOT / "components").as_posix())
     text = text.replace("../ObserveRoom.yaml", (ROOT / "ObserveRoom.yaml").as_posix())
+    text = text.replace("../../Thermostat/", (ROOT.parent / "Thermostat").as_posix() + "/")
     if replacement:
         text = text.replace(*replacement)
+    if transform:
+        text = transform(text)
     path = tmp_path / "test.yaml"
     path.write_text(text, encoding="utf-8")
-    return subprocess.run([sys.executable, "-m", "esphome", "config", str(path)],
+    command = ["compile", str(path), "--only-generate"] if generate else ["config", str(path)]
+    return subprocess.run([sys.executable, "-m", "esphome", *command],
                           capture_output=True, text=True, encoding="utf-8",
                           env={**os.environ, "PYTHONUTF8": "1"}, timeout=60)
 

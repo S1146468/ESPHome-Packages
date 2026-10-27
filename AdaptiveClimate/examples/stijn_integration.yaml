@@ -1,0 +1,41 @@
+# MERGE SNIPPET, not a replacement device configuration or a second ESPHome node.
+# 1. Append only this entry to your existing esphome.devices list.
+#    Keep climate_stijn, climate_nick and the existing kamer_stijn area unchanged.
+esphome:
+  devices:
+    - id: adaptive_climate_stijn
+      name: Adaptive Climate Stijn
+      area_id: kamer_stijn
+
+# 2. Keep your existing external_components entry/structure. Change its ref to
+#    this branch (or the reviewed commit) so it matches the package revision.
+external_components:
+  - source:
+      type: git
+      url: https://github.com/S1146468/ESPHome-Packages
+      ref: feature/adaptive-climate-subdevices
+      path: AdaptiveClimate/components
+    components: [adaptive_climate]
+
+# 3. Update your EXISTING named stijn_observer entry; do not add a duplicate.
+#    The only new vars are device.id/device.name. The input IDs stay unchanged.
+packages:
+  stijn_observer:
+    url: https://github.com/S1146468/ESPHome-Packages
+    ref: feature/adaptive-climate-subdevices
+    files:
+      - path: AdaptiveClimate/ObserveRoom.yaml
+        vars:
+          device:
+            id: adaptive_climate_stijn
+            name: Adaptive Climate Stijn
+          observer_id: stijn_thermal_model
+          observer_name: Stijn
+          room_temperature_id: climate_stijn_temperature
+          outdoor_temperature_id: outside_temperature_sensor
+          valve_command_id: climate_stijn_valve_opening_degree
+          supply_temperature_id: ch_temperature
+          heating_active_id: boiler_active
+          window_open_id: climate_stijn_window
+          dhw_active_id: dhw_active
+          observer_stale_after: 15min

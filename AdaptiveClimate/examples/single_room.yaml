@@ -3,6 +3,13 @@
 # external_components and packages entries, mapped to your existing IDs.
 esphome:
   name: adaptive-climate-single
+  areas:
+    - id: room_area
+      name: Room
+  devices:
+    - id: adaptive_room
+      name: Adaptive Room
+      area_id: room_area
 esp32:
   board: esp32dev
   framework:
@@ -19,6 +26,9 @@ packages:
   observer: !include
     file: ../ObserveRoom.yaml
     vars:
+      device:
+        id: adaptive_room
+        name: Adaptive Room
       observer_id: room_model
       observer_name: Room
       room_temperature_id: room_measurement
