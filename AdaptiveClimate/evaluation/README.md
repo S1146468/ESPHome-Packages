@@ -1,5 +1,10 @@
 # Initial measurement audit — 2026-11-02
 
+**Superseded scoring interpretation:** the table below uses an EMA diagnostic,
+not the observer's raw input. It is preserved for reproducibility only and must
+not be cited as thermal prediction accuracy. See `SCORING.md` and `MAPPINGS.md`
+for the next increment, strict evaluation contract and missing-data gates.
+
 Status: partial evaluation foundation. No thermal-model or actuator changes.
 This is not a completed MPC implementation or acceptance report.
 

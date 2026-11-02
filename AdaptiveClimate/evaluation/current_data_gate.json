@@ -1,0 +1,14 @@
+{
+  "metadata": {
+    "raw_temperature_mapping_verified": true,
+    "forecast_issue_times_verified": false,
+    "measurement_publication_times_verified": false,
+    "units_verified": false
+  },
+  "missing_entities": [
+    "sensor.temp_sensor_kamer_stijn_temperature",
+    "sensor.temp_sensor_kamer_nick_temperature"
+  ],
+  "mapping_evidence": "User-provided deployed YAML mappings; source histories absent",
+  "missing_boiler_history": ["OpenTherm t_boiler", "OpenTherm ch_active", "OpenTherm dhw_active"]
+}
