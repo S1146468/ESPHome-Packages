@@ -16,6 +16,7 @@ class AdaptiveClimate : public PollingComponent {
   void set_flag(unsigned i, binary_sensor::BinarySensor *s) { flags_[i] = s; }
   void set_diagnostic(unsigned i, sensor::Sensor *s) { diagnostics_[i] = s; }
   void set_status(text_sensor::TextSensor *s) { status_ = s; }
+  void set_cycle_record(text_sensor::TextSensor *s) { cycle_record_ = s; }
   void set_stale_after(uint32_t ms) { for (auto &v : values_) v.timeout = ms; }
   void set_input_policy(unsigned i, bool event_driven, uint32_t ms) {
     values_[i].event_driven = event_driven; values_[i].timeout = ms;
@@ -37,10 +38,13 @@ class AdaptiveClimate : public PollingComponent {
   void publish_inputs_(uint64_t now);
   void invalidate_(const char *reason);
   void publish_status_(const char *value);
+  void publish_cycle_(uint64_t now, const char *outcome, const char *reason, const float *forecasts);
   sensor::Sensor *inputs_[4]{};
   binary_sensor::BinarySensor *flags_[3]{};
   sensor::Sensor *diagnostics_[6]{};
   text_sensor::TextSensor *status_{nullptr};
+  text_sensor::TextSensor *cycle_record_{nullptr};
+  uint64_t cycle_sequence_{0};
   InputPolicy values_[4];
   sensor::Sensor *ages_[4]{};
   binary_sensor::BinarySensor *availability_[4]{};

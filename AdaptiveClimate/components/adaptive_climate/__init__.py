@@ -42,6 +42,7 @@ CONFIG_SCHEMA = cv.Schema({
         entity_category="diagnostic",
     ) for key in OUTPUTS},
     cv.Optional("status"): text_sensor.text_sensor_schema(entity_category="diagnostic"),
+    cv.Optional("cycle_record"): text_sensor.text_sensor_schema(entity_category="diagnostic"),
     cv.Optional("input_status"): text_sensor.text_sensor_schema(entity_category="diagnostic"),
     **{cv.Optional(key + "_age"): sensor.sensor_schema(
         accuracy_decimals=0, unit_of_measurement="s", device_class="duration",
@@ -70,5 +71,7 @@ async def to_code(config):
             cg.add(var.set_diagnostic(index, await sensor.new_sensor(config[key])))
     if "status" in config:
         cg.add(var.set_status(await text_sensor.new_text_sensor(config["status"])))
+    if "cycle_record" in config:
+        cg.add(var.set_cycle_record(await text_sensor.new_text_sensor(config["cycle_record"])))
     if "input_status" in config:
         cg.add(var.set_input_status(await text_sensor.new_text_sensor(config["input_status"])))

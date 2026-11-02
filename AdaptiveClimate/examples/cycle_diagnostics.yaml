@@ -1,0 +1,8 @@
+# Build-only observer fixture, not a replacement thermostat configuration.
+packages:
+  fixture: !include single_room.yaml
+adaptive_climate:
+  - id: !extend room_model
+    cycle_record:
+      name: "Room Observation Cycle"
+      device_id: adaptive_room

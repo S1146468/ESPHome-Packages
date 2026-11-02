@@ -1,5 +1,16 @@
 # Initial measurement audit — 2026-11-02
 
+Current development increment:
+- [Continuous event collection and startup instructions](COLLECTION.md)
+- [Optional atomic observer cycle telemetry](../docs/cycle_diagnostics.md)
+- [Working offline candidates and exploratory comparisons](EXPERIMENTS.md)
+- [Read-only shadow MPC architecture and validation gates](SHADOW_MPC_FOUNDATION.md)
+
+Collection is ready to configure on a host that can reach HA; it has not been
+started against the user's instance. New telemetry is optional and not deployed.
+The production thermal-model mathematics remain unchanged. New independent data
+must validate any apparent candidate improvement before promotion.
+
 Newest increment: [event-driven health reconstruction and sensitivity results](EVENT_HEALTH.md).
 The event-only status heartbeat assumption is corrected in a separate, explicitly
 labelled held-state analysis. Original strict scoring remains available.
