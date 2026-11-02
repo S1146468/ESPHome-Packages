@@ -5,10 +5,8 @@
     "measurement_publication_times_verified": false,
     "units_verified": false
   },
-  "missing_entities": [
-    "sensor.temp_sensor_kamer_stijn_temperature",
-    "sensor.temp_sensor_kamer_nick_temperature"
-  ],
-  "mapping_evidence": "User-provided deployed YAML mappings; source histories absent",
-  "missing_boiler_history": ["OpenTherm t_boiler", "OpenTherm ch_active", "OpenTherm dhw_active"]
+  "missing_entities": [],
+  "mapping_evidence": "User-confirmed mappings; raw and actual boiler histories now present in history (8).csv",
+  "missing_boiler_history": [],
+  "remaining_replay_evidence": ["observer tick/issue clock", "initial model/covariance/radiator state or pre-boot history", "raw publication and continuous connection/availability evidence"]
 }

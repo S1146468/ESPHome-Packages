@@ -1,0 +1,2086 @@
+{
+  "sources": [
+    {
+      "file": "history (5).csv",
+      "sha256": "4b02816b516b456a9f63849d77d405149d37f8ea6e553b9b2285b746633abc24",
+      "rows": 333856
+    },
+    {
+      "file": "history (6).csv",
+      "sha256": "38d69493300b2231ac9ec4dc9e0c2354c53d07fbea8a093375d8cc8e77a686b9",
+      "rows": 3185
+    },
+    {
+      "file": "history (8).csv",
+      "sha256": "7d2a5e9adec85b4ba1bff4dbc4d75fcc71b2d6473fef55275cfa818edede9968",
+      "rows": 36498
+    }
+  ],
+  "duplicates": 3241,
+  "conflicts": 5,
+  "inventory": {
+    "sensor.temp_sensor_kamer_nick_humidity": {
+      "rows": 1433,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T12:54:30.263Z",
+      "median_change_gap_s": 68.67400002479553,
+      "max_change_gap_s": 4420.137000083923,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "sensor.temp_sensor_kamer_stijn_humidity": {
+      "rows": 1870,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T12:54:51.459Z",
+      "median_change_gap_s": 59.88100004196167,
+      "max_change_gap_s": 3588.361000061035,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "sensor.ventilatie_ah_badkamer": {
+      "rows": 501,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:40:31.599Z",
+      "median_change_gap_s": 105.03099989891052,
+      "max_change_gap_s": 7188.700000047684,
+      "unavailable": 3,
+      "conflicts": 0
+    },
+    "sensor.ventilatie_ah_kamer_nick": {
+      "rows": 2568,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:42:08.206Z",
+      "median_change_gap_s": 60.074000120162964,
+      "max_change_gap_s": 2834.8049998283386,
+      "unavailable": 2,
+      "conflicts": 0
+    },
+    "sensor.ventilatie_ah_kamer_stijn": {
+      "rows": 3047,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:42:08.612Z",
+      "median_change_gap_s": 59.8510000705719,
+      "max_change_gap_s": 2286.6349999904633,
+      "unavailable": 3,
+      "conflicts": 0
+    },
+    "sensor.ventilatie_ah_aanvoer_raw": {
+      "rows": 4854,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:42:08.613Z",
+      "median_change_gap_s": 30.042999982833862,
+      "max_change_gap_s": 2620.8499999046326,
+      "unavailable": 2,
+      "conflicts": 0
+    },
+    "sensor.ventilatie_ah_kamer_verschil": {
+      "rows": 5608,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:42:08.614Z",
+      "median_change_gap_s": 30.04099988937378,
+      "max_change_gap_s": 1436.970999956131,
+      "unavailable": 3,
+      "conflicts": 0
+    },
+    "sensor.ventilatie_ah_badkamer_delta": {
+      "rows": 1712,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:41:08.758Z",
+      "median_change_gap_s": 75.36999988555908,
+      "max_change_gap_s": 2583.005000114441,
+      "unavailable": 3,
+      "conflicts": 0
+    },
+    "sensor.ventilatie_ah_aanvoer_10m": {
+      "rows": 1218,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:41:08.758Z",
+      "median_change_gap_s": 119.70300006866455,
+      "max_change_gap_s": 3864.2200000286102,
+      "unavailable": 2,
+      "conflicts": 0
+    },
+    "input_number.ventilatie_badkamer_session_baseline_ah": {
+      "rows": 13,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T00:50:41.108Z",
+      "median_change_gap_s": 18958.350999832153,
+      "max_change_gap_s": 40030.833000183105,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "input_number.ventilatie_badkamer_session_peak_ah": {
+      "rows": 161,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T00:50:41.109Z",
+      "median_change_gap_s": 27.992000102996826,
+      "max_change_gap_s": 40030.832000017166,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "sensor.ventilatie_ah_badkamer_10m": {
+      "rows": 475,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:40:31.600Z",
+      "median_change_gap_s": 115.79299998283386,
+      "max_change_gap_s": 7202.741999864578,
+      "unavailable": 2,
+      "conflicts": 0
+    },
+    "sensor.ventilatie_ah_badkamer_trend": {
+      "rows": 829,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:42:31.998Z",
+      "median_change_gap_s": 60.00099992752075,
+      "max_change_gap_s": 17010.286999940872,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "sensor.ventilatie_keuken_actieve_sensoren": {
+      "rows": 297,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T10:56:18.861Z",
+      "median_change_gap_s": 25.081000089645386,
+      "max_change_gap_s": 32591.976999998093,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "sensor.climate_nick_multiplier_proportional_kp": {
+      "rows": 3,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.166Z",
+      "median_change_gap_s": 193675.52099990845,
+      "max_change_gap_s": 193675.52099990845,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.climate_nick_multiplier_integral_ki": {
+      "rows": 3,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.166Z",
+      "median_change_gap_s": 193675.5220000744,
+      "max_change_gap_s": 193675.5220000744,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.climate_nick_multiplier_derivative_kd": {
+      "rows": 3,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.166Z",
+      "median_change_gap_s": 193675.5220000744,
+      "max_change_gap_s": 193675.5220000744,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.climate_stijn_multiplier_proportional_kp": {
+      "rows": 3,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.146Z",
+      "median_change_gap_s": 193675.51999998093,
+      "max_change_gap_s": 193675.51999998093,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.climate_stijn_multiplier_integral_ki": {
+      "rows": 3,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.165Z",
+      "median_change_gap_s": 193675.51999998093,
+      "max_change_gap_s": 193675.51999998093,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.climate_stijn_multiplier_derivative_kd": {
+      "rows": 3,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.165Z",
+      "median_change_gap_s": 193675.51999998093,
+      "max_change_gap_s": 193675.51999998093,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.ventilatie_keuken_pm2_5_trend": {
+      "rows": 3977,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:29:27.864Z",
+      "median_change_gap_s": 60.0,
+      "max_change_gap_s": 3265.088000059128,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.ventilatie_keuken_co2_trend": {
+      "rows": 8186,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:43:17.487Z",
+      "median_change_gap_s": 29.730000019073486,
+      "max_change_gap_s": 118.94200015068054,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.ventilatie_keuken_pm2_5_baseline": {
+      "rows": 1364,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:16:04.134Z",
+      "median_change_gap_s": 89.11700010299683,
+      "max_change_gap_s": 3979.8069999217987,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "sensor.ventilatie_keuken_co2_baseline": {
+      "rows": 4861,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:43:17.488Z",
+      "median_change_gap_s": 29.751999855041504,
+      "max_change_gap_s": 534.6510000228882,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "sensor.ventilatie_keuken_pm2_5_delta": {
+      "rows": 3502,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:26:27.861Z",
+      "median_change_gap_s": 29.735000133514404,
+      "max_change_gap_s": 3445.09299993515,
+      "unavailable": 0,
+      "conflicts": 5
+    },
+    "sensor.ventilatie_keuken_co2_delta": {
+      "rows": 13166,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:43:17.489Z",
+      "median_change_gap_s": 29.633000135421753,
+      "max_change_gap_s": 148.44599986076355,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "number.radiatorknop_stijn_timer_mode_target_temp": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.404Z",
+      "median_change_gap_s": 26.11899995803833,
+      "max_change_gap_s": 192000.59300017357,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "number.radiatorknop_nick_timer_mode_target_temp": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.503Z",
+      "median_change_gap_s": 48.081000089645386,
+      "max_change_gap_s": 192000.58499979973,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "number.radiatorknop_nick_frost_protection_temperature": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.504Z",
+      "median_change_gap_s": 48.08200001716614,
+      "max_change_gap_s": 192000.58400011063,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "number.radiatorknop_nick_temperature_accuracy": {
+      "rows": 10,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.502Z",
+      "median_change_gap_s": 48.0789999961853,
+      "max_change_gap_s": 192000.5609998703,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "sensor.kamer_nick_adaptive_climate_nick_nick_model_residual_rmse": {
+      "rows": 827,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:39:01.108Z",
+      "median_change_gap_s": 300.0189998149872,
+      "max_change_gap_s": 6804.473000049591,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.server_thermostaat_stijn_model_residual_rmse": {
+      "rows": 808,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:39:03.122Z",
+      "median_change_gap_s": 300.0200002193451,
+      "max_change_gap_s": 3600.699000120163,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "number.radiatorknop_stijn_temporary_mode_duration": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.404Z",
+      "median_change_gap_s": 26.140999794006348,
+      "max_change_gap_s": 192000.5790002346,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "number.radiatorknop_nick_temporary_mode_duration": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.503Z",
+      "median_change_gap_s": 48.081000089645386,
+      "max_change_gap_s": 192000.56799983978,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "sensor.radiatorknop_stijn_local_temperature": {
+      "rows": 265,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:37:39.591Z",
+      "median_change_gap_s": 302.42700004577637,
+      "max_change_gap_s": 15930.34200000763,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "sensor.radiatorknop_nick_local_temperature": {
+      "rows": 111,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:00:36.250Z",
+      "median_change_gap_s": 365.12599992752075,
+      "max_change_gap_s": 55726.97300004959,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "climate.radiatorknop_nick": {
+      "rows": 120,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:00:36.249Z",
+      "median_change_gap_s": 263.81699991226196,
+      "max_change_gap_s": 46023.30800008774,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "number.radiatorknop_nick_external_temperature_input": {
+      "rows": 11,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.504Z",
+      "median_change_gap_s": 48.08200001716614,
+      "max_change_gap_s": 191144.0190000534,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "sensor.kamer_nick_adaptive_climate_nick_nick_forecast_15min": {
+      "rows": 838,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:39:01.108Z",
+      "median_change_gap_s": 300.0169999599457,
+      "max_change_gap_s": 6804.471999883652,
+      "unavailable": 14,
+      "conflicts": 0
+    },
+    "sensor.kamer_nick_adaptive_climate_nick_nick_forecast_30min": {
+      "rows": 838,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:39:01.108Z",
+      "median_change_gap_s": 300.01799988746643,
+      "max_change_gap_s": 6804.471999883652,
+      "unavailable": 14,
+      "conflicts": 0
+    },
+    "sensor.kamer_nick_adaptive_climate_nick_nick_forecast_60min": {
+      "rows": 838,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:39:01.108Z",
+      "median_change_gap_s": 300.0169999599457,
+      "max_change_gap_s": 6804.473000049591,
+      "unavailable": 14,
+      "conflicts": 0
+    },
+    "sensor.server_thermostaat_stijn_forecast_15min": {
+      "rows": 741,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:39:03.121Z",
+      "median_change_gap_s": 300.0199999809265,
+      "max_change_gap_s": 4200.714999914169,
+      "unavailable": 27,
+      "conflicts": 0
+    },
+    "sensor.server_thermostaat_stijn_forecast_30min": {
+      "rows": 741,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:39:03.122Z",
+      "median_change_gap_s": 300.0199999809265,
+      "max_change_gap_s": 4200.713999986649,
+      "unavailable": 27,
+      "conflicts": 0
+    },
+    "sensor.server_thermostaat_stijn_forecast_60min": {
+      "rows": 741,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:39:03.122Z",
+      "median_change_gap_s": 300.0199999809265,
+      "max_change_gap_s": 4200.713999986649,
+      "unavailable": 27,
+      "conflicts": 0
+    },
+    "climate.climate_nick_verwarming_nick": {
+      "rows": 1199,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:13:43.686Z",
+      "median_change_gap_s": 35.60899996757507,
+      "max_change_gap_s": 15178.105999946594,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.climate_nick_temp": {
+      "rows": 23628,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:20:37.132Z",
+      "median_change_gap_s": 5.125999927520752,
+      "max_change_gap_s": 14780.634999990463,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.climate_stijn_temp": {
+      "rows": 27005,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:43:25.119Z",
+      "median_change_gap_s": 5.126000165939331,
+      "max_change_gap_s": 4537.7190001010895,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "number.radiatorknop_nick_local_temperature_calibration": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.526Z",
+      "median_change_gap_s": 48.104000091552734,
+      "max_change_gap_s": 192000.56900000572,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "sensor.radiatorknop_nick_battery": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.504Z",
+      "median_change_gap_s": 48.08200001716614,
+      "max_change_gap_s": 192000.56799983978,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "sensor.radiatorknop_nick_valve_opening_limit_voltage": {
+      "rows": 9,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.503Z",
+      "median_change_gap_s": 384.9500000476837,
+      "max_change_gap_s": 191144.9700000286,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "sensor.radiatorknop_nick_valve_closing_limit_voltage": {
+      "rows": 9,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.502Z",
+      "median_change_gap_s": 384.8109998703003,
+      "max_change_gap_s": 191145.05599999428,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "sensor.radiatorknop_nick_valve_motor_running_voltage": {
+      "rows": 92,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.526Z",
+      "median_change_gap_s": 35.5460000038147,
+      "max_change_gap_s": 153798.88300013542,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "number.radiatorknop_nick_valve_opening_degree": {
+      "rows": 91,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.504Z",
+      "median_change_gap_s": 35.55299997329712,
+      "max_change_gap_s": 153802.11099982262,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "number.radiatorknop_nick_valve_closing_degree": {
+      "rows": 91,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.502Z",
+      "median_change_gap_s": 35.555999994277954,
+      "max_change_gap_s": 153801.7690000534,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "sensor.climate_nick_heat_output": {
+      "rows": 86,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.145Z",
+      "median_change_gap_s": 35.59599995613098,
+      "max_change_gap_s": 154215.47099995613,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.climate_nick_valve_opening_degree": {
+      "rows": 86,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.146Z",
+      "median_change_gap_s": 35.59600019454956,
+      "max_change_gap_s": 154215.47200012207,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.climate_nick_valve_closing_degree": {
+      "rows": 86,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.146Z",
+      "median_change_gap_s": 35.59700012207031,
+      "max_change_gap_s": 154215.47200012207,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.climate_nick_error": {
+      "rows": 115,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.165Z",
+      "median_change_gap_s": 71.41300010681152,
+      "max_change_gap_s": 154220.5910000801,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.climate_nick_error_proportional": {
+      "rows": 126,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.165Z",
+      "median_change_gap_s": 71.4060001373291,
+      "max_change_gap_s": 154220.59299993515,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.climate_nick_error_integral": {
+      "rows": 1634,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.165Z",
+      "median_change_gap_s": 5.128999948501587,
+      "max_change_gap_s": 154072.25499987602,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.climate_nick_error_derivative": {
+      "rows": 3,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.165Z",
+      "median_change_gap_s": 193675.52099990845,
+      "max_change_gap_s": 193675.52099990845,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.climate_nick_pid_output_heat": {
+      "rows": 1405,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.166Z",
+      "median_change_gap_s": 5.128999948501587,
+      "max_change_gap_s": 154215.47499990463,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.climate_stijn_heat_output": {
+      "rows": 167,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:38:54.481Z",
+      "median_change_gap_s": 107.12100005149841,
+      "max_change_gap_s": 38377.50100016594,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.climate_stijn_valve_opening_degree": {
+      "rows": 167,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:38:54.481Z",
+      "median_change_gap_s": 107.12100005149841,
+      "max_change_gap_s": 38377.50200009346,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.climate_stijn_valve_closing_degree": {
+      "rows": 167,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:38:54.481Z",
+      "median_change_gap_s": 107.12100005149841,
+      "max_change_gap_s": 38377.50100016594,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.climate_stijn_error": {
+      "rows": 464,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:39:45.268Z",
+      "median_change_gap_s": 71.50300002098083,
+      "max_change_gap_s": 38367.34400010109,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.climate_stijn_error_proportional": {
+      "rows": 493,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:39:45.268Z",
+      "median_change_gap_s": 71.40900015830994,
+      "max_change_gap_s": 38367.34800004959,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.climate_stijn_error_integral": {
+      "rows": 6470,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:39:40.238Z",
+      "median_change_gap_s": 5.128000020980835,
+      "max_change_gap_s": 38346.9350001812,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.climate_stijn_error_derivative": {
+      "rows": 3,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.146Z",
+      "median_change_gap_s": 193675.51999998093,
+      "max_change_gap_s": 193675.51999998093,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.climate_stijn_pid_output_heat": {
+      "rows": 4151,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:40:41.585Z",
+      "median_change_gap_s": 5.128000020980835,
+      "max_change_gap_s": 38377.49800014496,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.radiatorknop_nick_linkquality": {
+      "rows": 2948,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:42:02.258Z",
+      "median_change_gap_s": 59.18599987030029,
+      "max_change_gap_s": 5700.0940001010895,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "sensor.kamer_nick_adaptive_climate_nick_nick_room_temperature_input_age": {
+      "rows": 25651,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:43:25.117Z",
+      "median_change_gap_s": 10.248000144958496,
+      "max_change_gap_s": 25.84599995613098,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.kamer_nick_adaptive_climate_nick_nick_outdoor_temperature_input_age": {
+      "rows": 25651,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:43:25.118Z",
+      "median_change_gap_s": 10.248000144958496,
+      "max_change_gap_s": 25.84500002861023,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.kamer_nick_adaptive_climate_nick_nick_valve_command_input_age": {
+      "rows": 15586,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:43:04.601Z",
+      "median_change_gap_s": 10.461999893188477,
+      "max_change_gap_s": 305.95300006866455,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.kamer_nick_adaptive_climate_nick_nick_supply_temperature_input_age": {
+      "rows": 25651,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:43:25.118Z",
+      "median_change_gap_s": 10.248000144958496,
+      "max_change_gap_s": 25.84500002861023,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.kamer_stijn_adaptive_climate_stijn_stijn_room_temperature_input_age": {
+      "rows": 25653,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:43:25.119Z",
+      "median_change_gap_s": 10.248000144958496,
+      "max_change_gap_s": 25.844000101089478,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.kamer_stijn_adaptive_climate_stijn_stijn_outdoor_temperature_input_age": {
+      "rows": 25653,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:43:25.119Z",
+      "median_change_gap_s": 10.248000144958496,
+      "max_change_gap_s": 25.844000101089478,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.kamer_stijn_adaptive_climate_stijn_stijn_valve_command_input_age": {
+      "rows": 16059,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:43:04.602Z",
+      "median_change_gap_s": 10.462000131607056,
+      "max_change_gap_s": 214.30599999427795,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.kamer_stijn_adaptive_climate_stijn_stijn_supply_temperature_input_age": {
+      "rows": 25653,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:43:25.119Z",
+      "median_change_gap_s": 10.248000144958496,
+      "max_change_gap_s": 25.844000101089478,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "input_select.ventilatie_vraag_toilet": {
+      "rows": 103,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:38:05.328Z",
+      "median_change_gap_s": 600.0019998550415,
+      "max_change_gap_s": 30646.329999923706,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "input_select.ventilatie_vraag_badkamer": {
+      "rows": 18,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T00:50:41.104Z",
+      "median_change_gap_s": 3855.3079998493195,
+      "max_change_gap_s": 64971.63199996948,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "input_select.ventilatie_vraag_keuken": {
+      "rows": 79,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:10:43.239Z",
+      "median_change_gap_s": 784.8639998435974,
+      "max_change_gap_s": 32083.96199989319,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "input_select.ventilatie_badkamer_status": {
+      "rows": 25,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T00:50:41.103Z",
+      "median_change_gap_s": 3758.066999912262,
+      "max_change_gap_s": 40030.83800005913,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "binary_sensor.ventilatie_keuken_activiteit": {
+      "rows": 135,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T10:56:48.864Z",
+      "median_change_gap_s": 260.5529999732971,
+      "max_change_gap_s": 32561.97500014305,
+      "unavailable": 3,
+      "conflicts": 0
+    },
+    "binary_sensor.ventilatie_keuken_beide_sensoren": {
+      "rows": 155,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T10:56:05.394Z",
+      "median_change_gap_s": 177.83400011062622,
+      "max_change_gap_s": 32593.576999902725,
+      "unavailable": 3,
+      "conflicts": 0
+    },
+    "binary_sensor.ventilatie_keuken_recent_actief": {
+      "rows": 97,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:01:48.865Z",
+      "median_change_gap_s": 734.2539999485016,
+      "max_change_gap_s": 32261.974999904633,
+      "unavailable": 3,
+      "conflicts": 0
+    },
+    "binary_sensor.ventilatie_keuken_kooklucht": {
+      "rows": 61,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:01:43.230Z",
+      "median_change_gap_s": 563.9429998397827,
+      "max_change_gap_s": 35367.550000190735,
+      "unavailable": 3,
+      "conflicts": 0
+    },
+    "binary_sensor.ventilatie_keuken_lucht_hersteld": {
+      "rows": 441,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:39:23.009Z",
+      "median_change_gap_s": 478.07599997520447,
+      "max_change_gap_s": 10131.355999946594,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "update.radiatorknop_stijn": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.405Z",
+      "median_change_gap_s": 26.151000022888184,
+      "max_change_gap_s": 192000.5680000782,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "select.radiatorknop_stijn_temporary_mode_select": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.406Z",
+      "median_change_gap_s": 26.111999988555908,
+      "max_change_gap_s": 192000.60099983215,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "text.radiatorknop_stijn_weekly_schedule_sunday": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.404Z",
+      "median_change_gap_s": 26.117000102996826,
+      "max_change_gap_s": 192000.59599995613,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "text.radiatorknop_stijn_weekly_schedule_monday": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.406Z",
+      "median_change_gap_s": 26.141000032424927,
+      "max_change_gap_s": 192000.57800006866,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "text.radiatorknop_stijn_weekly_schedule_tuesday": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.405Z",
+      "median_change_gap_s": 26.131999969482422,
+      "max_change_gap_s": 192000.58200001717,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "text.radiatorknop_stijn_weekly_schedule_wednesday": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.405Z",
+      "median_change_gap_s": 26.16000008583069,
+      "max_change_gap_s": 192000.55999994278,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "text.radiatorknop_stijn_weekly_schedule_thursday": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.404Z",
+      "median_change_gap_s": 26.13100004196167,
+      "max_change_gap_s": 192000.5829999447,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "text.radiatorknop_stijn_weekly_schedule_friday": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.404Z",
+      "median_change_gap_s": 26.122999906539917,
+      "max_change_gap_s": 192000.58500003815,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "text.radiatorknop_stijn_weekly_schedule_saturday": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.404Z",
+      "median_change_gap_s": 26.14199995994568,
+      "max_change_gap_s": 192000.57800006866,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "switch.radiatorknop_stijn_smart_temperature_control": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.405Z",
+      "median_change_gap_s": 26.127000093460083,
+      "max_change_gap_s": 192000.58500003815,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "select.radiatorknop_nick_temporary_mode_select": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.526Z",
+      "median_change_gap_s": 48.1029999256134,
+      "max_change_gap_s": 192000.5720000267,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "switch.radiatorknop_nick_child_lock": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.526Z",
+      "median_change_gap_s": 48.104000091552734,
+      "max_change_gap_s": 192000.58200001717,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "switch.radiatorknop_nick_open_window": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.502Z",
+      "median_change_gap_s": 48.0789999961853,
+      "max_change_gap_s": 192000.58400011063,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "select.radiatorknop_nick_temperature_sensor_select": {
+      "rows": 9,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.504Z",
+      "median_change_gap_s": 168.7079999446869,
+      "max_change_gap_s": 192000.57800006866,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "sensor.radiatorknop_nick_idle_steps": {
+      "rows": 9,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.503Z",
+      "median_change_gap_s": 384.93499994277954,
+      "max_change_gap_s": 191149.9690001011,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "sensor.radiatorknop_nick_closing_steps": {
+      "rows": 9,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.526Z",
+      "median_change_gap_s": 384.9009997844696,
+      "max_change_gap_s": 191149.99100017548,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "text.radiatorknop_nick_weekly_schedule_sunday": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.504Z",
+      "median_change_gap_s": 48.08200001716614,
+      "max_change_gap_s": 192000.56299996376,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "text.radiatorknop_nick_weekly_schedule_monday": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.503Z",
+      "median_change_gap_s": 48.079999923706055,
+      "max_change_gap_s": 192000.55999994278,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "text.radiatorknop_nick_weekly_schedule_tuesday": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.526Z",
+      "median_change_gap_s": 48.1029999256134,
+      "max_change_gap_s": 192000.58200001717,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "text.radiatorknop_nick_weekly_schedule_wednesday": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.503Z",
+      "median_change_gap_s": 48.081000089645386,
+      "max_change_gap_s": 192000.60099983215,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "text.radiatorknop_nick_weekly_schedule_thursday": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.504Z",
+      "median_change_gap_s": 48.08099985122681,
+      "max_change_gap_s": 192000.58200001717,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "text.radiatorknop_nick_weekly_schedule_friday": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.502Z",
+      "median_change_gap_s": 48.080000162124634,
+      "max_change_gap_s": 192000.58499979973,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "text.radiatorknop_nick_weekly_schedule_saturday": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.502Z",
+      "median_change_gap_s": 48.0789999961853,
+      "max_change_gap_s": 192000.58500003815,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "update.radiatorknop_nick": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.504Z",
+      "median_change_gap_s": 48.08200001716614,
+      "max_change_gap_s": 192000.58100008965,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "sensor.radiatorknop_nick_last_seen": {
+      "rows": 7155,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:43:01.448Z",
+      "median_change_gap_s": 59.170000076293945,
+      "max_change_gap_s": 61.89299988746643,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "switch.radiatorknop_nick_smart_temperature_control": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.504Z",
+      "median_change_gap_s": 48.08099985122681,
+      "max_change_gap_s": 192000.58500003815,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "sensor.kamer_nick_adaptive_climate_nick_nick_model_training_samples": {
+      "rows": 827,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:39:01.108Z",
+      "median_change_gap_s": 300.01900005340576,
+      "max_change_gap_s": 6804.473000049591,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.kamer_nick_adaptive_climate_nick_nick_model_heating_excitation": {
+      "rows": 3,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.168Z",
+      "median_change_gap_s": 193675.52500009537,
+      "max_change_gap_s": 193675.52500009537,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.kamer_nick_adaptive_climate_nick_nick_model_status": {
+      "rows": 43,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T22:38:55.032Z",
+      "median_change_gap_s": 300.13499999046326,
+      "max_change_gap_s": 42647.52500009537,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.kamer_nick_adaptive_climate_nick_nick_input_freshness_status": {
+      "rows": 323,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:28:43.797Z",
+      "median_change_gap_s": 725.9400000572205,
+      "max_change_gap_s": 4924.093999862671,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.server_thermostaat_stijn_model_training_samples": {
+      "rows": 808,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:39:03.122Z",
+      "median_change_gap_s": 300.0199999809265,
+      "max_change_gap_s": 3600.699000120163,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.server_thermostaat_stijn_model_heating_excitation": {
+      "rows": 9,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T05:49:00.252Z",
+      "median_change_gap_s": 26045.831000089645,
+      "max_change_gap_s": 135020.0989999771,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.server_thermostaat_stijn_model_status": {
+      "rows": 84,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T10:24:02.298Z",
+      "median_change_gap_s": 354.6270000934601,
+      "max_change_gap_s": 39516.43299984932,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.kamer_stijn_adaptive_climate_stijn_stijn_input_freshness_status": {
+      "rows": 358,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:37:18.319Z",
+      "median_change_gap_s": 531.8380000591278,
+      "max_change_gap_s": 4583.206000089645,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "button.climate_nick_pid_autotune": {
+      "rows": 3,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.021Z",
+      "median_change_gap_s": 193675.5269999504,
+      "max_change_gap_s": 193675.5269999504,
+      "unavailable": 3,
+      "conflicts": 0
+    },
+    "binary_sensor.climate_nick_window": {
+      "rows": 4,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.144Z",
+      "median_change_gap_s": 6484.93799996376,
+      "max_change_gap_s": 187190.57400012016,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "switch.climate_nick_heat_output_switch": {
+      "rows": 19,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.195Z",
+      "median_change_gap_s": 234.7519998550415,
+      "max_change_gap_s": 154215.46300005913,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "button.climate_stijn_pid_autotune": {
+      "rows": 3,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.022Z",
+      "median_change_gap_s": 193675.5269999504,
+      "max_change_gap_s": 193675.5269999504,
+      "unavailable": 3,
+      "conflicts": 0
+    },
+    "binary_sensor.climate_stijn_window": {
+      "rows": 33,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T10:18:42.562Z",
+      "median_change_gap_s": 2041.2699999809265,
+      "max_change_gap_s": 50630.24300003052,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "switch.climate_stijn_heat_output_switch": {
+      "rows": 67,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:38:54.484Z",
+      "median_change_gap_s": 786.0899999141693,
+      "max_change_gap_s": 38382.53799986839,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.knmi_dew_point": {
+      "rows": 327,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:32:56.034Z",
+      "median_change_gap_s": 600.0120000839233,
+      "max_change_gap_s": 4200.006000041962,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "sensor.knmi_wind_chill": {
+      "rows": 270,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:42:56.045Z",
+      "median_change_gap_s": 600.0160000324249,
+      "max_change_gap_s": 6600.003999948502,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "sensor.knmi_max_temperature_today": {
+      "rows": 12,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T00:52:55.028Z",
+      "median_change_gap_s": 12614.730000019073,
+      "max_change_gap_s": 51000.957000017166,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "sensor.knmi_max_temperature_tomorrow": {
+      "rows": 6,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:32:56.036Z",
+      "median_change_gap_s": 43958.31599998474,
+      "max_change_gap_s": 89401.05399990082,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "sensor.knmi_min_temperature_today": {
+      "rows": 7,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:32:56.036Z",
+      "median_change_gap_s": 43958.31599998474,
+      "max_change_gap_s": 51014.70100021362,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "sensor.knmi_min_temperature_tomorrow": {
+      "rows": 5,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:32:56.036Z",
+      "median_change_gap_s": 89401.05399990082,
+      "max_change_gap_s": 89415.65800023079,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "sensor.temperature": {
+      "rows": 215,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:42:56.046Z",
+      "median_change_gap_s": 600.0599999427795,
+      "max_change_gap_s": 6600.004999876022,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "sensor.knmi_solar_irradiance": {
+      "rows": 165,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:42:56.045Z",
+      "median_change_gap_s": 600.0030000209808,
+      "max_change_gap_s": 52215.71199989319,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "sensor.knmi_air_pressure": {
+      "rows": 43,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:02:56.036Z",
+      "median_change_gap_s": 1200.0250000953674,
+      "max_change_gap_s": 78002.00999999046,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "sensor.knmi_precipitation_today": {
+      "rows": 1,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-10-30T11:00:00.000Z",
+      "median_change_gap_s": null,
+      "max_change_gap_s": null,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "sensor.knmi_precipitation_tomorrow": {
+      "rows": 1,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-10-30T11:00:00.000Z",
+      "median_change_gap_s": null,
+      "max_change_gap_s": null,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "sensor.knmi_remaining_api_requests": {
+      "rows": 875,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:47:56.064Z",
+      "median_change_gap_s": 300.0020000934601,
+      "max_change_gap_s": 314.8140001296997,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "sensor.knmi_wind_speed": {
+      "rows": 416,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:32:56.039Z",
+      "median_change_gap_s": 600.0010001659393,
+      "max_change_gap_s": 2399.981999874115,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "sensor.knmi_visibility": {
+      "rows": 91,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:02:56.038Z",
+      "median_change_gap_s": 600.0030000209808,
+      "max_change_gap_s": 65999.97599983215,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "sensor.humidity": {
+      "rows": 259,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:42:56.045Z",
+      "median_change_gap_s": 600.0250000953674,
+      "max_change_gap_s": 4799.977999925613,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "binary_sensor.knmi_warning": {
+      "rows": 2,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-10-30T11:22:38.307Z",
+      "median_change_gap_s": 1358.3069999217987,
+      "max_change_gap_s": 1358.3069999217987,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "binary_sensor.knmi_sun": {
+      "rows": 7,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T06:32:56.067Z",
+      "median_change_gap_s": 51299.96700000763,
+      "max_change_gap_s": 51915.69599986076,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "sensor.knmi_location": {
+      "rows": 1,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-10-30T11:00:00.000Z",
+      "median_change_gap_s": null,
+      "max_change_gap_s": null,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "sensor.knmi_description": {
+      "rows": 25,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-10-31T03:32:38.320Z",
+      "median_change_gap_s": 1200.0260000228882,
+      "max_change_gap_s": 15599.926000118256,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "sensor.knmi_latest_update": {
+      "rows": 438,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:42:56.047Z",
+      "median_change_gap_s": 600.0,
+      "max_change_gap_s": 614.702999830246,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "sensor.knmi_weather_forecast": {
+      "rows": 9,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T06:52:56.008Z",
+      "median_change_gap_s": 21601.977999925613,
+      "max_change_gap_s": 68414.70600008965,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "sensor.knmi_weather_code": {
+      "rows": 2,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-10-30T11:22:38.311Z",
+      "median_change_gap_s": 1358.3110001087189,
+      "max_change_gap_s": 1358.3110001087189,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "weather.knmi_home": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:02:56.039Z",
+      "median_change_gap_s": 1200.0309998989105,
+      "max_change_gap_s": 248417.70399999619,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "climate.verwarming_nick_master": {
+      "rows": 1223,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T12:54:05.715Z",
+      "median_change_gap_s": 36.228999853134155,
+      "max_change_gap_s": 15177.730999946594,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "climate.verwarming_stijn_master": {
+      "rows": 1359,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T12:54:55.891Z",
+      "median_change_gap_s": 35.41799998283386,
+      "max_change_gap_s": 4950.153000116348,
+      "unavailable": 0,
+      "conflicts": 0
+    },
+    "sensor.temp_sensor_kamer_nick_temperature": {
+      "rows": 1203,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T12:54:05.714Z",
+      "median_change_gap_s": 37.30299997329712,
+      "max_change_gap_s": 15177.732000112534,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "sensor.temp_sensor_kamer_stijn_temperature": {
+      "rows": 1237,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T12:54:55.891Z",
+      "median_change_gap_s": 45.223999977111816,
+      "max_change_gap_s": 4950.151999950409,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "sensor.thermostaat_heating_temperature": {
+      "rows": 4768,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T12:48:05.033Z",
+      "median_change_gap_s": 7.236999988555908,
+      "max_change_gap_s": 3345.5360000133514,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.diyless_thermostat_rssi": {
+      "rows": 1758,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T12:53:11.173Z",
+      "median_change_gap_s": 90.11400008201599,
+      "max_change_gap_s": 1440.9289999008179,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.diyless_thermostat_uptime": {
+      "rows": 890,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T12:54:01.963Z",
+      "median_change_gap_s": 300.018000125885,
+      "max_change_gap_s": 300.61299991607666,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.thermostaat_water_pressure_in_ch_circuit_bar": {
+      "rows": 19898,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T12:55:05.418Z",
+      "median_change_gap_s": 2.4189999103546143,
+      "max_change_gap_s": 13756.491000175476,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.thermostaat_burner_starts": {
+      "rows": 121,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:28:50.637Z",
+      "median_change_gap_s": 453.4869999885559,
+      "max_change_gap_s": 35051.606999874115,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.thermostaat_hours_burner_ch_mode": {
+      "rows": 6,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.145Z",
+      "median_change_gap_s": 24888.3109998703,
+      "max_change_gap_s": 104236.33000016212,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.thermostaat_hours_burner_is_in_dhw_mode": {
+      "rows": 4,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.145Z",
+      "median_change_gap_s": 30081.105000019073,
+      "max_change_gap_s": 163594.41199994087,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.thermostaat_target_water_temperature": {
+      "rows": 44,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T12:43:01.398Z",
+      "median_change_gap_s": 2403.6360001564026,
+      "max_change_gap_s": 53401.421000003815,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "sensor.server_thermostaat_outside_temperature_smoothed": {
+      "rows": 225,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T12:52:56.387Z",
+      "median_change_gap_s": 600.220999956131,
+      "max_change_gap_s": 6600.214999914169,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "update.temp_sensor_kamer_nick": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:07.514Z",
+      "median_change_gap_s": 26.122999906539917,
+      "max_change_gap_s": 192000.58500003815,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "update.temp_sensor_kamer_stijn": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.337Z",
+      "median_change_gap_s": 47.90399980545044,
+      "max_change_gap_s": 192000.58200001717,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "button.thermostaat_restart": {
+      "rows": 3,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.021Z",
+      "median_change_gap_s": 193675.5260000229,
+      "max_change_gap_s": 193675.5260000229,
+      "unavailable": 3,
+      "conflicts": 0
+    },
+    "binary_sensor.thermostaat_heating_active": {
+      "rows": 67,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:39:57.231Z",
+      "median_change_gap_s": 960.1049997806549,
+      "max_change_gap_s": 38320.983000040054,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "binary_sensor.thermostaat_hot_water_active": {
+      "rows": 43,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T22:31:03.948Z",
+      "median_change_gap_s": 53.00500011444092,
+      "max_change_gap_s": 43003.25500011444,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "binary_sensor.thermostaat_flame_on": {
+      "rows": 239,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T11:29:35.494Z",
+      "median_change_gap_s": 304.7330000400543,
+      "max_change_gap_s": 35005.94499993324,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "binary_sensor.thermostaat_boiler_fault": {
+      "rows": 3,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.144Z",
+      "median_change_gap_s": 193675.51099991798,
+      "max_change_gap_s": 193675.51099991798,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "binary_sensor.thermostaat_boiler_diagnostic": {
+      "rows": 3,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.144Z",
+      "median_change_gap_s": 193675.51099991798,
+      "max_change_gap_s": 193675.51099991798,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "binary_sensor.thermostaat_electricity_production": {
+      "rows": 3,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.144Z",
+      "median_change_gap_s": 193675.51099991798,
+      "max_change_gap_s": 193675.51099991798,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "binary_sensor.thermostaat_service_required": {
+      "rows": 3,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:47:57.144Z",
+      "median_change_gap_s": 193675.51099991798,
+      "max_change_gap_s": 193675.51099991798,
+      "unavailable": 1,
+      "conflicts": 0
+    },
+    "binary_sensor.raam_sensor_kamer_stijn_contact": {
+      "rows": 38,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-02T10:18:42.268Z",
+      "median_change_gap_s": 383.83799982070923,
+      "max_change_gap_s": 50630.40000009537,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "binary_sensor.raam_sensor_kamer_stijn_tamper": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.442Z",
+      "median_change_gap_s": 48.07799983024597,
+      "max_change_gap_s": 192000.57700014114,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "update.raam_sensor_kamer_stijn": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.440Z",
+      "median_change_gap_s": 48.07599997520447,
+      "max_change_gap_s": 192000.58099985123,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "binary_sensor.raam_sensor_kamer_nick_contact": {
+      "rows": 9,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.317Z",
+      "median_change_gap_s": 383.8179998397827,
+      "max_change_gap_s": 186779.0380001068,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "binary_sensor.raam_sensor_kamer_nick_tamper": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.319Z",
+      "median_change_gap_s": 47.95199990272522,
+      "max_change_gap_s": 192000.55700016022,
+      "unavailable": 4,
+      "conflicts": 0
+    },
+    "update.raam_sensor_kamer_nick": {
+      "rows": 8,
+      "start": "2026-10-30T11:00:00.000Z",
+      "end": "2026-11-01T16:48:44.319Z",
+      "median_change_gap_s": 47.95099997520447,
+      "max_change_gap_s": 192000.5649998188,
+      "unavailable": 4,
+      "conflicts": 0
+    }
+  },
+  "receipt_age_audit": {
+    "stijn": {
+      "comparisons": 25590,
+      "age_decreases": 1218,
+      "receipt_vs_last_raw_change_abs_median_s": 0.3639976978302002,
+      "receipt_vs_last_raw_change_abs_p95_s": 0.5400063991546631,
+      "agreement_within_2s": 25549
+    },
+    "nick": {
+      "comparisons": 25641,
+      "age_decreases": 1172,
+      "receipt_vs_last_raw_change_abs_median_s": 0.39699649810791016,
+      "receipt_vs_last_raw_change_abs_p95_s": 0.5289993286132812,
+      "agreement_within_2s": 25597
+    }
+  },
+  "results": {
+    "stijn_15": {
+      "counts": {
+        "total_forecast_events": 741,
+        "invalid_boundary_or_conflicting_forecast": 25,
+        "origin_raw_missing_invalid_or_over_60s": 528,
+        "outcome_raw_missing_invalid_or_over_60s": 120,
+        "bounded_raw_pairs": 31,
+        "bounded_pairs_unconfirmed_360s_health": 31,
+        "bounded_pairs_without_recent_ready_status": 28,
+        "bounded_pairs_with_recent_ready_status": 3,
+        "outside_split_or_60min_embargo": 37
+      },
+      "change_time_diagnostic": {
+        "train": {
+          "recorded": {
+            "n": 10,
+            "mae": 0.4603141784667802,
+            "rmse": 0.49337552654137273,
+            "bias": -0.4423052215576003,
+            "absolute_p50": 0.5210655212401996,
+            "absolute_p95": 0.5764724731444986
+          },
+          "persistence": {
+            "n": 10,
+            "mae": 0.2600000000000005,
+            "rmse": 0.4,
+            "bias": -0.20000000000000034,
+            "absolute_p50": 0.10000000000000142,
+            "absolute_p95": 0.6999999999999993
+          }
+        },
+        "validation": {
+          "recorded": {
+            "n": 11,
+            "mae": 0.39199752807617244,
+            "rmse": 0.4292176678123146,
+            "bias": -0.39199752807617244,
+            "absolute_p50": 0.3721607208251996,
+            "absolute_p95": 0.6864376068114986
+          },
+          "persistence": {
+            "n": 11,
+            "mae": 0.13636363636363605,
+            "rmse": 0.1930614598326843,
+            "bias": -0.027272727272726692,
+            "absolute_p50": 0.09999999999999787,
+            "absolute_p95": 0.3000000000000007
+          }
+        },
+        "test": {
+          "recorded": {
+            "n": 10,
+            "mae": 0.26613304138184085,
+            "rmse": 0.3144372563649441,
+            "bias": -0.26613304138184085,
+            "absolute_p50": 0.17653465271000002,
+            "absolute_p95": 0.3508773803711023
+          },
+          "persistence": {
+            "n": 10,
+            "mae": 0.11999999999999993,
+            "rmse": 0.18439088914585766,
+            "bias": 0.019999999999999928,
+            "absolute_p50": 0.09999999999999787,
+            "absolute_p95": 0.1999999999999993
+          }
+        }
+      },
+      "strict_verified_scores": {},
+      "strict_blocker": "Issue times and continuous health not established by change history"
+    },
+    "stijn_30": {
+      "counts": {
+        "total_forecast_events": 741,
+        "invalid_boundary_or_conflicting_forecast": 25,
+        "origin_raw_missing_invalid_or_over_60s": 528,
+        "outcome_raw_missing_invalid_or_over_60s": 122,
+        "bounded_raw_pairs": 29,
+        "bounded_pairs_unconfirmed_360s_health": 29,
+        "bounded_pairs_without_recent_ready_status": 27,
+        "outside_split_or_60min_embargo": 37,
+        "bounded_pairs_with_recent_ready_status": 2
+      },
+      "change_time_diagnostic": {
+        "train": {
+          "recorded": {
+            "n": 10,
+            "mae": 0.8190548706054802,
+            "rmse": 0.8609832148798827,
+            "bias": -0.8190548706054802,
+            "absolute_p50": 0.7100120544433999,
+            "absolute_p95": 1.196913909912098
+          },
+          "persistence": {
+            "n": 10,
+            "mae": 0.23000000000000043,
+            "rmse": 0.27748873851023226,
+            "bias": -0.07000000000000028,
+            "absolute_p50": 0.20000000000000284,
+            "absolute_p95": 0.3000000000000007
+          }
+        },
+        "validation": {
+          "recorded": {
+            "n": 11,
+            "mae": 0.8176933288574184,
+            "rmse": 0.884296330542395,
+            "bias": -0.8176933288574184,
+            "absolute_p50": 0.8160778045654027,
+            "absolute_p95": 1.2528911590576008
+          },
+          "persistence": {
+            "n": 11,
+            "mae": 0.20909090909090916,
+            "rmse": 0.3261343839027655,
+            "bias": -0.06363636363636357,
+            "absolute_p50": 0.10000000000000142,
+            "absolute_p95": 0.6000000000000014
+          }
+        },
+        "test": {
+          "recorded": {
+            "n": 8,
+            "mae": 0.681306266784663,
+            "rmse": 0.7422789047169308,
+            "bias": -0.36829118728636345,
+            "absolute_p50": 0.5871212005614979,
+            "absolute_p95": 1.0585182189941023
+          },
+          "persistence": {
+            "n": 8,
+            "mae": 0.3250000000000002,
+            "rmse": 0.44721359549995854,
+            "bias": -0.15000000000000036,
+            "absolute_p50": 0.1999999999999993,
+            "absolute_p95": 0.8000000000000007
+          }
+        }
+      },
+      "strict_verified_scores": {},
+      "strict_blocker": "Issue times and continuous health not established by change history"
+    },
+    "stijn_60": {
+      "counts": {
+        "total_forecast_events": 741,
+        "invalid_boundary_or_conflicting_forecast": 25,
+        "origin_raw_missing_invalid_or_over_60s": 528,
+        "outcome_raw_missing_invalid_or_over_60s": 117,
+        "bounded_raw_pairs": 34,
+        "bounded_pairs_unconfirmed_360s_health": 34,
+        "bounded_pairs_without_recent_ready_status": 32,
+        "outside_split_or_60min_embargo": 37,
+        "bounded_pairs_with_recent_ready_status": 2
+      },
+      "change_time_diagnostic": {
+        "train": {
+          "recorded": {
+            "n": 11,
+            "mae": 1.9789959300648001,
+            "rmse": 2.2036001594227654,
+            "bias": -1.9742387251420366,
+            "absolute_p50": 1.800040817260701,
+            "absolute_p95": 2.8058555603026996
+          },
+          "persistence": {
+            "n": 11,
+            "mae": 0.5363636363636363,
+            "rmse": 0.8317560831266474,
+            "bias": -0.4454545454545453,
+            "absolute_p50": 0.20000000000000284,
+            "absolute_p95": 1.1000000000000014
+          }
+        },
+        "validation": {
+          "recorded": {
+            "n": 11,
+            "mae": 1.5638844229958275,
+            "rmse": 1.6457973080260562,
+            "bias": -1.5638844229958275,
+            "absolute_p50": 1.5129302978516002,
+            "absolute_p95": 2.2768112182617024
+          },
+          "persistence": {
+            "n": 11,
+            "mae": 0.3454545454545452,
+            "rmse": 0.44107307166211607,
+            "bias": -0.01818181818181844,
+            "absolute_p50": 0.1999999999999993,
+            "absolute_p95": 0.5999999999999979
+          }
+        },
+        "test": {
+          "recorded": {
+            "n": 12,
+            "mae": 1.3063254356384173,
+            "rmse": 1.3501118532117828,
+            "bias": -1.3063254356384173,
+            "absolute_p50": 1.1826332092285021,
+            "absolute_p95": 1.8212608337401974
+          },
+          "persistence": {
+            "n": 12,
+            "mae": 0.29166666666666635,
+            "rmse": 0.48390770469859906,
+            "bias": -0.10833333333333339,
+            "absolute_p50": 0.1999999999999993,
+            "absolute_p95": 0.8999999999999986
+          }
+        }
+      },
+      "strict_verified_scores": {},
+      "strict_blocker": "Issue times and continuous health not established by change history"
+    },
+    "nick_15": {
+      "counts": {
+        "total_forecast_events": 838,
+        "invalid_boundary_or_conflicting_forecast": 14,
+        "origin_raw_missing_invalid_or_over_60s": 634,
+        "outcome_raw_missing_invalid_or_over_60s": 111,
+        "bounded_raw_pairs": 37,
+        "bounded_pairs_unconfirmed_360s_health": 37,
+        "bounded_pairs_without_recent_ready_status": 37,
+        "outside_split_or_60min_embargo": 42
+      },
+      "change_time_diagnostic": {
+        "train": {
+          "recorded": {
+            "n": 5,
+            "mae": 0.44509429931641903,
+            "rmse": 0.5044916931912714,
+            "bias": -0.44509429931641903,
+            "absolute_p50": 0.5671833038330014,
+            "absolute_p95": 0.582888031005897
+          },
+          "persistence": {
+            "n": 5,
+            "mae": 0.1,
+            "rmse": 0.14832396974191345,
+            "bias": -0.05999999999999943,
+            "absolute_p50": 0.09999999999999787,
+            "absolute_p95": 0.10000000000000142
+          }
+        },
+        "validation": {
+          "recorded": {
+            "n": 17,
+            "mae": 0.24042340446920651,
+            "rmse": 0.25620425274390907,
+            "bias": -0.24042340446920651,
+            "absolute_p50": 0.252718734741201,
+            "absolute_p95": 0.36609573364259873
+          },
+          "persistence": {
+            "n": 17,
+            "mae": 0.05882352941176491,
+            "rmse": 0.08401680504168103,
+            "bias": 0.0117647058823529,
+            "absolute_p50": 0.09999999999999787,
+            "absolute_p95": 0.10000000000000142
+          }
+        },
+        "test": {
+          "recorded": {
+            "n": 15,
+            "mae": 0.13462389628092714,
+            "rmse": 0.1568603893056455,
+            "bias": -0.13350674947103347,
+            "absolute_p50": 0.15371932983399716,
+            "absolute_p95": 0.260903930664103
+          },
+          "persistence": {
+            "n": 15,
+            "mae": 0.06666666666666714,
+            "rmse": 0.08164965809277318,
+            "bias": 0.02666666666666657,
+            "absolute_p50": 0.10000000000000142,
+            "absolute_p95": 0.10000000000000142
+          }
+        }
+      },
+      "strict_verified_scores": {},
+      "strict_blocker": "Issue times and continuous health not established by change history"
+    },
+    "nick_30": {
+      "counts": {
+        "total_forecast_events": 838,
+        "invalid_boundary_or_conflicting_forecast": 14,
+        "origin_raw_missing_invalid_or_over_60s": 634,
+        "outcome_raw_missing_invalid_or_over_60s": 120,
+        "bounded_raw_pairs": 28,
+        "bounded_pairs_unconfirmed_360s_health": 28,
+        "bounded_pairs_without_recent_ready_status": 27,
+        "outside_split_or_60min_embargo": 42,
+        "bounded_pairs_with_recent_ready_status": 1
+      },
+      "change_time_diagnostic": {
+        "train": {
+          "recorded": {
+            "n": 6,
+            "mae": 0.8741942087809349,
+            "rmse": 0.9167893416445003,
+            "bias": -0.8741942087809349,
+            "absolute_p50": 0.842324829101603,
+            "absolute_p95": 1.0483383178710994
+          },
+          "persistence": {
+            "n": 6,
+            "mae": 0.2833333333333338,
+            "rmse": 0.3719318934070233,
+            "bias": 0.25,
+            "absolute_p50": 0.10000000000000142,
+            "absolute_p95": 0.5999999999999979
+          }
+        },
+        "validation": {
+          "recorded": {
+            "n": 12,
+            "mae": 0.4229587237040251,
+            "rmse": 0.4497110589011925,
+            "bias": -0.4229587237040251,
+            "absolute_p50": 0.49095764160160016,
+            "absolute_p95": 0.5905590057373011
+          },
+          "persistence": {
+            "n": 12,
+            "mae": 0.08333333333333304,
+            "rmse": 0.11547005383792501,
+            "bias": 0.05000000000000041,
+            "absolute_p50": 0.09999999999999787,
+            "absolute_p95": 0.1999999999999993
+          }
+        },
+        "test": {
+          "recorded": {
+            "n": 10,
+            "mae": 0.2604714965820403,
+            "rmse": 0.3055031258194297,
+            "bias": -0.24865287780762024,
+            "absolute_p50": 0.26256217956539984,
+            "absolute_p95": 0.4248844146729027
+          },
+          "persistence": {
+            "n": 10,
+            "mae": 0.12999999999999973,
+            "rmse": 0.18165902124584934,
+            "bias": 0.029999999999999714,
+            "absolute_p50": 0.09999999999999787,
+            "absolute_p95": 0.29999999999999716
+          }
+        }
+      },
+      "strict_verified_scores": {},
+      "strict_blocker": "Issue times and continuous health not established by change history"
+    },
+    "nick_60": {
+      "counts": {
+        "total_forecast_events": 838,
+        "invalid_boundary_or_conflicting_forecast": 14,
+        "origin_raw_missing_invalid_or_over_60s": 634,
+        "outcome_raw_missing_invalid_or_over_60s": 128,
+        "bounded_raw_pairs": 20,
+        "bounded_pairs_unconfirmed_360s_health": 20,
+        "bounded_pairs_without_recent_ready_status": 19,
+        "outside_split_or_60min_embargo": 42,
+        "bounded_pairs_with_recent_ready_status": 1
+      },
+      "change_time_diagnostic": {
+        "train": {
+          "recorded": {
+            "n": 9,
+            "mae": 1.6628620571560226,
+            "rmse": 1.7999942866394574,
+            "bias": -1.6628620571560226,
+            "absolute_p50": 1.6963050842285021,
+            "absolute_p95": 2.3793888092041016
+          },
+          "persistence": {
+            "n": 9,
+            "mae": 0.48888888888888954,
+            "rmse": 0.8027729719194868,
+            "bias": -0.1111111111111111,
+            "absolute_p50": 0.1999999999999993,
+            "absolute_p95": 1.0
+          }
+        },
+        "validation": {
+          "recorded": {
+            "n": 5,
+            "mae": 0.6909214019775405,
+            "rmse": 0.8058860648217833,
+            "bias": -0.6909214019775405,
+            "absolute_p50": 0.48025093078610226,
+            "absolute_p95": 0.6850196838379006
+          },
+          "persistence": {
+            "n": 5,
+            "mae": 0.3799999999999997,
+            "rmse": 0.4266145801540304,
+            "bias": 0.1,
+            "absolute_p50": 0.3999999999999986,
+            "absolute_p95": 0.40000000000000213
+          }
+        },
+        "test": {
+          "recorded": {
+            "n": 6,
+            "mae": 0.5489673614501994,
+            "rmse": 0.6224638651650336,
+            "bias": -0.5374888102213671,
+            "absolute_p50": 0.5228187561035007,
+            "absolute_p95": 0.7575088500977003
+          },
+          "persistence": {
+            "n": 6,
+            "mae": 0.21666666666666737,
+            "rmse": 0.3188521078284833,
+            "bias": 0.049999999999999524,
+            "absolute_p50": 0.10000000000000142,
+            "absolute_p95": 0.3000000000000007
+          }
+        }
+      },
+      "strict_verified_scores": {},
+      "strict_blocker": "Issue times and continuous health not established by change history"
+    }
+  }
+}

@@ -3,9 +3,7 @@
   "missing_provenance": [
     "forecast_issue_times_verified",
     "measurement_publication_times_verified",
-    "units_verified",
-    "missing_entity:sensor.temp_sensor_kamer_stijn_temperature",
-    "missing_entity:sensor.temp_sensor_kamer_nick_temperature"
+    "units_verified"
   ],
   "scores": {}
 }

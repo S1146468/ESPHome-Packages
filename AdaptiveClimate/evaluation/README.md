@@ -1,5 +1,9 @@
 # Initial measurement audit — 2026-11-02
 
+Latest follow-up: [raw-temperature results and coverage](RAW_RESULTS.md).
+The missing raw/boiler exports have now been supplied; earlier missing-file
+statements below describe the initial audit only.
+
 **Superseded scoring interpretation:** the table below uses an EMA diagnostic,
 not the observer's raw input. It is preserved for reproducibility only and must
 not be cited as thermal prediction accuracy. See `SCORING.md` and `MAPPINGS.md`
