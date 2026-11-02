@@ -1,0 +1,5362 @@
+{
+  "evidence": "reconstructed live diagnostics + bounded held raw states; NOT physical measurements",
+  "sources": [
+    {
+      "file": "history (5).csv",
+      "sha256": "4b02816b516b456a9f63849d77d405149d37f8ea6e553b9b2285b746633abc24",
+      "rows": 333856
+    },
+    {
+      "file": "history (6).csv",
+      "sha256": "38d69493300b2231ac9ec4dc9e0c2354c53d07fbea8a093375d8cc8e77a686b9",
+      "rows": 3185
+    },
+    {
+      "file": "history (8).csv",
+      "sha256": "7d2a5e9adec85b4ba1bff4dbc4d75fcc71b2d6473fef55275cfa818edede9968",
+      "rows": 36498
+    }
+  ],
+  "strict_verified_origins": 0,
+  "policies": {
+    "stijn/15/hold30_gap30": {
+      "counts": {
+        "total": 741,
+        "invalid_forecast": 25,
+        "raw_pair_missing_invalid_or_old": 666,
+        "health_interval": 7,
+        "accepted_held_state": 6,
+        "split_embargo": 37
+      },
+      "metrics": {
+        "train/recorded": {
+          "n": 2,
+          "mae": 0.5632410049438494,
+          "rmse": 0.5633963981078529,
+          "bias": -0.5632410049438494,
+          "absolute_p50": 0.5500095367432003,
+          "absolute_p95": 0.5500095367432003
+        },
+        "train/persistence": {
+          "n": 2,
+          "mae": 0.15000000000000036,
+          "rmse": 0.15811388300841897,
+          "bias": -0.15000000000000036,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "validation/recorded": {
+          "n": 1,
+          "mae": 0.3075981140137003,
+          "rmse": 0.3075981140137003,
+          "bias": -0.3075981140137003,
+          "absolute_p50": 0.3075981140137003,
+          "absolute_p95": 0.3075981140137003
+        },
+        "validation/persistence": {
+          "n": 1,
+          "mae": 0.10000000000000142,
+          "rmse": 0.10000000000000142,
+          "bias": 0.10000000000000142,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "test/recorded": {
+          "n": 3,
+          "mae": 0.18719418843590083,
+          "rmse": 0.19906955324032424,
+          "bias": -0.18719418843590083,
+          "absolute_p50": 0.17653465271000002,
+          "absolute_p95": 0.17653465271000002
+        },
+        "test/persistence": {
+          "n": 3,
+          "mae": 0.10000000000000024,
+          "rmse": 0.12909944487358055,
+          "bias": 0.10000000000000024,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        }
+      },
+      "regimes": {
+        "train/stable_ch_off/recorded": {
+          "n": 1,
+          "mae": 0.5500095367432003,
+          "rmse": 0.5500095367432003,
+          "bias": -0.5500095367432003,
+          "absolute_p50": 0.5500095367432003,
+          "absolute_p95": 0.5500095367432003
+        },
+        "train/stable_ch_off/persistence": {
+          "n": 1,
+          "mae": 0.10000000000000142,
+          "rmse": 0.10000000000000142,
+          "bias": -0.10000000000000142,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "train/ch_transition/recorded": {
+          "n": 1,
+          "mae": 0.5764724731444986,
+          "rmse": 0.5764724731444986,
+          "bias": -0.5764724731444986,
+          "absolute_p50": 0.5764724731444986,
+          "absolute_p95": 0.5764724731444986
+        },
+        "train/ch_transition/persistence": {
+          "n": 1,
+          "mae": 0.1999999999999993,
+          "rmse": 0.1999999999999993,
+          "bias": -0.1999999999999993,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.1999999999999993
+        },
+        "validation/stable_ch_off/recorded": {
+          "n": 1,
+          "mae": 0.3075981140137003,
+          "rmse": 0.3075981140137003,
+          "bias": -0.3075981140137003,
+          "absolute_p50": 0.3075981140137003,
+          "absolute_p95": 0.3075981140137003
+        },
+        "validation/stable_ch_off/persistence": {
+          "n": 1,
+          "mae": 0.10000000000000142,
+          "rmse": 0.10000000000000142,
+          "bias": 0.10000000000000142,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "test/dhw_interval/recorded": {
+          "n": 1,
+          "mae": 0.11009025573730113,
+          "rmse": 0.11009025573730113,
+          "bias": -0.11009025573730113,
+          "absolute_p50": 0.11009025573730113,
+          "absolute_p95": 0.11009025573730113
+        },
+        "test/dhw_interval/persistence": {
+          "n": 1,
+          "mae": 0.1999999999999993,
+          "rmse": 0.1999999999999993,
+          "bias": 0.1999999999999993,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.1999999999999993
+        },
+        "test/stable_ch_off/recorded": {
+          "n": 2,
+          "mae": 0.22574615478520066,
+          "rmse": 0.23104782694671952,
+          "bias": -0.22574615478520066,
+          "absolute_p50": 0.17653465271000002,
+          "absolute_p95": 0.17653465271000002
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 2,
+          "mae": 0.05000000000000071,
+          "rmse": 0.07071067811865576,
+          "bias": 0.05000000000000071,
+          "absolute_p50": 0.0,
+          "absolute_p95": 0.0
+        }
+      },
+      "raw_ages": {
+        "n": 12,
+        "mean": 15.678666631380716,
+        "max": 28.721999883651733
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 70,
+        "reconstructed_live_held_state": 25356,
+        "raw_unavailable": 6,
+        "age_diagnostic_gap_or_invalid": 2055
+      }
+    },
+    "stijn/30/hold30_gap30": {
+      "counts": {
+        "total": 741,
+        "invalid_forecast": 25,
+        "raw_pair_missing_invalid_or_old": 662,
+        "health_interval": 11,
+        "accepted_held_state": 6,
+        "split_embargo": 37
+      },
+      "metrics": {
+        "train/recorded": {
+          "n": 1,
+          "mae": 0.7000202178954993,
+          "rmse": 0.7000202178954993,
+          "bias": -0.7000202178954993,
+          "absolute_p50": 0.7000202178954993,
+          "absolute_p95": 0.7000202178954993
+        },
+        "train/persistence": {
+          "n": 1,
+          "mae": 0.20000000000000284,
+          "rmse": 0.20000000000000284,
+          "bias": 0.20000000000000284,
+          "absolute_p50": 0.20000000000000284,
+          "absolute_p95": 0.20000000000000284
+        },
+        "validation/recorded": {
+          "n": 2,
+          "mae": 0.3514684677124009,
+          "rmse": 0.3662309582904905,
+          "bias": -0.3514684677124009,
+          "absolute_p50": 0.2485363006592003,
+          "absolute_p95": 0.2485363006592003
+        },
+        "validation/persistence": {
+          "n": 2,
+          "mae": 0.29999999999999893,
+          "rmse": 0.3605551275463986,
+          "bias": 0.29999999999999893,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.09999999999999787
+        },
+        "test/recorded": {
+          "n": 3,
+          "mae": 0.5227357228597013,
+          "rmse": 0.5258566793014474,
+          "bias": -0.5227357228597013,
+          "absolute_p50": 0.4881164550780994,
+          "absolute_p95": 0.4881164550780994
+        },
+        "test/persistence": {
+          "n": 3,
+          "mae": 0.13333333333333286,
+          "rmse": 0.141421356237309,
+          "bias": 0.13333333333333286,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        }
+      },
+      "regimes": {
+        "train/stable_ch_on/recorded": {
+          "n": 1,
+          "mae": 0.7000202178954993,
+          "rmse": 0.7000202178954993,
+          "bias": -0.7000202178954993,
+          "absolute_p50": 0.7000202178954993,
+          "absolute_p95": 0.7000202178954993
+        },
+        "train/stable_ch_on/persistence": {
+          "n": 1,
+          "mae": 0.20000000000000284,
+          "rmse": 0.20000000000000284,
+          "bias": 0.20000000000000284,
+          "absolute_p50": 0.20000000000000284,
+          "absolute_p95": 0.20000000000000284
+        },
+        "validation/ch_transition/recorded": {
+          "n": 2,
+          "mae": 0.3514684677124009,
+          "rmse": 0.3662309582904905,
+          "bias": -0.3514684677124009,
+          "absolute_p50": 0.2485363006592003,
+          "absolute_p95": 0.2485363006592003
+        },
+        "validation/ch_transition/persistence": {
+          "n": 2,
+          "mae": 0.29999999999999893,
+          "rmse": 0.3605551275463986,
+          "bias": 0.29999999999999893,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.09999999999999787
+        },
+        "test/stable_ch_off/recorded": {
+          "n": 3,
+          "mae": 0.5227357228597013,
+          "rmse": 0.5258566793014474,
+          "bias": -0.5227357228597013,
+          "absolute_p50": 0.4881164550780994,
+          "absolute_p95": 0.4881164550780994
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 3,
+          "mae": 0.13333333333333286,
+          "rmse": 0.141421356237309,
+          "bias": 0.13333333333333286,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        }
+      },
+      "raw_ages": {
+        "n": 12,
+        "mean": 13.284583330154419,
+        "max": 29.661999940872192
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 70,
+        "reconstructed_live_held_state": 25356,
+        "raw_unavailable": 6,
+        "age_diagnostic_gap_or_invalid": 2055
+      }
+    },
+    "stijn/60/hold30_gap30": {
+      "counts": {
+        "total": 741,
+        "invalid_forecast": 25,
+        "raw_pair_missing_invalid_or_old": 662,
+        "health_interval": 14,
+        "split_embargo": 37,
+        "accepted_held_state": 3
+      },
+      "metrics": {
+        "validation/recorded": {
+          "n": 1,
+          "mae": 0.9322448730469013,
+          "rmse": 0.9322448730469013,
+          "bias": -0.9322448730469013,
+          "absolute_p50": 0.9322448730469013,
+          "absolute_p95": 0.9322448730469013
+        },
+        "validation/persistence": {
+          "n": 1,
+          "mae": 0.5999999999999979,
+          "rmse": 0.5999999999999979,
+          "bias": 0.5999999999999979,
+          "absolute_p50": 0.5999999999999979,
+          "absolute_p95": 0.5999999999999979
+        },
+        "test/recorded": {
+          "n": 2,
+          "mae": 1.1587377548217521,
+          "rmse": 1.160476822172876,
+          "bias": -1.1587377548217521,
+          "absolute_p50": 1.0952297210693018,
+          "absolute_p95": 1.0952297210693018
+        },
+        "test/persistence": {
+          "n": 2,
+          "mae": 0.09999999999999964,
+          "rmse": 0.141421356237309,
+          "bias": 0.09999999999999964,
+          "absolute_p50": 0.0,
+          "absolute_p95": 0.0
+        }
+      },
+      "regimes": {
+        "validation/ch_transition/recorded": {
+          "n": 1,
+          "mae": 0.9322448730469013,
+          "rmse": 0.9322448730469013,
+          "bias": -0.9322448730469013,
+          "absolute_p50": 0.9322448730469013,
+          "absolute_p95": 0.9322448730469013
+        },
+        "validation/ch_transition/persistence": {
+          "n": 1,
+          "mae": 0.5999999999999979,
+          "rmse": 0.5999999999999979,
+          "bias": 0.5999999999999979,
+          "absolute_p50": 0.5999999999999979,
+          "absolute_p95": 0.5999999999999979
+        },
+        "test/stable_ch_off/recorded": {
+          "n": 1,
+          "mae": 1.0952297210693018,
+          "rmse": 1.0952297210693018,
+          "bias": -1.0952297210693018,
+          "absolute_p50": 1.0952297210693018,
+          "absolute_p95": 1.0952297210693018
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 1,
+          "mae": 0.1999999999999993,
+          "rmse": 0.1999999999999993,
+          "bias": 0.1999999999999993,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.1999999999999993
+        },
+        "test/dhw_interval/recorded": {
+          "n": 1,
+          "mae": 1.2222457885742024,
+          "rmse": 1.2222457885742024,
+          "bias": -1.2222457885742024,
+          "absolute_p50": 1.2222457885742024,
+          "absolute_p95": 1.2222457885742024
+        },
+        "test/dhw_interval/persistence": {
+          "n": 1,
+          "mae": 0.0,
+          "rmse": 0.0,
+          "bias": 0.0,
+          "absolute_p50": 0.0,
+          "absolute_p95": 0.0
+        }
+      },
+      "raw_ages": {
+        "n": 6,
+        "mean": 14.26466671625773,
+        "max": 23.230000019073486
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 70,
+        "reconstructed_live_held_state": 25356,
+        "raw_unavailable": 6,
+        "age_diagnostic_gap_or_invalid": 2055
+      }
+    },
+    "stijn/15/hold60_gap30": {
+      "counts": {
+        "total": 741,
+        "invalid_forecast": 25,
+        "raw_pair_missing_invalid_or_old": 648,
+        "health_interval": 20,
+        "accepted_held_state": 11,
+        "split_embargo": 37
+      },
+      "metrics": {
+        "train/recorded": {
+          "n": 2,
+          "mae": 0.5632410049438494,
+          "rmse": 0.5633963981078529,
+          "bias": -0.5632410049438494,
+          "absolute_p50": 0.5500095367432003,
+          "absolute_p95": 0.5500095367432003
+        },
+        "train/persistence": {
+          "n": 2,
+          "mae": 0.15000000000000036,
+          "rmse": 0.15811388300841897,
+          "bias": -0.15000000000000036,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "validation/recorded": {
+          "n": 3,
+          "mae": 0.1861747741699323,
+          "rmse": 0.2072390559783715,
+          "bias": -0.1861747741699323,
+          "absolute_p50": 0.16251373291019888,
+          "absolute_p95": 0.16251373291019888
+        },
+        "validation/persistence": {
+          "n": 3,
+          "mae": 0.20000000000000048,
+          "rmse": 0.216024689946929,
+          "bias": 0.20000000000000048,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.1999999999999993
+        },
+        "test/recorded": {
+          "n": 6,
+          "mae": 0.22335643768311778,
+          "rmse": 0.236748624843714,
+          "bias": -0.22335643768311778,
+          "absolute_p50": 0.17653465271000002,
+          "absolute_p95": 0.2749576568604013
+        },
+        "test/persistence": {
+          "n": 6,
+          "mae": 0.08333333333333333,
+          "rmse": 0.10801234497346422,
+          "bias": 0.08333333333333333,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.10000000000000142
+        }
+      },
+      "regimes": {
+        "train/stable_ch_off/recorded": {
+          "n": 1,
+          "mae": 0.5500095367432003,
+          "rmse": 0.5500095367432003,
+          "bias": -0.5500095367432003,
+          "absolute_p50": 0.5500095367432003,
+          "absolute_p95": 0.5500095367432003
+        },
+        "train/stable_ch_off/persistence": {
+          "n": 1,
+          "mae": 0.10000000000000142,
+          "rmse": 0.10000000000000142,
+          "bias": -0.10000000000000142,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "train/ch_transition/recorded": {
+          "n": 1,
+          "mae": 0.5764724731444986,
+          "rmse": 0.5764724731444986,
+          "bias": -0.5764724731444986,
+          "absolute_p50": 0.5764724731444986,
+          "absolute_p95": 0.5764724731444986
+        },
+        "train/ch_transition/persistence": {
+          "n": 1,
+          "mae": 0.1999999999999993,
+          "rmse": 0.1999999999999993,
+          "bias": -0.1999999999999993,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.1999999999999993
+        },
+        "validation/stable_ch_off/recorded": {
+          "n": 2,
+          "mae": 0.2350559234619496,
+          "rmse": 0.24599523687379887,
+          "bias": -0.2350559234619496,
+          "absolute_p50": 0.16251373291019888,
+          "absolute_p95": 0.16251373291019888
+        },
+        "validation/stable_ch_off/persistence": {
+          "n": 2,
+          "mae": 0.15000000000000036,
+          "rmse": 0.15811388300841897,
+          "bias": 0.15000000000000036,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "validation/ch_transition/recorded": {
+          "n": 1,
+          "mae": 0.08841247558589771,
+          "rmse": 0.08841247558589771,
+          "bias": -0.08841247558589771,
+          "absolute_p50": 0.08841247558589771,
+          "absolute_p95": 0.08841247558589771
+        },
+        "validation/ch_transition/persistence": {
+          "n": 1,
+          "mae": 0.3000000000000007,
+          "rmse": 0.3000000000000007,
+          "bias": 0.3000000000000007,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.3000000000000007
+        },
+        "test/stable_ch_off/recorded": {
+          "n": 5,
+          "mae": 0.2460096740722811,
+          "rmse": 0.2546289864819139,
+          "bias": -0.2460096740722811,
+          "absolute_p50": 0.25154838562010085,
+          "absolute_p95": 0.2749576568604013
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 5,
+          "mae": 0.060000000000000143,
+          "rmse": 0.07745966692414852,
+          "bias": 0.060000000000000143,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.10000000000000142
+        },
+        "test/dhw_interval/recorded": {
+          "n": 1,
+          "mae": 0.11009025573730113,
+          "rmse": 0.11009025573730113,
+          "bias": -0.11009025573730113,
+          "absolute_p50": 0.11009025573730113,
+          "absolute_p95": 0.11009025573730113
+        },
+        "test/dhw_interval/persistence": {
+          "n": 1,
+          "mae": 0.1999999999999993,
+          "rmse": 0.1999999999999993,
+          "bias": 0.1999999999999993,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.1999999999999993
+        }
+      },
+      "raw_ages": {
+        "n": 22,
+        "mean": 23.131863604892384,
+        "max": 59.93400001525879
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 70,
+        "reconstructed_live_held_state": 25356,
+        "raw_unavailable": 6,
+        "age_diagnostic_gap_or_invalid": 2055
+      }
+    },
+    "stijn/30/hold60_gap30": {
+      "counts": {
+        "total": 741,
+        "invalid_forecast": 25,
+        "raw_pair_missing_invalid_or_old": 650,
+        "health_interval": 23,
+        "accepted_held_state": 6,
+        "split_embargo": 37
+      },
+      "metrics": {
+        "train/recorded": {
+          "n": 1,
+          "mae": 0.7000202178954993,
+          "rmse": 0.7000202178954993,
+          "bias": -0.7000202178954993,
+          "absolute_p50": 0.7000202178954993,
+          "absolute_p95": 0.7000202178954993
+        },
+        "train/persistence": {
+          "n": 1,
+          "mae": 0.20000000000000284,
+          "rmse": 0.20000000000000284,
+          "bias": 0.20000000000000284,
+          "absolute_p50": 0.20000000000000284,
+          "absolute_p95": 0.20000000000000284
+        },
+        "validation/recorded": {
+          "n": 2,
+          "mae": 0.3514684677124009,
+          "rmse": 0.3662309582904905,
+          "bias": -0.3514684677124009,
+          "absolute_p50": 0.2485363006592003,
+          "absolute_p95": 0.2485363006592003
+        },
+        "validation/persistence": {
+          "n": 2,
+          "mae": 0.29999999999999893,
+          "rmse": 0.3605551275463986,
+          "bias": 0.29999999999999893,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.09999999999999787
+        },
+        "test/recorded": {
+          "n": 3,
+          "mae": 0.5227357228597013,
+          "rmse": 0.5258566793014474,
+          "bias": -0.5227357228597013,
+          "absolute_p50": 0.4881164550780994,
+          "absolute_p95": 0.4881164550780994
+        },
+        "test/persistence": {
+          "n": 3,
+          "mae": 0.13333333333333286,
+          "rmse": 0.141421356237309,
+          "bias": 0.13333333333333286,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        }
+      },
+      "regimes": {
+        "train/stable_ch_on/recorded": {
+          "n": 1,
+          "mae": 0.7000202178954993,
+          "rmse": 0.7000202178954993,
+          "bias": -0.7000202178954993,
+          "absolute_p50": 0.7000202178954993,
+          "absolute_p95": 0.7000202178954993
+        },
+        "train/stable_ch_on/persistence": {
+          "n": 1,
+          "mae": 0.20000000000000284,
+          "rmse": 0.20000000000000284,
+          "bias": 0.20000000000000284,
+          "absolute_p50": 0.20000000000000284,
+          "absolute_p95": 0.20000000000000284
+        },
+        "validation/ch_transition/recorded": {
+          "n": 2,
+          "mae": 0.3514684677124009,
+          "rmse": 0.3662309582904905,
+          "bias": -0.3514684677124009,
+          "absolute_p50": 0.2485363006592003,
+          "absolute_p95": 0.2485363006592003
+        },
+        "validation/ch_transition/persistence": {
+          "n": 2,
+          "mae": 0.29999999999999893,
+          "rmse": 0.3605551275463986,
+          "bias": 0.29999999999999893,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.09999999999999787
+        },
+        "test/stable_ch_off/recorded": {
+          "n": 3,
+          "mae": 0.5227357228597013,
+          "rmse": 0.5258566793014474,
+          "bias": -0.5227357228597013,
+          "absolute_p50": 0.4881164550780994,
+          "absolute_p95": 0.4881164550780994
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 3,
+          "mae": 0.13333333333333286,
+          "rmse": 0.141421356237309,
+          "bias": 0.13333333333333286,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        }
+      },
+      "raw_ages": {
+        "n": 12,
+        "mean": 13.284583330154419,
+        "max": 29.661999940872192
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 70,
+        "reconstructed_live_held_state": 25356,
+        "raw_unavailable": 6,
+        "age_diagnostic_gap_or_invalid": 2055
+      }
+    },
+    "stijn/60/hold60_gap30": {
+      "counts": {
+        "total": 741,
+        "invalid_forecast": 25,
+        "raw_pair_missing_invalid_or_old": 645,
+        "health_interval": 30,
+        "split_embargo": 37,
+        "accepted_held_state": 4
+      },
+      "metrics": {
+        "validation/recorded": {
+          "n": 1,
+          "mae": 0.9322448730469013,
+          "rmse": 0.9322448730469013,
+          "bias": -0.9322448730469013,
+          "absolute_p50": 0.9322448730469013,
+          "absolute_p95": 0.9322448730469013
+        },
+        "validation/persistence": {
+          "n": 1,
+          "mae": 0.5999999999999979,
+          "rmse": 0.5999999999999979,
+          "bias": 0.5999999999999979,
+          "absolute_p50": 0.5999999999999979,
+          "absolute_p95": 0.5999999999999979
+        },
+        "test/recorded": {
+          "n": 3,
+          "mae": 1.1483142852783008,
+          "rmse": 1.1495789847198827,
+          "bias": -1.1483142852783008,
+          "absolute_p50": 1.1274673461913984,
+          "absolute_p95": 1.1274673461913984
+        },
+        "test/persistence": {
+          "n": 3,
+          "mae": 0.16666666666666666,
+          "rmse": 0.2081665999466134,
+          "bias": 0.16666666666666666,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.1999999999999993
+        }
+      },
+      "regimes": {
+        "validation/ch_transition/recorded": {
+          "n": 1,
+          "mae": 0.9322448730469013,
+          "rmse": 0.9322448730469013,
+          "bias": -0.9322448730469013,
+          "absolute_p50": 0.9322448730469013,
+          "absolute_p95": 0.9322448730469013
+        },
+        "validation/ch_transition/persistence": {
+          "n": 1,
+          "mae": 0.5999999999999979,
+          "rmse": 0.5999999999999979,
+          "bias": 0.5999999999999979,
+          "absolute_p50": 0.5999999999999979,
+          "absolute_p95": 0.5999999999999979
+        },
+        "test/ch_transition/recorded": {
+          "n": 1,
+          "mae": 1.1274673461913984,
+          "rmse": 1.1274673461913984,
+          "bias": -1.1274673461913984,
+          "absolute_p50": 1.1274673461913984,
+          "absolute_p95": 1.1274673461913984
+        },
+        "test/ch_transition/persistence": {
+          "n": 1,
+          "mae": 0.3000000000000007,
+          "rmse": 0.3000000000000007,
+          "bias": 0.3000000000000007,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.3000000000000007
+        },
+        "test/stable_ch_off/recorded": {
+          "n": 1,
+          "mae": 1.0952297210693018,
+          "rmse": 1.0952297210693018,
+          "bias": -1.0952297210693018,
+          "absolute_p50": 1.0952297210693018,
+          "absolute_p95": 1.0952297210693018
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 1,
+          "mae": 0.1999999999999993,
+          "rmse": 0.1999999999999993,
+          "bias": 0.1999999999999993,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.1999999999999993
+        },
+        "test/dhw_interval/recorded": {
+          "n": 1,
+          "mae": 1.2222457885742024,
+          "rmse": 1.2222457885742024,
+          "bias": -1.2222457885742024,
+          "absolute_p50": 1.2222457885742024,
+          "absolute_p95": 1.2222457885742024
+        },
+        "test/dhw_interval/persistence": {
+          "n": 1,
+          "mae": 0.0,
+          "rmse": 0.0,
+          "bias": 0.0,
+          "absolute_p50": 0.0,
+          "absolute_p95": 0.0
+        }
+      },
+      "raw_ages": {
+        "n": 8,
+        "mean": 17.750875055789948,
+        "max": 49.76800012588501
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 70,
+        "reconstructed_live_held_state": 25356,
+        "raw_unavailable": 6,
+        "age_diagnostic_gap_or_invalid": 2055
+      }
+    },
+    "stijn/15/hold300_gap30": {
+      "counts": {
+        "total": 741,
+        "invalid_forecast": 25,
+        "health_interval": 75,
+        "raw_pair_missing_invalid_or_old": 545,
+        "accepted_held_state": 59,
+        "split_embargo": 37
+      },
+      "metrics": {
+        "train/recorded": {
+          "n": 14,
+          "mae": 0.4036742074148929,
+          "rmse": 0.4386069623726849,
+          "bias": -0.4036742074148929,
+          "absolute_p50": 0.3318264007567997,
+          "absolute_p95": 0.5839649200439005
+        },
+        "train/persistence": {
+          "n": 14,
+          "mae": 0.1642857142857151,
+          "rmse": 0.19456912102680393,
+          "bias": 0.021428571428571734,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.20000000000000284
+        },
+        "validation/recorded": {
+          "n": 24,
+          "mae": 0.3291676203409833,
+          "rmse": 0.35941066819596784,
+          "bias": -0.2776359240213999,
+          "absolute_p50": 0.3079242706299006,
+          "absolute_p95": 0.5233959197997997
+        },
+        "validation/persistence": {
+          "n": 24,
+          "mae": 0.18333333333333313,
+          "rmse": 0.23629078131263032,
+          "bias": -0.0083333333333336,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.3999999999999986
+        },
+        "test/recorded": {
+          "n": 21,
+          "mae": 0.3023917970203194,
+          "rmse": 0.3352372102791838,
+          "bias": -0.18266163780575762,
+          "absolute_p50": 0.2749576568604013,
+          "absolute_p95": 0.5930576324462997
+        },
+        "test/persistence": {
+          "n": 21,
+          "mae": 0.13333333333333336,
+          "rmse": 0.2023669462940549,
+          "bias": -0.03809523809523779,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.5
+        }
+      },
+      "regimes": {
+        "train/unknown_operation/recorded": {
+          "n": 3,
+          "mae": 0.3161719004313011,
+          "rmse": 0.31630751062271867,
+          "bias": -0.3161719004313011,
+          "absolute_p50": 0.3127170562744013,
+          "absolute_p95": 0.3127170562744013
+        },
+        "train/unknown_operation/persistence": {
+          "n": 3,
+          "mae": 0.10000000000000024,
+          "rmse": 0.10000000000000024,
+          "bias": 0.10000000000000024,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "train/stable_ch_off/recorded": {
+          "n": 4,
+          "mae": 0.36770610809327486,
+          "rmse": 0.3840672965982211,
+          "bias": -0.36770610809327486,
+          "absolute_p50": 0.3318264007567997,
+          "absolute_p95": 0.33897895812989987
+        },
+        "train/stable_ch_off/persistence": {
+          "n": 4,
+          "mae": 0.1250000000000009,
+          "rmse": 0.13228756555323007,
+          "bias": 0.07500000000000018,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "train/ch_transition/recorded": {
+          "n": 5,
+          "mae": 0.5064157104491998,
+          "rmse": 0.5582237390795418,
+          "bias": -0.5064157104491998,
+          "absolute_p50": 0.5764724731444986,
+          "absolute_p95": 0.5839649200439005
+        },
+        "train/ch_transition/persistence": {
+          "n": 5,
+          "mae": 0.26000000000000084,
+          "rmse": 0.2863564212655276,
+          "bias": -0.1,
+          "absolute_p50": 0.20000000000000284,
+          "absolute_p95": 0.20000000000000284
+        },
+        "train/stable_ch_on/recorded": {
+          "n": 2,
+          "mae": 0.35001010894774964,
+          "rmse": 0.3500101089478016,
+          "bias": -0.35001010894774964,
+          "absolute_p50": 0.3500099182129013,
+          "absolute_p95": 0.3500099182129013
+        },
+        "train/stable_ch_on/persistence": {
+          "n": 2,
+          "mae": 0.10000000000000142,
+          "rmse": 0.10000000000000142,
+          "bias": 0.10000000000000142,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "validation/dhw_interval/recorded": {
+          "n": 3,
+          "mae": 0.401092910766599,
+          "rmse": 0.40319567349913565,
+          "bias": -0.401092910766599,
+          "absolute_p50": 0.42541732788089703,
+          "absolute_p95": 0.42541732788089703
+        },
+        "validation/dhw_interval/persistence": {
+          "n": 3,
+          "mae": 0.29999999999999954,
+          "rmse": 0.4123105625617656,
+          "bias": -0.23333333333333428,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "validation/stable_ch_off/recorded": {
+          "n": 13,
+          "mae": 0.30128308809720805,
+          "rmse": 0.31415024877539865,
+          "bias": -0.30128308809720805,
+          "absolute_p50": 0.3075981140137003,
+          "absolute_p95": 0.3741947174072031
+        },
+        "validation/stable_ch_off/persistence": {
+          "n": 13,
+          "mae": 0.10769230769230731,
+          "rmse": 0.11766968108291,
+          "bias": 0.09230769230769226,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.1999999999999993
+        },
+        "validation/ch_transition/recorded": {
+          "n": 6,
+          "mae": 0.3602806091308495,
+          "rmse": 0.42445386182136263,
+          "bias": -0.3602806091308495,
+          "absolute_p50": 0.29143981933589913,
+          "absolute_p95": 0.5620662689208977
+        },
+        "validation/ch_transition/persistence": {
+          "n": 6,
+          "mae": 0.21666666666666679,
+          "rmse": 0.23452078799117176,
+          "bias": 0.016666666666666313,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.3000000000000007
+        },
+        "validation/valve_transition/recorded": {
+          "n": 2,
+          "mae": 0.30919017791750036,
+          "rmse": 0.35255001004444186,
+          "bias": 0.30919017791750036,
+          "absolute_p50": 0.1398002624511996,
+          "absolute_p95": 0.1398002624511996
+        },
+        "validation/valve_transition/persistence": {
+          "n": 2,
+          "mae": 0.40000000000000036,
+          "rmse": 0.40000000000000036,
+          "bias": -0.40000000000000036,
+          "absolute_p50": 0.3999999999999986,
+          "absolute_p95": 0.3999999999999986
+        },
+        "test/ch_transition/recorded": {
+          "n": 7,
+          "mae": 0.3888760702950422,
+          "rmse": 0.42914624041547944,
+          "bias": -0.1728717803955,
+          "absolute_p50": 0.3620571136474986,
+          "absolute_p95": 0.5930576324462997
+        },
+        "test/ch_transition/persistence": {
+          "n": 7,
+          "mae": 0.1999999999999993,
+          "rmse": 0.26726124191242384,
+          "bias": -0.14285714285714235,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.3999999999999986
+        },
+        "test/stable_ch_off/recorded": {
+          "n": 10,
+          "mae": 0.24967445373536065,
+          "rmse": 0.2583356399506623,
+          "bias": -0.24967445373536065,
+          "absolute_p50": 0.25154838562010085,
+          "absolute_p95": 0.32612495422360155
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 10,
+          "mae": 0.0600000000000005,
+          "rmse": 0.07745966692414898,
+          "bias": 0.040000000000000216,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.10000000000000142
+        },
+        "test/dhw_interval/recorded": {
+          "n": 3,
+          "mae": 0.21006635030110132,
+          "rmse": 0.22536803124830498,
+          "bias": -0.21006635030110132,
+          "absolute_p50": 0.21007537841800072,
+          "absolute_p95": 0.21007537841800072
+        },
+        "test/dhw_interval/persistence": {
+          "n": 3,
+          "mae": 0.10000000000000024,
+          "rmse": 0.12909944487358055,
+          "bias": 0.10000000000000024,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "test/valve_transition/recorded": {
+          "n": 1,
+          "mae": 0.5011516571045007,
+          "rmse": 0.5011516571045007,
+          "bias": 0.5011516571045007,
+          "absolute_p50": 0.5011516571045007,
+          "absolute_p95": 0.5011516571045007
+        },
+        "test/valve_transition/persistence": {
+          "n": 1,
+          "mae": 0.5,
+          "rmse": 0.5,
+          "bias": -0.5,
+          "absolute_p50": 0.5,
+          "absolute_p95": 0.5
+        }
+      },
+      "raw_ages": {
+        "n": 118,
+        "mean": 106.72683050268787,
+        "max": 282.56700015068054
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 70,
+        "reconstructed_live_held_state": 25356,
+        "raw_unavailable": 6,
+        "age_diagnostic_gap_or_invalid": 2055
+      }
+    },
+    "stijn/30/hold300_gap30": {
+      "counts": {
+        "total": 741,
+        "invalid_forecast": 25,
+        "raw_pair_missing_invalid_or_old": 547,
+        "health_interval": 104,
+        "accepted_held_state": 28,
+        "split_embargo": 37
+      },
+      "metrics": {
+        "train/recorded": {
+          "n": 8,
+          "mae": 0.7419112682342504,
+          "rmse": 0.7680993565559241,
+          "bias": -0.7419112682342504,
+          "absolute_p50": 0.6194683074951008,
+          "absolute_p95": 0.963418579101603
+        },
+        "train/persistence": {
+          "n": 8,
+          "mae": 0.23750000000000027,
+          "rmse": 0.2715695122800053,
+          "bias": 0.11250000000000027,
+          "absolute_p50": 0.20000000000000284,
+          "absolute_p95": 0.3999999999999986
+        },
+        "validation/recorded": {
+          "n": 9,
+          "mae": 0.6075710296630774,
+          "rmse": 0.6707133854874024,
+          "bias": -0.6075710296630774,
+          "absolute_p50": 0.6139698028563991,
+          "absolute_p95": 0.7408782958983977
+        },
+        "validation/persistence": {
+          "n": 9,
+          "mae": 0.2666666666666665,
+          "rmse": 0.31622776601683783,
+          "bias": 0.13333333333333286,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.5
+        },
+        "test/recorded": {
+          "n": 11,
+          "mae": 0.5792499542236456,
+          "rmse": 0.5903329697208677,
+          "bias": -0.5792499542236456,
+          "absolute_p50": 0.5680072784424013,
+          "absolute_p95": 0.7818408966064005
+        },
+        "test/persistence": {
+          "n": 11,
+          "mae": 0.17272727272727292,
+          "rmse": 0.19771421064483227,
+          "bias": 0.027272727272727337,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.3000000000000007
+        }
+      },
+      "regimes": {
+        "train/unknown_operation/recorded": {
+          "n": 1,
+          "mae": 0.6194683074951008,
+          "rmse": 0.6194683074951008,
+          "bias": -0.6194683074951008,
+          "absolute_p50": 0.6194683074951008,
+          "absolute_p95": 0.6194683074951008
+        },
+        "train/unknown_operation/persistence": {
+          "n": 1,
+          "mae": 0.1999999999999993,
+          "rmse": 0.1999999999999993,
+          "bias": 0.1999999999999993,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.1999999999999993
+        },
+        "train/ch_transition/recorded": {
+          "n": 3,
+          "mae": 0.8492004394531337,
+          "rmse": 0.8857396899869512,
+          "bias": -0.8492004394531337,
+          "absolute_p50": 0.963418579101603,
+          "absolute_p95": 0.963418579101603
+        },
+        "train/ch_transition/persistence": {
+          "n": 3,
+          "mae": 0.29999999999999954,
+          "rmse": 0.33166247903553897,
+          "bias": -0.033333333333333805,
+          "absolute_p50": 0.3999999999999986,
+          "absolute_p95": 0.3999999999999986
+        },
+        "train/stable_ch_on/recorded": {
+          "n": 1,
+          "mae": 0.7000202178954993,
+          "rmse": 0.7000202178954993,
+          "bias": -0.7000202178954993,
+          "absolute_p50": 0.7000202178954993,
+          "absolute_p95": 0.7000202178954993
+        },
+        "train/stable_ch_on/persistence": {
+          "n": 1,
+          "mae": 0.20000000000000284,
+          "rmse": 0.20000000000000284,
+          "bias": 0.20000000000000284,
+          "absolute_p50": 0.20000000000000284,
+          "absolute_p95": 0.20000000000000284
+        },
+        "train/stable_ch_off/recorded": {
+          "n": 2,
+          "mae": 0.7388967514038018,
+          "rmse": 0.756260239251713,
+          "bias": -0.7388967514038018,
+          "absolute_p50": 0.5777721405029013,
+          "absolute_p95": 0.5777721405029013
+        },
+        "train/stable_ch_off/persistence": {
+          "n": 2,
+          "mae": 0.15000000000000036,
+          "rmse": 0.21213203435596475,
+          "bias": 0.15000000000000036,
+          "absolute_p50": 0.0,
+          "absolute_p95": 0.0
+        },
+        "train/dhw_interval/recorded": {
+          "n": 1,
+          "mae": 0.5904067993163977,
+          "rmse": 0.5904067993163977,
+          "bias": -0.5904067993163977,
+          "absolute_p50": 0.5904067993163977,
+          "absolute_p95": 0.5904067993163977
+        },
+        "train/dhw_interval/persistence": {
+          "n": 1,
+          "mae": 0.3000000000000007,
+          "rmse": 0.3000000000000007,
+          "bias": 0.3000000000000007,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.3000000000000007
+        },
+        "validation/stable_ch_off/recorded": {
+          "n": 3,
+          "mae": 0.6653729756672982,
+          "rmse": 0.667604634324228,
+          "bias": -0.6653729756672982,
+          "absolute_p50": 0.641270828247098,
+          "absolute_p95": 0.641270828247098
+        },
+        "validation/stable_ch_off/persistence": {
+          "n": 3,
+          "mae": 0.16666666666666666,
+          "rmse": 0.17320508075688745,
+          "bias": 0.16666666666666666,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.1999999999999993
+        },
+        "validation/ch_transition/recorded": {
+          "n": 6,
+          "mae": 0.5786700566609669,
+          "rmse": 0.6722623701519864,
+          "bias": -0.5786700566609669,
+          "absolute_p50": 0.45440063476560155,
+          "absolute_p95": 0.7229919433593999
+        },
+        "validation/ch_transition/persistence": {
+          "n": 6,
+          "mae": 0.31666666666666643,
+          "rmse": 0.3674234614174766,
+          "bias": 0.11666666666666596,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.5
+        },
+        "test/stable_ch_off/recorded": {
+          "n": 7,
+          "mae": 0.5143511090960001,
+          "rmse": 0.5168937562849718,
+          "bias": -0.5143511090960001,
+          "absolute_p50": 0.4954311370849993,
+          "absolute_p95": 0.5758682250977003
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 7,
+          "mae": 0.14285714285714285,
+          "rmse": 0.15118578920369102,
+          "bias": 0.14285714285714285,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.1999999999999993
+        },
+        "test/ch_transition/recorded": {
+          "n": 4,
+          "mae": 0.692822933197025,
+          "rmse": 0.7005656784929827,
+          "bias": -0.692822933197025,
+          "absolute_p50": 0.6132263183593984,
+          "absolute_p95": 0.7818408966064005
+        },
+        "test/ch_transition/persistence": {
+          "n": 4,
+          "mae": 0.22500000000000053,
+          "rmse": 0.2598076211353315,
+          "bias": -0.17499999999999982,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.3000000000000007
+        }
+      },
+      "raw_ages": {
+        "n": 56,
+        "mean": 101.68591071026665,
+        "max": 298.58200001716614
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 70,
+        "reconstructed_live_held_state": 25356,
+        "raw_unavailable": 6,
+        "age_diagnostic_gap_or_invalid": 2055
+      }
+    },
+    "stijn/60/hold300_gap30": {
+      "counts": {
+        "total": 741,
+        "invalid_forecast": 25,
+        "raw_pair_missing_invalid_or_old": 533,
+        "health_interval": 140,
+        "split_embargo": 37,
+        "accepted_held_state": 6
+      },
+      "metrics": {
+        "validation/recorded": {
+          "n": 1,
+          "mae": 0.9322448730469013,
+          "rmse": 0.9322448730469013,
+          "bias": -0.9322448730469013,
+          "absolute_p50": 0.9322448730469013,
+          "absolute_p95": 0.9322448730469013
+        },
+        "validation/persistence": {
+          "n": 1,
+          "mae": 0.5999999999999979,
+          "rmse": 0.5999999999999979,
+          "bias": 0.5999999999999979,
+          "absolute_p50": 0.5999999999999979,
+          "absolute_p95": 0.5999999999999979
+        },
+        "test/recorded": {
+          "n": 5,
+          "mae": 1.1951711273193197,
+          "rmse": 1.1975882713030819,
+          "bias": -1.1951711273193197,
+          "absolute_p50": 1.2222457885742024,
+          "absolute_p95": 1.2222530364989979
+        },
+        "test/persistence": {
+          "n": 5,
+          "mae": 0.11999999999999958,
+          "rmse": 0.16733200530681494,
+          "bias": 0.08000000000000043,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.1999999999999993
+        }
+      },
+      "regimes": {
+        "validation/ch_transition/recorded": {
+          "n": 1,
+          "mae": 0.9322448730469013,
+          "rmse": 0.9322448730469013,
+          "bias": -0.9322448730469013,
+          "absolute_p50": 0.9322448730469013,
+          "absolute_p95": 0.9322448730469013
+        },
+        "validation/ch_transition/persistence": {
+          "n": 1,
+          "mae": 0.5999999999999979,
+          "rmse": 0.5999999999999979,
+          "bias": 0.5999999999999979,
+          "absolute_p50": 0.5999999999999979,
+          "absolute_p95": 0.5999999999999979
+        },
+        "test/ch_transition/recorded": {
+          "n": 1,
+          "mae": 1.1274673461913984,
+          "rmse": 1.1274673461913984,
+          "bias": -1.1274673461913984,
+          "absolute_p50": 1.1274673461913984,
+          "absolute_p95": 1.1274673461913984
+        },
+        "test/ch_transition/persistence": {
+          "n": 1,
+          "mae": 0.3000000000000007,
+          "rmse": 0.3000000000000007,
+          "bias": 0.3000000000000007,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.3000000000000007
+        },
+        "test/stable_ch_off/recorded": {
+          "n": 1,
+          "mae": 1.0952297210693018,
+          "rmse": 1.0952297210693018,
+          "bias": -1.0952297210693018,
+          "absolute_p50": 1.0952297210693018,
+          "absolute_p95": 1.0952297210693018
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 1,
+          "mae": 0.1999999999999993,
+          "rmse": 0.1999999999999993,
+          "bias": 0.1999999999999993,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.1999999999999993
+        },
+        "test/dhw_interval/recorded": {
+          "n": 3,
+          "mae": 1.2510528564452994,
+          "rmse": 1.2517158329232325,
+          "bias": -1.2510528564452994,
+          "absolute_p50": 1.2222530364989979,
+          "absolute_p95": 1.2222530364989979
+        },
+        "test/dhw_interval/persistence": {
+          "n": 3,
+          "mae": 0.033333333333332625,
+          "rmse": 0.057735026918961346,
+          "bias": -0.033333333333332625,
+          "absolute_p50": 0.0,
+          "absolute_p95": 0.0
+        }
+      },
+      "raw_ages": {
+        "n": 12,
+        "mean": 48.50716668367386,
+        "max": 233.44199991226196
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 70,
+        "reconstructed_live_held_state": 25356,
+        "raw_unavailable": 6,
+        "age_diagnostic_gap_or_invalid": 2055
+      }
+    },
+    "stijn/15/hold900_gap30": {
+      "counts": {
+        "total": 741,
+        "invalid_forecast": 25,
+        "health_interval": 211,
+        "raw_pair_missing_invalid_or_old": 313,
+        "accepted_held_state": 155,
+        "split_embargo": 37
+      },
+      "metrics": {
+        "train/recorded": {
+          "n": 45,
+          "mae": 0.3747890641954156,
+          "rmse": 0.39505014108443065,
+          "bias": -0.3747890641954156,
+          "absolute_p50": 0.3430728912354013,
+          "absolute_p95": 0.5764724731444986
+        },
+        "train/persistence": {
+          "n": 45,
+          "mae": 0.11777777777777843,
+          "rmse": 0.14681810363696884,
+          "bias": 0.05555555555555595,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.20000000000000284
+        },
+        "validation/recorded": {
+          "n": 55,
+          "mae": 0.36555075905539797,
+          "rmse": 0.3907469834259523,
+          "bias": -0.3430642006613979,
+          "absolute_p50": 0.32677345275880043,
+          "absolute_p95": 0.5620662689208977
+        },
+        "validation/persistence": {
+          "n": 55,
+          "mae": 0.1363636363636363,
+          "rmse": 0.18040358795061295,
+          "bias": 0.0018181818181817794,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.3000000000000007
+        },
+        "test/recorded": {
+          "n": 55,
+          "mae": 0.28316655939275664,
+          "rmse": 0.30669909810129203,
+          "bias": -0.23745140769265125,
+          "absolute_p50": 0.2560066223144979,
+          "absolute_p95": 0.5011516571045007
+        },
+        "test/persistence": {
+          "n": 55,
+          "mae": 0.10000000000000006,
+          "rmse": 0.14832396974191323,
+          "bias": 0.009090909090909155,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.3000000000000007
+        }
+      },
+      "regimes": {
+        "train/unknown_operation/recorded": {
+          "n": 15,
+          "mae": 0.3474842325846339,
+          "rmse": 0.35307926237782666,
+          "bias": -0.3474842325846339,
+          "absolute_p50": 0.31322669982910156,
+          "absolute_p95": 0.4328804016112997
+        },
+        "train/unknown_operation/persistence": {
+          "n": 15,
+          "mae": 0.08000000000000043,
+          "rmse": 0.08944271909999206,
+          "bias": 0.0666666666666669,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "train/stable_ch_off/recorded": {
+          "n": 13,
+          "mae": 0.3439890347994309,
+          "rmse": 0.3555333545707488,
+          "bias": -0.3439890347994309,
+          "absolute_p50": 0.33897895812989987,
+          "absolute_p95": 0.45001106262209944
+        },
+        "train/stable_ch_off/persistence": {
+          "n": 13,
+          "mae": 0.11538461538461593,
+          "rmse": 0.1330124343522357,
+          "bias": 0.10000000000000032,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.1999999999999993
+        },
+        "train/ch_transition/recorded": {
+          "n": 10,
+          "mae": 0.47370250701902955,
+          "rmse": 0.5133969937097098,
+          "bias": -0.47370250701902955,
+          "absolute_p50": 0.3474563598632976,
+          "absolute_p95": 0.7200916290282997
+        },
+        "train/ch_transition/persistence": {
+          "n": 10,
+          "mae": 0.19000000000000092,
+          "rmse": 0.23021728866442742,
+          "bias": -0.04999999999999964,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.3000000000000007
+        },
+        "train/stable_ch_on/recorded": {
+          "n": 4,
+          "mae": 0.37501010894775,
+          "rmse": 0.37750180188101445,
+          "bias": -0.37501010894775,
+          "absolute_p50": 0.3500099182129013,
+          "absolute_p95": 0.350010299682598
+        },
+        "train/stable_ch_on/persistence": {
+          "n": 4,
+          "mae": 0.07500000000000018,
+          "rmse": 0.08660254037844407,
+          "bias": 0.07500000000000018,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.10000000000000142
+        },
+        "train/dhw_interval/recorded": {
+          "n": 3,
+          "mae": 0.3147738138834318,
+          "rmse": 0.31826949372746766,
+          "bias": -0.3147738138834318,
+          "absolute_p50": 0.3471240997313991,
+          "absolute_p95": 0.3471240997313991
+        },
+        "train/dhw_interval/persistence": {
+          "n": 3,
+          "mae": 0.13333333333333522,
+          "rmse": 0.14142135623731153,
+          "bias": 0.13333333333333522,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "validation/dhw_interval/recorded": {
+          "n": 5,
+          "mae": 0.3863951873779385,
+          "rmse": 0.3884612989415265,
+          "bias": -0.3863951873779385,
+          "absolute_p50": 0.3899497985839986,
+          "absolute_p95": 0.42541732788089703
+        },
+        "validation/dhw_interval/persistence": {
+          "n": 5,
+          "mae": 0.2,
+          "rmse": 0.3224903099319417,
+          "bias": -0.12000000000000029,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "validation/stable_ch_off/recorded": {
+          "n": 39,
+          "mae": 0.36279798654409473,
+          "rmse": 0.38490075931597867,
+          "bias": -0.36279798654409473,
+          "absolute_p50": 0.3199474334717003,
+          "absolute_p95": 0.5482650756836023
+        },
+        "validation/stable_ch_off/persistence": {
+          "n": 39,
+          "mae": 0.1051282051282049,
+          "rmse": 0.12089410496539754,
+          "bias": 0.043589743589743754,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.1999999999999993
+        },
+        "validation/ch_transition/recorded": {
+          "n": 9,
+          "mae": 0.3784237755669445,
+          "rmse": 0.42383004569526556,
+          "bias": -0.3784237755669445,
+          "absolute_p50": 0.3947723388672024,
+          "absolute_p95": 0.5620662689208977
+        },
+        "validation/ch_transition/persistence": {
+          "n": 9,
+          "mae": 0.17777777777777834,
+          "rmse": 0.20548046676563317,
+          "bias": -0.022222222222222934,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.3000000000000007
+        },
+        "validation/valve_transition/recorded": {
+          "n": 2,
+          "mae": 0.30919017791750036,
+          "rmse": 0.35255001004444186,
+          "bias": 0.30919017791750036,
+          "absolute_p50": 0.1398002624511996,
+          "absolute_p95": 0.1398002624511996
+        },
+        "validation/valve_transition/persistence": {
+          "n": 2,
+          "mae": 0.40000000000000036,
+          "rmse": 0.40000000000000036,
+          "bias": -0.40000000000000036,
+          "absolute_p50": 0.3999999999999986,
+          "absolute_p95": 0.3999999999999986
+        },
+        "test/ch_transition/recorded": {
+          "n": 11,
+          "mae": 0.33975379250265386,
+          "rmse": 0.37951597040624196,
+          "bias": -0.20229651711203608,
+          "absolute_p50": 0.35569610595699785,
+          "absolute_p95": 0.5930576324462997
+        },
+        "test/ch_transition/persistence": {
+          "n": 11,
+          "mae": 0.16363636363636305,
+          "rmse": 0.22156468376279842,
+          "bias": -0.07272727272727214,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.3999999999999986
+        },
+        "test/stable_ch_off/recorded": {
+          "n": 40,
+          "mae": 0.2676379585266154,
+          "rmse": 0.28220813245793974,
+          "bias": -0.2676379585266154,
+          "absolute_p50": 0.25398635864259944,
+          "absolute_p95": 0.40519790649410226
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 40,
+          "mae": 0.07250000000000023,
+          "rmse": 0.09617692030835698,
+          "bias": 0.03749999999999991,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.10000000000000142
+        },
+        "test/dhw_interval/recorded": {
+          "n": 3,
+          "mae": 0.21006635030110132,
+          "rmse": 0.22536803124830498,
+          "bias": -0.21006635030110132,
+          "absolute_p50": 0.21007537841800072,
+          "absolute_p95": 0.21007537841800072
+        },
+        "test/dhw_interval/persistence": {
+          "n": 3,
+          "mae": 0.10000000000000024,
+          "rmse": 0.12909944487358055,
+          "bias": 0.10000000000000024,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "test/valve_transition/recorded": {
+          "n": 1,
+          "mae": 0.5011516571045007,
+          "rmse": 0.5011516571045007,
+          "bias": 0.5011516571045007,
+          "absolute_p50": 0.5011516571045007,
+          "absolute_p95": 0.5011516571045007
+        },
+        "test/valve_transition/persistence": {
+          "n": 1,
+          "mae": 0.5,
+          "rmse": 0.5,
+          "bias": -0.5,
+          "absolute_p50": 0.5,
+          "absolute_p95": 0.5
+        }
+      },
+      "raw_ages": {
+        "n": 310,
+        "mean": 260.9593387026941,
+        "max": 898.800999879837
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 70,
+        "reconstructed_live_held_state": 25356,
+        "raw_unavailable": 6,
+        "age_diagnostic_gap_or_invalid": 2055
+      }
+    },
+    "stijn/30/hold900_gap30": {
+      "counts": {
+        "total": 741,
+        "invalid_forecast": 25,
+        "health_interval": 263,
+        "raw_pair_missing_invalid_or_old": 334,
+        "accepted_held_state": 82,
+        "split_embargo": 37
+      },
+      "metrics": {
+        "train/recorded": {
+          "n": 21,
+          "mae": 0.7085812159947045,
+          "rmse": 0.7224461904288438,
+          "bias": -0.7085812159947045,
+          "absolute_p50": 0.6859992980956982,
+          "absolute_p95": 0.963418579101603
+        },
+        "train/persistence": {
+          "n": 21,
+          "mae": 0.19523809523809565,
+          "rmse": 0.2236067977499791,
+          "bias": 0.14761904761904804,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.3999999999999986
+        },
+        "validation/recorded": {
+          "n": 24,
+          "mae": 0.6558245023091497,
+          "rmse": 0.7012894361638552,
+          "bias": -0.6558245023091497,
+          "absolute_p50": 0.6149349212645987,
+          "absolute_p95": 1.0512126922606981
+        },
+        "validation/persistence": {
+          "n": 24,
+          "mae": 0.23749999999999968,
+          "rmse": 0.2669269563007824,
+          "bias": 0.12916666666666657,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.5
+        },
+        "test/recorded": {
+          "n": 37,
+          "mae": 0.5867363388473972,
+          "rmse": 0.5968847512778658,
+          "bias": -0.5867363388473972,
+          "absolute_p50": 0.5663356781006001,
+          "absolute_p95": 0.8096492767333991
+        },
+        "test/persistence": {
+          "n": 37,
+          "mae": 0.1459459459459462,
+          "rmse": 0.16274669424134708,
+          "bias": 0.04324324324324338,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.20000000000000284
+        }
+      },
+      "regimes": {
+        "train/unknown_operation/recorded": {
+          "n": 8,
+          "mae": 0.6757628917694252,
+          "rmse": 0.6800904879975516,
+          "bias": -0.6757628917694252,
+          "absolute_p50": 0.6251544952393004,
+          "absolute_p95": 0.7261009216308985
+        },
+        "train/unknown_operation/persistence": {
+          "n": 8,
+          "mae": 0.1499999999999999,
+          "rmse": 0.16583123951776968,
+          "bias": 0.1499999999999999,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.1999999999999993
+        },
+        "train/ch_transition/recorded": {
+          "n": 5,
+          "mae": 0.8050251007080199,
+          "rmse": 0.8307479857474532,
+          "bias": -0.8050251007080199,
+          "absolute_p50": 0.791524887085,
+          "absolute_p95": 0.963418579101603
+        },
+        "train/ch_transition/persistence": {
+          "n": 5,
+          "mae": 0.24000000000000057,
+          "rmse": 0.2756809750418042,
+          "bias": 0.04000000000000057,
+          "absolute_p50": 0.20000000000000284,
+          "absolute_p95": 0.3999999999999986
+        },
+        "train/stable_ch_on/recorded": {
+          "n": 3,
+          "mae": 0.733353551228832,
+          "rmse": 0.7348671163915088,
+          "bias": -0.733353551228832,
+          "absolute_p50": 0.7000202178954993,
+          "absolute_p95": 0.7000202178954993
+        },
+        "train/stable_ch_on/persistence": {
+          "n": 3,
+          "mae": 0.16666666666666785,
+          "rmse": 0.1732050807568888,
+          "bias": 0.16666666666666785,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.1999999999999993
+        },
+        "train/stable_ch_off/recorded": {
+          "n": 3,
+          "mae": 0.688105519612634,
+          "rmse": 0.704241529164826,
+          "bias": -0.688105519612634,
+          "absolute_p50": 0.5865230560302983,
+          "absolute_p95": 0.5865230560302983
+        },
+        "train/stable_ch_off/persistence": {
+          "n": 3,
+          "mae": 0.20000000000000048,
+          "rmse": 0.24494897427831838,
+          "bias": 0.20000000000000048,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.3000000000000007
+        },
+        "train/dhw_interval/recorded": {
+          "n": 2,
+          "mae": 0.5922998428344481,
+          "rmse": 0.592302867995313,
+          "bias": -0.5922998428344481,
+          "absolute_p50": 0.5904067993163977,
+          "absolute_p95": 0.5904067993163977
+        },
+        "train/dhw_interval/persistence": {
+          "n": 2,
+          "mae": 0.3000000000000007,
+          "rmse": 0.3000000000000007,
+          "bias": 0.3000000000000007,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.3000000000000007
+        },
+        "validation/dhw_interval/recorded": {
+          "n": 2,
+          "mae": 0.6389486312865991,
+          "rmse": 0.641119141600953,
+          "bias": -0.6389486312865991,
+          "absolute_p50": 0.5862380981444986,
+          "absolute_p95": 0.5862380981444986
+        },
+        "validation/dhw_interval/persistence": {
+          "n": 2,
+          "mae": 0.25,
+          "rmse": 0.25495097567963937,
+          "bias": 0.25,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.1999999999999993
+        },
+        "validation/stable_ch_off/recorded": {
+          "n": 12,
+          "mae": 0.755008443196591,
+          "rmse": 0.7807444592733503,
+          "bias": -0.755008443196591,
+          "absolute_p50": 0.6396533966063984,
+          "absolute_p95": 1.0512126922606981
+        },
+        "validation/stable_ch_off/persistence": {
+          "n": 12,
+          "mae": 0.19166666666666612,
+          "rmse": 0.19790570145063116,
+          "bias": 0.07500000000000018,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.1999999999999993
+        },
+        "validation/ch_transition/recorded": {
+          "n": 10,
+          "mae": 0.5401789474487302,
+          "rmse": 0.6055208107830571,
+          "bias": -0.5401789474487302,
+          "absolute_p50": 0.47597389221190056,
+          "absolute_p95": 0.7229919433593999
+        },
+        "validation/ch_transition/persistence": {
+          "n": 10,
+          "mae": 0.28999999999999987,
+          "rmse": 0.33316662497915345,
+          "bias": 0.16999999999999957,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.5
+        },
+        "test/stable_ch_off/recorded": {
+          "n": 20,
+          "mae": 0.5474659156799403,
+          "rmse": 0.5519696979581712,
+          "bias": -0.5474659156799403,
+          "absolute_p50": 0.5465946197510014,
+          "absolute_p95": 0.7071826934813998
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 20,
+          "mae": 0.12500000000000017,
+          "rmse": 0.13601470508735453,
+          "bias": 0.1049999999999999,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.1999999999999993
+        },
+        "test/ch_transition/recorded": {
+          "n": 13,
+          "mae": 0.6773907588078458,
+          "rmse": 0.6865428984235988,
+          "bias": -0.6773907588078458,
+          "absolute_p50": 0.6441986083983977,
+          "absolute_p95": 0.8102790832519986
+        },
+        "test/ch_transition/persistence": {
+          "n": 13,
+          "mae": 0.1846153846153848,
+          "rmse": 0.2038098661460272,
+          "bias": -0.07692307692307665,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.3000000000000007
+        },
+        "test/dhw_interval/recorded": {
+          "n": 4,
+          "mae": 0.4884615898132241,
+          "rmse": 0.49020304880487686,
+          "bias": -0.4884615898132241,
+          "absolute_p50": 0.5093852996825987,
+          "absolute_p95": 0.5102512359618991
+        },
+        "test/dhw_interval/persistence": {
+          "n": 4,
+          "mae": 0.1250000000000009,
+          "rmse": 0.13228756555323007,
+          "bias": 0.1250000000000009,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        }
+      },
+      "raw_ages": {
+        "n": 164,
+        "mean": 299.3756829223982,
+        "max": 898.800999879837
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 70,
+        "reconstructed_live_held_state": 25356,
+        "raw_unavailable": 6,
+        "age_diagnostic_gap_or_invalid": 2055
+      }
+    },
+    "stijn/60/hold900_gap30": {
+      "counts": {
+        "total": 741,
+        "invalid_forecast": 25,
+        "health_interval": 341,
+        "raw_pair_missing_invalid_or_old": 313,
+        "accepted_held_state": 25,
+        "split_embargo": 37
+      },
+      "metrics": {
+        "train/recorded": {
+          "n": 3,
+          "mae": 1.4445274353026996,
+          "rmse": 1.451751594507668,
+          "bias": -1.4445274353026996,
+          "absolute_p50": 1.3443565368651988,
+          "absolute_p95": 1.3443565368651988
+        },
+        "train/persistence": {
+          "n": 3,
+          "mae": 0.23333333333333428,
+          "rmse": 0.2516611478423591,
+          "bias": 0.23333333333333428,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.3000000000000007
+        },
+        "validation/recorded": {
+          "n": 3,
+          "mae": 0.931100336710634,
+          "rmse": 0.931302965782607,
+          "bias": -0.931100336710634,
+          "absolute_p50": 0.9322448730469013,
+          "absolute_p95": 0.9322448730469013
+        },
+        "validation/persistence": {
+          "n": 3,
+          "mae": 0.5999999999999991,
+          "rmse": 0.599999999999999,
+          "bias": 0.5999999999999991,
+          "absolute_p50": 0.5999999999999979,
+          "absolute_p95": 0.5999999999999979
+        },
+        "test/recorded": {
+          "n": 19,
+          "mae": 1.267917050813374,
+          "rmse": 1.3445277101223279,
+          "bias": -0.9446448677464581,
+          "absolute_p50": 1.1407546997069993,
+          "absolute_p95": 1.5124328613281008
+        },
+        "test/persistence": {
+          "n": 19,
+          "mae": 0.2052631578947362,
+          "rmse": 0.2395170579575311,
+          "bias": 0.12105263157894741,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.3999999999999986
+        }
+      },
+      "regimes": {
+        "train/unknown_operation/recorded": {
+          "n": 3,
+          "mae": 1.4445274353026996,
+          "rmse": 1.451751594507668,
+          "bias": -1.4445274353026996,
+          "absolute_p50": 1.3443565368651988,
+          "absolute_p95": 1.3443565368651988
+        },
+        "train/unknown_operation/persistence": {
+          "n": 3,
+          "mae": 0.23333333333333428,
+          "rmse": 0.2516611478423591,
+          "bias": 0.23333333333333428,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.3000000000000007
+        },
+        "validation/ch_transition/recorded": {
+          "n": 3,
+          "mae": 0.931100336710634,
+          "rmse": 0.931302965782607,
+          "bias": -0.931100336710634,
+          "absolute_p50": 0.9322448730469013,
+          "absolute_p95": 0.9322448730469013
+        },
+        "validation/ch_transition/persistence": {
+          "n": 3,
+          "mae": 0.5999999999999991,
+          "rmse": 0.599999999999999,
+          "bias": 0.5999999999999991,
+          "absolute_p50": 0.5999999999999979,
+          "absolute_p95": 0.5999999999999979
+        },
+        "test/ch_transition/recorded": {
+          "n": 10,
+          "mae": 1.1167083358764807,
+          "rmse": 1.1285200632527672,
+          "bias": -1.1167083358764807,
+          "absolute_p50": 1.1242305755614979,
+          "absolute_p95": 1.1646266937256016
+        },
+        "test/ch_transition/persistence": {
+          "n": 10,
+          "mae": 0.29999999999999966,
+          "rmse": 0.3098386676965928,
+          "bias": 0.21999999999999922,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.3999999999999986
+        },
+        "test/stable_ch_off/recorded": {
+          "n": 3,
+          "mae": 1.1567000071207332,
+          "rmse": 1.1581437363912188,
+          "bias": -1.1567000071207332,
+          "absolute_p50": 1.1407546997069993,
+          "absolute_p95": 1.1407546997069993
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 3,
+          "mae": 0.16666666666666666,
+          "rmse": 0.17320508075688745,
+          "bias": 0.16666666666666666,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.1999999999999993
+        },
+        "test/dhw_interval/recorded": {
+          "n": 6,
+          "mae": 1.5755400975545164,
+          "rmse": 1.7121075914586519,
+          "bias": -0.5518448511759496,
+          "absolute_p50": 1.3068000793456989,
+          "absolute_p95": 1.3221961975098004
+        },
+        "test/dhw_interval/persistence": {
+          "n": 6,
+          "mae": 0.06666666666666525,
+          "rmse": 0.08164965809277086,
+          "bias": -0.06666666666666525,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.09999999999999787
+        }
+      },
+      "raw_ages": {
+        "n": 50,
+        "mean": 294.6038600063324,
+        "max": 898.800999879837
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 70,
+        "reconstructed_live_held_state": 25356,
+        "raw_unavailable": 6,
+        "age_diagnostic_gap_or_invalid": 2055
+      }
+    },
+    "stijn/15/hold300_gap60": {
+      "counts": {
+        "total": 741,
+        "invalid_forecast": 25,
+        "health_interval": 43,
+        "raw_pair_missing_invalid_or_old": 545,
+        "accepted_held_state": 91,
+        "split_embargo": 37
+      },
+      "metrics": {
+        "train/recorded": {
+          "n": 23,
+          "mae": 0.42416658816129155,
+          "rmse": 0.4545095699696473,
+          "bias": -0.42416658816129155,
+          "absolute_p50": 0.350010299682598,
+          "absolute_p95": 0.5839649200439005
+        },
+        "train/persistence": {
+          "n": 23,
+          "mae": 0.1478260869565223,
+          "rmse": 0.18177865182927763,
+          "bias": 0.0,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.3000000000000007
+        },
+        "validation/recorded": {
+          "n": 38,
+          "mae": 0.3421835648386129,
+          "rmse": 0.371703569038515,
+          "bias": -0.22807781821802892,
+          "absolute_p50": 0.31960067749020027,
+          "absolute_p95": 0.5620662689208977
+        },
+        "validation/persistence": {
+          "n": 38,
+          "mae": 0.2026315789473684,
+          "rmse": 0.2699902532353813,
+          "bias": -0.06578947368421062,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.6000000000000014
+        },
+        "test/recorded": {
+          "n": 30,
+          "mae": 0.322453791300457,
+          "rmse": 0.3706657638674335,
+          "bias": -0.14031173706055072,
+          "absolute_p50": 0.2749576568604013,
+          "absolute_p95": 0.5930576324462997
+        },
+        "test/persistence": {
+          "n": 30,
+          "mae": 0.16999999999999993,
+          "rmse": 0.2562550812504341,
+          "bias": -0.08333333333333322,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.5
+        }
+      },
+      "regimes": {
+        "train/unknown_operation/recorded": {
+          "n": 6,
+          "mae": 0.3996332804361848,
+          "rmse": 0.40983509600363727,
+          "bias": -0.3996332804361848,
+          "absolute_p50": 0.32884025573730113,
+          "absolute_p95": 0.49360046386720313
+        },
+        "train/unknown_operation/persistence": {
+          "n": 6,
+          "mae": 0.08333333333333393,
+          "rmse": 0.09128709291752833,
+          "bias": 0.016666666666666313,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "train/stable_ch_off/recorded": {
+          "n": 8,
+          "mae": 0.36120119094848757,
+          "rmse": 0.3818054416895534,
+          "bias": -0.36120119094848757,
+          "absolute_p50": 0.33706245422360226,
+          "absolute_p95": 0.5148612976073998
+        },
+        "train/stable_ch_off/persistence": {
+          "n": 8,
+          "mae": 0.125,
+          "rmse": 0.15000000000000005,
+          "bias": 0.07500000000000018,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.1999999999999993
+        },
+        "train/ch_transition/recorded": {
+          "n": 7,
+          "mae": 0.5383431570870282,
+          "rmse": 0.5772236111400167,
+          "bias": -0.5383431570870282,
+          "absolute_p50": 0.5764724731444986,
+          "absolute_p95": 0.6888477325438984
+        },
+        "train/ch_transition/persistence": {
+          "n": 7,
+          "mae": 0.24285714285714377,
+          "rmse": 0.26992062325273186,
+          "bias": -0.12857142857142886,
+          "absolute_p50": 0.20000000000000284,
+          "absolute_p95": 0.3000000000000007
+        },
+        "train/stable_ch_on/recorded": {
+          "n": 2,
+          "mae": 0.35001010894774964,
+          "rmse": 0.3500101089478016,
+          "bias": -0.35001010894774964,
+          "absolute_p50": 0.3500099182129013,
+          "absolute_p95": 0.3500099182129013
+        },
+        "train/stable_ch_on/persistence": {
+          "n": 2,
+          "mae": 0.10000000000000142,
+          "rmse": 0.10000000000000142,
+          "bias": 0.10000000000000142,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "validation/dhw_interval/recorded": {
+          "n": 5,
+          "mae": 0.38215713500975923,
+          "rmse": 0.3848493594832016,
+          "bias": -0.38215713500975923,
+          "absolute_p50": 0.38954353332519887,
+          "absolute_p95": 0.42541732788089703
+        },
+        "validation/dhw_interval/persistence": {
+          "n": 5,
+          "mae": 0.31999999999999956,
+          "rmse": 0.44721359549995743,
+          "bias": -0.2800000000000004,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.6999999999999993
+        },
+        "validation/stable_ch_off/recorded": {
+          "n": 19,
+          "mae": 0.31684457879317907,
+          "rmse": 0.3277925231423411,
+          "bias": -0.31684457879317907,
+          "absolute_p50": 0.3079242706299006,
+          "absolute_p95": 0.4500099182129027
+        },
+        "validation/stable_ch_off/persistence": {
+          "n": 19,
+          "mae": 0.09473684210526283,
+          "rmse": 0.1076055173697937,
+          "bias": 0.07368421052631591,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.1999999999999993
+        },
+        "validation/ch_transition/recorded": {
+          "n": 8,
+          "mae": 0.36301670074462455,
+          "rmse": 0.4218669947676406,
+          "bias": -0.36301670074462455,
+          "absolute_p50": 0.29143981933589913,
+          "absolute_p95": 0.5620662689208977
+        },
+        "validation/ch_transition/persistence": {
+          "n": 8,
+          "mae": 0.2375000000000007,
+          "rmse": 0.2573907535246759,
+          "bias": -0.012500000000000178,
+          "absolute_p50": 0.20000000000000284,
+          "absolute_p95": 0.3000000000000007
+        },
+        "validation/valve_transition/recorded": {
+          "n": 6,
+          "mae": 0.36133486429851597,
+          "rmse": 0.4172098950103021,
+          "bias": 0.36133486429851597,
+          "absolute_p50": 0.364163208007799,
+          "absolute_p95": 0.5229343414306982
+        },
+        "validation/valve_transition/persistence": {
+          "n": 6,
+          "mae": 0.40000000000000036,
+          "rmse": 0.41231056256176646,
+          "bias": -0.40000000000000036,
+          "absolute_p50": 0.3999999999999986,
+          "absolute_p95": 0.40000000000000213
+        },
+        "test/dhw_interval/recorded": {
+          "n": 4,
+          "mae": 0.22327556610107635,
+          "rmse": 0.2353138054786438,
+          "bias": -0.22327556610107635,
+          "absolute_p50": 0.21007537841800072,
+          "absolute_p95": 0.26290321350100143
+        },
+        "test/dhw_interval/persistence": {
+          "n": 4,
+          "mae": 0.10000000000000053,
+          "rmse": 0.1224744871391592,
+          "bias": 0.10000000000000053,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "test/ch_transition/recorded": {
+          "n": 9,
+          "mae": 0.44528931511771064,
+          "rmse": 0.4986066859498929,
+          "bias": -0.18936178419324456,
+          "absolute_p50": 0.39565887451169957,
+          "absolute_p95": 0.6792972564697024
+        },
+        "test/ch_transition/persistence": {
+          "n": 9,
+          "mae": 0.2666666666666661,
+          "rmse": 0.346410161513775,
+          "bias": -0.22222222222222182,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.5
+        },
+        "test/stable_ch_off/recorded": {
+          "n": 14,
+          "mae": 0.2285771506173366,
+          "rmse": 0.24405119696840993,
+          "bias": -0.2274872371128794,
+          "absolute_p50": 0.23971710205080043,
+          "absolute_p95": 0.32612495422360155
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 14,
+          "mae": 0.0571428571428572,
+          "rmse": 0.07559289460184551,
+          "bias": 0.042857142857142705,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.10000000000000142
+        },
+        "test/valve_transition/recorded": {
+          "n": 3,
+          "mae": 0.5242758433024323,
+          "rmse": 0.5256651174331647,
+          "bias": 0.5242758433024323,
+          "absolute_p50": 0.5011516571045007,
+          "absolute_p95": 0.5011516571045007
+        },
+        "test/valve_transition/persistence": {
+          "n": 3,
+          "mae": 0.5,
+          "rmse": 0.5,
+          "bias": -0.5,
+          "absolute_p50": 0.5,
+          "absolute_p95": 0.5
+        }
+      },
+      "raw_ages": {
+        "n": 182,
+        "mean": 105.24673625925085,
+        "max": 282.56700015068054
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 70,
+        "reconstructed_live_held_state": 26653,
+        "raw_unavailable": 6,
+        "age_diagnostic_gap_or_invalid": 758
+      }
+    },
+    "stijn/30/hold300_gap60": {
+      "counts": {
+        "total": 741,
+        "invalid_forecast": 25,
+        "raw_pair_missing_invalid_or_old": 547,
+        "health_interval": 57,
+        "accepted_held_state": 75,
+        "split_embargo": 37
+      },
+      "metrics": {
+        "train/recorded": {
+          "n": 22,
+          "mae": 0.8605834614146911,
+          "rmse": 0.8947696230495602,
+          "bias": -0.8605834614146911,
+          "absolute_p50": 0.825120925903299,
+          "absolute_p95": 1.1987045288086016
+        },
+        "train/persistence": {
+          "n": 22,
+          "mae": 0.2136363636363644,
+          "rmse": 0.2513599375036094,
+          "bias": 0.00454545454545461,
+          "absolute_p50": 0.20000000000000284,
+          "absolute_p95": 0.3999999999999986
+        },
+        "validation/recorded": {
+          "n": 32,
+          "mae": 0.812213134765622,
+          "rmse": 0.8799929066988297,
+          "bias": -0.5223563194274908,
+          "absolute_p50": 0.7229919433593999,
+          "absolute_p95": 1.2733730316161989
+        },
+        "validation/persistence": {
+          "n": 32,
+          "mae": 0.33437500000000053,
+          "rmse": 0.4376785350002902,
+          "bias": -0.15312500000000018,
+          "absolute_p50": 0.20000000000000284,
+          "absolute_p95": 1.0
+        },
+        "test/recorded": {
+          "n": 21,
+          "mae": 0.7355361211867623,
+          "rmse": 0.8313144500178271,
+          "bias": -0.28368265061151476,
+          "absolute_p50": 0.6033702850342024,
+          "absolute_p95": 1.6335773468018004
+        },
+        "test/persistence": {
+          "n": 21,
+          "mae": 0.23809523809523828,
+          "rmse": 0.32659863237109027,
+          "bias": -0.07619047619047609,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.8000000000000007
+        }
+      },
+      "regimes": {
+        "train/unknown_operation/recorded": {
+          "n": 4,
+          "mae": 0.8150735855102509,
+          "rmse": 0.8327337227757525,
+          "bias": -0.8150735855102509,
+          "absolute_p50": 0.7334625244141009,
+          "absolute_p95": 0.825120925903299
+        },
+        "train/unknown_operation/persistence": {
+          "n": 4,
+          "mae": 0.1250000000000009,
+          "rmse": 0.15000000000000094,
+          "bias": 0.024999999999999467,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.1999999999999993
+        },
+        "train/ch_transition/recorded": {
+          "n": 9,
+          "mae": 0.8705778333875998,
+          "rmse": 0.8950671574400674,
+          "bias": -0.8705778333875998,
+          "absolute_p50": 0.9000209808349986,
+          "absolute_p95": 1.0841629028319986
+        },
+        "train/ch_transition/persistence": {
+          "n": 9,
+          "mae": 0.20000000000000087,
+          "rmse": 0.2403700850309329,
+          "bias": -0.022222222222222143,
+          "absolute_p50": 0.20000000000000284,
+          "absolute_p95": 0.3999999999999986
+        },
+        "train/stable_ch_on/recorded": {
+          "n": 1,
+          "mae": 0.7000202178954993,
+          "rmse": 0.7000202178954993,
+          "bias": -0.7000202178954993,
+          "absolute_p50": 0.7000202178954993,
+          "absolute_p95": 0.7000202178954993
+        },
+        "train/stable_ch_on/persistence": {
+          "n": 1,
+          "mae": 0.20000000000000284,
+          "rmse": 0.20000000000000284,
+          "bias": 0.20000000000000284,
+          "absolute_p50": 0.20000000000000284,
+          "absolute_p95": 0.20000000000000284
+        },
+        "train/stable_ch_off/recorded": {
+          "n": 3,
+          "mae": 0.7172300974528009,
+          "rmse": 0.7298392475773896,
+          "bias": -0.7172300974528009,
+          "absolute_p50": 0.673896789550799,
+          "absolute_p95": 0.673896789550799
+        },
+        "train/stable_ch_off/persistence": {
+          "n": 3,
+          "mae": 0.16666666666666666,
+          "rmse": 0.2081665999466134,
+          "bias": 0.16666666666666666,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.1999999999999993
+        },
+        "train/dhw_interval/recorded": {
+          "n": 5,
+          "mae": 0.9971261596679802,
+          "rmse": 1.0527455415998357,
+          "bias": -0.9971261596679802,
+          "absolute_p50": 1.1987045288086016,
+          "absolute_p95": 1.2000213623047031
+        },
+        "train/dhw_interval/persistence": {
+          "n": 5,
+          "mae": 0.3400000000000006,
+          "rmse": 0.34928498393146007,
+          "bias": -0.1,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.3000000000000007
+        },
+        "validation/stable_ch_off/recorded": {
+          "n": 16,
+          "mae": 0.8596443653106625,
+          "rmse": 0.8974645181497151,
+          "bias": -0.8596443653106625,
+          "absolute_p50": 0.8160778045654027,
+          "absolute_p95": 1.1755176544189005
+        },
+        "validation/stable_ch_off/persistence": {
+          "n": 16,
+          "mae": 0.18750000000000044,
+          "rmse": 0.21213203435596467,
+          "bias": -0.02499999999999991,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.3000000000000007
+        },
+        "validation/ch_transition/recorded": {
+          "n": 9,
+          "mae": 0.6769147660997226,
+          "rmse": 0.7799480931282929,
+          "bias": -0.6769147660997226,
+          "absolute_p50": 0.5860569000243991,
+          "absolute_p95": 1.2356552124022997
+        },
+        "validation/ch_transition/persistence": {
+          "n": 9,
+          "mae": 0.3333333333333337,
+          "rmse": 0.3915780041490245,
+          "bias": -3.9474596431116675e-16,
+          "absolute_p50": 0.20000000000000284,
+          "absolute_p95": 0.5
+        },
+        "validation/dhw_interval/recorded": {
+          "n": 4,
+          "mae": 0.5889059066772511,
+          "rmse": 0.6238143128577449,
+          "bias": -0.16437835693360014,
+          "absolute_p50": 0.5828868865967003,
+          "absolute_p95": 0.678785324096701
+        },
+        "validation/dhw_interval/persistence": {
+          "n": 4,
+          "mae": 0.5750000000000011,
+          "rmse": 0.715891053163818,
+          "bias": -0.5250000000000004,
+          "absolute_p50": 0.20000000000000284,
+          "absolute_p95": 1.0
+        },
+        "validation/valve_transition/recorded": {
+          "n": 3,
+          "mae": 1.262884648640932,
+          "rmse": 1.273037193225987,
+          "bias": 1.262884648640932,
+          "absolute_p50": 1.2733730316161989,
+          "absolute_p95": 1.2733730316161989
+        },
+        "validation/valve_transition/persistence": {
+          "n": 3,
+          "mae": 0.8000000000000007,
+          "rmse": 0.8124038404635967,
+          "bias": -0.8000000000000007,
+          "absolute_p50": 0.7000000000000028,
+          "absolute_p95": 0.7000000000000028
+        },
+        "test/dhw_interval/recorded": {
+          "n": 1,
+          "mae": 0.4255626678467017,
+          "rmse": 0.4255626678467017,
+          "bias": -0.4255626678467017,
+          "absolute_p50": 0.4255626678467017,
+          "absolute_p95": 0.4255626678467017
+        },
+        "test/dhw_interval/persistence": {
+          "n": 1,
+          "mae": 0.3000000000000007,
+          "rmse": 0.3000000000000007,
+          "bias": 0.3000000000000007,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.3000000000000007
+        },
+        "test/ch_transition/recorded": {
+          "n": 9,
+          "mae": 1.029464848836267,
+          "rmse": 1.1150372728270501,
+          "bias": 0.02485991583931045,
+          "absolute_p50": 0.8252445220947031,
+          "absolute_p95": 1.6335773468018004
+        },
+        "test/ch_transition/persistence": {
+          "n": 9,
+          "mae": 0.36666666666666675,
+          "rmse": 0.46308146631499314,
+          "bias": -0.3444444444444442,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.8000000000000007
+        },
+        "test/stable_ch_off/recorded": {
+          "n": 11,
+          "mae": 0.5232283852317184,
+          "rmse": 0.5344394981125056,
+          "bias": -0.5232283852317184,
+          "absolute_p50": 0.5112041473388977,
+          "absolute_p95": 0.6050842285156008
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 11,
+          "mae": 0.12727272727272745,
+          "rmse": 0.1414213562373097,
+          "bias": 0.10909090909090903,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.1999999999999993
+        }
+      },
+      "raw_ages": {
+        "n": 150,
+        "mean": 102.96883999029795,
+        "max": 298.58200001716614
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 70,
+        "reconstructed_live_held_state": 26653,
+        "raw_unavailable": 6,
+        "age_diagnostic_gap_or_invalid": 758
+      }
+    },
+    "stijn/60/hold300_gap60": {
+      "counts": {
+        "total": 741,
+        "invalid_forecast": 25,
+        "raw_pair_missing_invalid_or_old": 533,
+        "accepted_held_state": 40,
+        "health_interval": 106,
+        "split_embargo": 37
+      },
+      "metrics": {
+        "train/recorded": {
+          "n": 13,
+          "mae": 1.780520453819862,
+          "rmse": 1.820355333204256,
+          "bias": -1.780520453819862,
+          "absolute_p50": 1.7986354827881001,
+          "absolute_p95": 1.9603302001952976
+        },
+        "train/persistence": {
+          "n": 13,
+          "mae": 0.20769230769230818,
+          "rmse": 0.32225169331774506,
+          "bias": -0.08461538461538445,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.3000000000000007
+        },
+        "validation/recorded": {
+          "n": 12,
+          "mae": 1.7624215761820503,
+          "rmse": 1.8667194664976485,
+          "bias": -1.7624215761820503,
+          "absolute_p50": 1.5642864227294986,
+          "absolute_p95": 2.359402465820299
+        },
+        "validation/persistence": {
+          "n": 12,
+          "mae": 0.4333333333333333,
+          "rmse": 0.5901977069875258,
+          "bias": -0.13333333333333375,
+          "absolute_p50": 0.5,
+          "absolute_p95": 0.6000000000000014
+        },
+        "test/recorded": {
+          "n": 15,
+          "mae": 1.6389435323079333,
+          "rmse": 1.870938968018283,
+          "bias": -0.32589955647785324,
+          "absolute_p50": 1.2222530364989979,
+          "absolute_p95": 3.7873760223389006
+        },
+        "test/persistence": {
+          "n": 15,
+          "mae": 0.1400000000000001,
+          "rmse": 0.19832633040858044,
+          "bias": 0.020000000000000285,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.3000000000000007
+        }
+      },
+      "regimes": {
+        "train/unknown_operation/recorded": {
+          "n": 2,
+          "mae": 1.4692295074463022,
+          "rmse": 1.5116402694665623,
+          "bias": -1.4692295074463022,
+          "absolute_p50": 1.1136722564697017,
+          "absolute_p95": 1.1136722564697017
+        },
+        "train/unknown_operation/persistence": {
+          "n": 2,
+          "mae": 0.20000000000000107,
+          "rmse": 0.22360679774997977,
+          "bias": 0.09999999999999964,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "train/ch_transition/recorded": {
+          "n": 4,
+          "mae": 1.7559854507446238,
+          "rmse": 1.7613648821193413,
+          "bias": -1.7559854507446238,
+          "absolute_p50": 1.6668292999267997,
+          "absolute_p95": 1.7967414855956996
+        },
+        "train/ch_transition/persistence": {
+          "n": 4,
+          "mae": 0.1750000000000007,
+          "rmse": 0.2061552812808838,
+          "bias": -0.07499999999999929,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.20000000000000284
+        },
+        "train/dhw_interval/recorded": {
+          "n": 7,
+          "mae": 1.8834807259695867,
+          "rmse": 1.9308872279058034,
+          "bias": -1.8834807259695867,
+          "absolute_p50": 1.8725936889648018,
+          "absolute_p95": 1.8963043212891009
+        },
+        "train/dhw_interval/persistence": {
+          "n": 7,
+          "mae": 0.2285714285714288,
+          "rmse": 0.3927922024247863,
+          "bias": -0.14285714285714285,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.1999999999999993
+        },
+        "validation/stable_ch_off/recorded": {
+          "n": 6,
+          "mae": 2.0411985397338843,
+          "rmse": 2.063406871231683,
+          "bias": -2.0411985397338843,
+          "absolute_p50": 2.0977523803711016,
+          "absolute_p95": 2.2768112182617024
+        },
+        "validation/stable_ch_off/persistence": {
+          "n": 6,
+          "mae": 0.3333333333333333,
+          "rmse": 0.40000000000000036,
+          "bias": -0.3000000000000007,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.5
+        },
+        "validation/dhw_interval/recorded": {
+          "n": 3,
+          "mae": 2.0164515177408995,
+          "rmse": 2.125791670328035,
+          "bias": -2.0164515177408995,
+          "absolute_p50": 1.5473857879639006,
+          "absolute_p95": 1.5473857879639006
+        },
+        "validation/dhw_interval/persistence": {
+          "n": 3,
+          "mae": 0.5,
+          "rmse": 0.8660254037844386,
+          "bias": -0.5,
+          "absolute_p50": 0.0,
+          "absolute_p95": 0.0
+        },
+        "validation/ch_transition/recorded": {
+          "n": 3,
+          "mae": 0.9508377075195327,
+          "rmse": 0.9509364901384116,
+          "bias": -0.9508377075195327,
+          "absolute_p50": 0.9553882598876982,
+          "absolute_p95": 0.9553882598876982
+        },
+        "validation/ch_transition/persistence": {
+          "n": 3,
+          "mae": 0.5666666666666664,
+          "rmse": 0.5686240703077324,
+          "bias": 0.5666666666666664,
+          "absolute_p50": 0.5999999999999979,
+          "absolute_p95": 0.5999999999999979
+        },
+        "test/dhw_interval/recorded": {
+          "n": 5,
+          "mae": 1.2625779724120996,
+          "rmse": 1.2676340223231848,
+          "bias": -1.2625779724120996,
+          "absolute_p50": 1.2222530364989979,
+          "absolute_p95": 1.3086597442626982
+        },
+        "test/dhw_interval/persistence": {
+          "n": 5,
+          "mae": 0.039999999999999855,
+          "rmse": 0.06324555320336736,
+          "bias": 7.105427357601002e-16,
+          "absolute_p50": 0.0,
+          "absolute_p95": 0.09999999999999787
+        },
+        "test/ch_transition/recorded": {
+          "n": 7,
+          "mae": 2.104895183018271,
+          "rmse": 2.398757270725137,
+          "bias": 0.7087704794747575,
+          "absolute_p50": 1.449516296386701,
+          "absolute_p95": 3.7873760223389006
+        },
+        "test/ch_transition/persistence": {
+          "n": 7,
+          "mae": 0.2142857142857148,
+          "rmse": 0.26992062325273164,
+          "bias": 0.014285714285714997,
+          "absolute_p50": 0.20000000000000284,
+          "absolute_p95": 0.3000000000000007
+        },
+        "test/stable_ch_off/recorded": {
+          "n": 3,
+          "mae": 1.1789989471435345,
+          "rmse": 1.182293555056798,
+          "bias": -1.1789989471435345,
+          "absolute_p50": 1.140843963623002,
+          "absolute_p95": 1.140843963623002
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 3,
+          "mae": 0.13333333333333286,
+          "rmse": 0.141421356237309,
+          "bias": 0.06666666666666525,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        }
+      },
+      "raw_ages": {
+        "n": 80,
+        "mean": 100.00183751881123,
+        "max": 277.4230000972748
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 70,
+        "reconstructed_live_held_state": 26653,
+        "raw_unavailable": 6,
+        "age_diagnostic_gap_or_invalid": 758
+      }
+    },
+    "nick/15/hold30_gap30": {
+      "counts": {
+        "total": 838,
+        "invalid_forecast": 14,
+        "raw_pair_missing_invalid_or_old": 763,
+        "accepted_held_state": 8,
+        "split_embargo": 42,
+        "health_interval": 11
+      },
+      "metrics": {
+        "train/recorded": {
+          "n": 1,
+          "mae": 0.021166610717799017,
+          "rmse": 0.021166610717799017,
+          "bias": -0.021166610717799017,
+          "absolute_p50": 0.021166610717799017,
+          "absolute_p95": 0.021166610717799017
+        },
+        "train/persistence": {
+          "n": 1,
+          "mae": 0.3000000000000007,
+          "rmse": 0.3000000000000007,
+          "bias": -0.3000000000000007,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.3000000000000007
+        },
+        "validation/recorded": {
+          "n": 3,
+          "mae": 0.2318283081054678,
+          "rmse": 0.2386175244769432,
+          "bias": -0.2318283081054678,
+          "absolute_p50": 0.2273727416992024,
+          "absolute_p95": 0.2273727416992024
+        },
+        "validation/persistence": {
+          "n": 3,
+          "mae": 0.06666666666666643,
+          "rmse": 0.08164965809277232,
+          "bias": -1.1842378929335002e-15,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.09999999999999787
+        },
+        "test/recorded": {
+          "n": 4,
+          "mae": 0.13750801086427522,
+          "rmse": 0.1596941100336607,
+          "bias": -0.13750801086427522,
+          "absolute_p50": 0.06835174560550072,
+          "absolute_p95": 0.15371932983399716
+        },
+        "test/persistence": {
+          "n": 4,
+          "mae": 0.07500000000000107,
+          "rmse": 0.0866025403784451,
+          "bias": 0.025000000000000355,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        }
+      },
+      "regimes": {
+        "train/unknown_operation/recorded": {
+          "n": 1,
+          "mae": 0.021166610717799017,
+          "rmse": 0.021166610717799017,
+          "bias": -0.021166610717799017,
+          "absolute_p50": 0.021166610717799017,
+          "absolute_p95": 0.021166610717799017
+        },
+        "train/unknown_operation/persistence": {
+          "n": 1,
+          "mae": 0.3000000000000007,
+          "rmse": 0.3000000000000007,
+          "bias": -0.3000000000000007,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.3000000000000007
+        },
+        "validation/ch_transition/recorded": {
+          "n": 1,
+          "mae": 0.16494712829589986,
+          "rmse": 0.16494712829589986,
+          "bias": -0.16494712829589986,
+          "absolute_p50": 0.16494712829589986,
+          "absolute_p95": 0.16494712829589986
+        },
+        "validation/ch_transition/persistence": {
+          "n": 1,
+          "mae": 0.09999999999999787,
+          "rmse": 0.09999999999999787,
+          "bias": 0.09999999999999787,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.09999999999999787
+        },
+        "validation/stable_ch_off/recorded": {
+          "n": 2,
+          "mae": 0.2652688980102518,
+          "rmse": 0.2679621370916512,
+          "bias": -0.2652688980102518,
+          "absolute_p50": 0.2273727416992024,
+          "absolute_p95": 0.2273727416992024
+        },
+        "validation/stable_ch_off/persistence": {
+          "n": 2,
+          "mae": 0.05000000000000071,
+          "rmse": 0.07071067811865576,
+          "bias": -0.05000000000000071,
+          "absolute_p50": 0.0,
+          "absolute_p95": 0.0
+        },
+        "test/stable_ch_off/recorded": {
+          "n": 3,
+          "mae": 0.16056009928386672,
+          "rmse": 0.18012669059160613,
+          "bias": -0.16056009928386672,
+          "absolute_p50": 0.15371932983399716,
+          "absolute_p95": 0.15371932983399716
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 3,
+          "mae": 0.06666666666666761,
+          "rmse": 0.08164965809277376,
+          "bias": 0.0,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "test/ch_transition/recorded": {
+          "n": 1,
+          "mae": 0.06835174560550072,
+          "rmse": 0.06835174560550072,
+          "bias": -0.06835174560550072,
+          "absolute_p50": 0.06835174560550072,
+          "absolute_p95": 0.06835174560550072
+        },
+        "test/ch_transition/persistence": {
+          "n": 1,
+          "mae": 0.10000000000000142,
+          "rmse": 0.10000000000000142,
+          "bias": 0.10000000000000142,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        }
+      },
+      "raw_ages": {
+        "n": 16,
+        "mean": 16.81581248342991,
+        "max": 28.161999940872192
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 154,
+        "reconstructed_live_held_state": 24719,
+        "age_diagnostic_gap_or_invalid": 2523,
+        "raw_unavailable": 5
+      }
+    },
+    "nick/30/hold30_gap30": {
+      "counts": {
+        "total": 838,
+        "invalid_forecast": 14,
+        "raw_pair_missing_invalid_or_old": 767,
+        "health_interval": 13,
+        "split_embargo": 42,
+        "accepted_held_state": 2
+      },
+      "metrics": {
+        "test/recorded": {
+          "n": 2,
+          "mae": 0.4161546707153505,
+          "rmse": 0.42612048348519665,
+          "bias": -0.4161546707153505,
+          "absolute_p50": 0.3245361328125007,
+          "absolute_p95": 0.3245361328125007
+        },
+        "test/persistence": {
+          "n": 2,
+          "mae": 0.09999999999999964,
+          "rmse": 0.141421356237309,
+          "bias": -0.09999999999999964,
+          "absolute_p50": 0.0,
+          "absolute_p95": 0.0
+        }
+      },
+      "regimes": {
+        "test/stable_ch_off/recorded": {
+          "n": 2,
+          "mae": 0.4161546707153505,
+          "rmse": 0.42612048348519665,
+          "bias": -0.4161546707153505,
+          "absolute_p50": 0.3245361328125007,
+          "absolute_p95": 0.3245361328125007
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 2,
+          "mae": 0.09999999999999964,
+          "rmse": 0.141421356237309,
+          "bias": -0.09999999999999964,
+          "absolute_p50": 0.0,
+          "absolute_p95": 0.0
+        }
+      },
+      "raw_ages": {
+        "n": 4,
+        "mean": 18.232500076293945,
+        "max": 26.409000158309937
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 154,
+        "reconstructed_live_held_state": 24719,
+        "age_diagnostic_gap_or_invalid": 2523,
+        "raw_unavailable": 5
+      }
+    },
+    "nick/60/hold30_gap30": {
+      "counts": {
+        "total": 838,
+        "invalid_forecast": 14,
+        "raw_pair_missing_invalid_or_old": 776,
+        "health_interval": 6,
+        "split_embargo": 42
+      },
+      "metrics": {},
+      "regimes": {},
+      "raw_ages": {
+        "n": 0,
+        "mean": null,
+        "max": null
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 154,
+        "reconstructed_live_held_state": 24719,
+        "age_diagnostic_gap_or_invalid": 2523,
+        "raw_unavailable": 5
+      }
+    },
+    "nick/15/hold60_gap30": {
+      "counts": {
+        "total": 838,
+        "invalid_forecast": 14,
+        "raw_pair_missing_invalid_or_old": 745,
+        "accepted_held_state": 15,
+        "health_interval": 22,
+        "split_embargo": 42
+      },
+      "metrics": {
+        "train/recorded": {
+          "n": 2,
+          "mae": 0.35702095031739844,
+          "rmse": 0.49016537657552,
+          "bias": -0.35702095031739844,
+          "absolute_p50": 0.021166610717799017,
+          "absolute_p95": 0.021166610717799017
+        },
+        "train/persistence": {
+          "n": 2,
+          "mae": 0.1999999999999993,
+          "rmse": 0.22360679774997896,
+          "bias": -0.1999999999999993,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.09999999999999787
+        },
+        "validation/recorded": {
+          "n": 6,
+          "mae": 0.23519687652586838,
+          "rmse": 0.24249728005851356,
+          "bias": -0.23519687652586838,
+          "absolute_p50": 0.20417175292970313,
+          "absolute_p95": 0.30316505432130114
+        },
+        "validation/persistence": {
+          "n": 6,
+          "mae": 0.06666666666666643,
+          "rmse": 0.08164965809277232,
+          "bias": -1.1842378929335002e-15,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.10000000000000142
+        },
+        "test/recorded": {
+          "n": 7,
+          "mae": 0.1214175088065004,
+          "rmse": 0.14052264906341594,
+          "bias": -0.1214175088065004,
+          "absolute_p50": 0.06835174560550072,
+          "absolute_p95": 0.16445808410639984
+        },
+        "test/persistence": {
+          "n": 7,
+          "mae": 0.07142857142857142,
+          "rmse": 0.08451542547285167,
+          "bias": 0.04285714285714245,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.10000000000000142
+        }
+      },
+      "regimes": {
+        "train/unknown_operation/recorded": {
+          "n": 1,
+          "mae": 0.021166610717799017,
+          "rmse": 0.021166610717799017,
+          "bias": -0.021166610717799017,
+          "absolute_p50": 0.021166610717799017,
+          "absolute_p95": 0.021166610717799017
+        },
+        "train/unknown_operation/persistence": {
+          "n": 1,
+          "mae": 0.3000000000000007,
+          "rmse": 0.3000000000000007,
+          "bias": -0.3000000000000007,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.3000000000000007
+        },
+        "train/valve_transition/recorded": {
+          "n": 1,
+          "mae": 0.6928752899169979,
+          "rmse": 0.6928752899169979,
+          "bias": -0.6928752899169979,
+          "absolute_p50": 0.6928752899169979,
+          "absolute_p95": 0.6928752899169979
+        },
+        "train/valve_transition/persistence": {
+          "n": 1,
+          "mae": 0.09999999999999787,
+          "rmse": 0.09999999999999787,
+          "bias": -0.09999999999999787,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.09999999999999787
+        },
+        "validation/stable_ch_off/recorded": {
+          "n": 5,
+          "mae": 0.24924682617186206,
+          "rmse": 0.2551948392431159,
+          "bias": -0.24924682617186206,
+          "absolute_p50": 0.2273727416992024,
+          "absolute_p95": 0.30316505432130114
+        },
+        "validation/stable_ch_off/persistence": {
+          "n": 5,
+          "mae": 0.060000000000000143,
+          "rmse": 0.07745966692414852,
+          "bias": -0.020000000000000996,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.10000000000000142
+        },
+        "validation/ch_transition/recorded": {
+          "n": 1,
+          "mae": 0.16494712829589986,
+          "rmse": 0.16494712829589986,
+          "bias": -0.16494712829589986,
+          "absolute_p50": 0.16494712829589986,
+          "absolute_p95": 0.16494712829589986
+        },
+        "validation/ch_transition/persistence": {
+          "n": 1,
+          "mae": 0.09999999999999787,
+          "rmse": 0.09999999999999787,
+          "bias": 0.09999999999999787,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.09999999999999787
+        },
+        "test/stable_ch_off/recorded": {
+          "n": 6,
+          "mae": 0.13026180267333368,
+          "rmse": 0.14919469560012322,
+          "bias": -0.13026180267333368,
+          "absolute_p50": 0.06784973144529971,
+          "absolute_p95": 0.16445808410639984
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 6,
+          "mae": 0.06666666666666643,
+          "rmse": 0.08164965809277232,
+          "bias": 0.033333333333332625,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.10000000000000142
+        },
+        "test/ch_transition/recorded": {
+          "n": 1,
+          "mae": 0.06835174560550072,
+          "rmse": 0.06835174560550072,
+          "bias": -0.06835174560550072,
+          "absolute_p50": 0.06835174560550072,
+          "absolute_p95": 0.06835174560550072
+        },
+        "test/ch_transition/persistence": {
+          "n": 1,
+          "mae": 0.10000000000000142,
+          "rmse": 0.10000000000000142,
+          "bias": 0.10000000000000142,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        }
+      },
+      "raw_ages": {
+        "n": 30,
+        "mean": 23.31069997151693,
+        "max": 57.492000102996826
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 154,
+        "reconstructed_live_held_state": 24719,
+        "age_diagnostic_gap_or_invalid": 2523,
+        "raw_unavailable": 5
+      }
+    },
+    "nick/30/hold60_gap30": {
+      "counts": {
+        "total": 838,
+        "invalid_forecast": 14,
+        "raw_pair_missing_invalid_or_old": 754,
+        "health_interval": 23,
+        "split_embargo": 42,
+        "accepted_held_state": 5
+      },
+      "metrics": {
+        "test/recorded": {
+          "n": 5,
+          "mae": 0.3135549926757804,
+          "rmse": 0.3483754380858023,
+          "bias": -0.28991775512694035,
+          "absolute_p50": 0.3245361328125007,
+          "absolute_p95": 0.413810348510701
+        },
+        "test/persistence": {
+          "n": 5,
+          "mae": 0.16000000000000014,
+          "rmse": 0.20976176963403093,
+          "bias": 7.105427357601002e-16,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.1999999999999993
+        }
+      },
+      "regimes": {
+        "test/stable_ch_off/recorded": {
+          "n": 3,
+          "mae": 0.41537322998046733,
+          "rmse": 0.4220570014527513,
+          "bias": -0.41537322998046733,
+          "absolute_p50": 0.413810348510701,
+          "absolute_p95": 0.413810348510701
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 3,
+          "mae": 0.10000000000000024,
+          "rmse": 0.12909944487358055,
+          "bias": -0.10000000000000024,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "test/ch_transition/recorded": {
+          "n": 2,
+          "mae": 0.16082763671875,
+          "rmse": 0.19030356260657616,
+          "bias": -0.10173454284664984,
+          "absolute_p50": 0.059093093872100155,
+          "absolute_p95": 0.059093093872100155
+        },
+        "test/ch_transition/persistence": {
+          "n": 2,
+          "mae": 0.25,
+          "rmse": 0.2915475947422661,
+          "bias": 0.15000000000000213,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.09999999999999787
+        }
+      },
+      "raw_ages": {
+        "n": 10,
+        "mean": 28.153100037574767,
+        "max": 54.37299990653992
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 154,
+        "reconstructed_live_held_state": 24719,
+        "age_diagnostic_gap_or_invalid": 2523,
+        "raw_unavailable": 5
+      }
+    },
+    "nick/60/hold60_gap30": {
+      "counts": {
+        "total": 838,
+        "invalid_forecast": 14,
+        "raw_pair_missing_invalid_or_old": 762,
+        "health_interval": 19,
+        "split_embargo": 42,
+        "accepted_held_state": 1
+      },
+      "metrics": {
+        "test/recorded": {
+          "n": 1,
+          "mae": 0.9145000457763999,
+          "rmse": 0.9145000457763999,
+          "bias": -0.9145000457763999,
+          "absolute_p50": 0.9145000457763999,
+          "absolute_p95": 0.9145000457763999
+        },
+        "test/persistence": {
+          "n": 1,
+          "mae": 0.3000000000000007,
+          "rmse": 0.3000000000000007,
+          "bias": -0.3000000000000007,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.3000000000000007
+        }
+      },
+      "regimes": {
+        "test/stable_ch_off/recorded": {
+          "n": 1,
+          "mae": 0.9145000457763999,
+          "rmse": 0.9145000457763999,
+          "bias": -0.9145000457763999,
+          "absolute_p50": 0.9145000457763999,
+          "absolute_p95": 0.9145000457763999
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 1,
+          "mae": 0.3000000000000007,
+          "rmse": 0.3000000000000007,
+          "bias": -0.3000000000000007,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.3000000000000007
+        }
+      },
+      "raw_ages": {
+        "n": 2,
+        "mean": 32.95300006866455,
+        "max": 48.45300006866455
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 154,
+        "reconstructed_live_held_state": 24719,
+        "age_diagnostic_gap_or_invalid": 2523,
+        "raw_unavailable": 5
+      }
+    },
+    "nick/15/hold300_gap30": {
+      "counts": {
+        "total": 838,
+        "invalid_forecast": 14,
+        "accepted_held_state": 70,
+        "health_interval": 107,
+        "raw_pair_missing_invalid_or_old": 605,
+        "split_embargo": 42
+      },
+      "metrics": {
+        "train/recorded": {
+          "n": 27,
+          "mae": 0.4037556542290555,
+          "rmse": 0.5017627606324011,
+          "bias": -0.3664077052363593,
+          "absolute_p50": 0.40974922180179973,
+          "absolute_p95": 0.7910289764404013
+        },
+        "train/persistence": {
+          "n": 27,
+          "mae": 0.35555555555555546,
+          "rmse": 0.46587233984970294,
+          "bias": -0.2296296296296296,
+          "absolute_p50": 0.29999999999999716,
+          "absolute_p95": 0.9000000000000021
+        },
+        "validation/recorded": {
+          "n": 25,
+          "mae": 0.2334723205566327,
+          "rmse": 0.24217879136649587,
+          "bias": -0.2334723205566327,
+          "absolute_p50": 0.2361999511719013,
+          "absolute_p95": 0.3246818542480021
+        },
+        "validation/persistence": {
+          "n": 25,
+          "mae": 0.055999999999999946,
+          "rmse": 0.0799999999999999,
+          "bias": 0.01599999999999966,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.10000000000000142
+        },
+        "test/recorded": {
+          "n": 18,
+          "mae": 0.1180958853827665,
+          "rmse": 0.13278818556934968,
+          "bias": -0.1101822959052223,
+          "absolute_p50": 0.10291519165039986,
+          "absolute_p95": 0.17091445922850212
+        },
+        "test/persistence": {
+          "n": 18,
+          "mae": 0.06111111111111119,
+          "rmse": 0.09128709291752768,
+          "bias": 0.04999999999999992,
+          "absolute_p50": 0.0,
+          "absolute_p95": 0.1999999999999993
+        }
+      },
+      "regimes": {
+        "train/unknown_operation/recorded": {
+          "n": 14,
+          "mae": 0.2573246002197284,
+          "rmse": 0.3874054275441974,
+          "bias": -0.1852964128766715,
+          "absolute_p50": 0.134915161132799,
+          "absolute_p95": 0.7655071258544979
+        },
+        "train/unknown_operation/persistence": {
+          "n": 14,
+          "mae": 0.43571428571428555,
+          "rmse": 0.5625198409199196,
+          "bias": -0.3928571428571431,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 1.0999999999999979
+        },
+        "train/stable_ch_off/recorded": {
+          "n": 5,
+          "mae": 0.40742645263671945,
+          "rmse": 0.4102320922409904,
+          "bias": -0.40742645263671945,
+          "absolute_p50": 0.4119224548339986,
+          "absolute_p95": 0.4503234863280987
+        },
+        "train/stable_ch_off/persistence": {
+          "n": 5,
+          "mae": 0.14000000000000057,
+          "rmse": 0.14832396974191345,
+          "bias": 0.14000000000000057,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.1999999999999993
+        },
+        "train/ch_transition/recorded": {
+          "n": 2,
+          "mae": 0.40646820068355183,
+          "rmse": 0.4091272988871427,
+          "bias": -0.40646820068355183,
+          "absolute_p50": 0.35989837646480183,
+          "absolute_p95": 0.35989837646480183
+        },
+        "train/ch_transition/persistence": {
+          "n": 2,
+          "mae": 0.25,
+          "rmse": 0.25495097567963937,
+          "bias": 0.25,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.1999999999999993
+        },
+        "train/valve_transition/recorded": {
+          "n": 4,
+          "mae": 0.7334229469299247,
+          "rmse": 0.7697876759620087,
+          "bias": -0.7334229469299247,
+          "absolute_p50": 0.6928752899169979,
+          "absolute_p95": 0.7640113830566015
+        },
+        "train/valve_transition/persistence": {
+          "n": 4,
+          "mae": 0.2499999999999991,
+          "rmse": 0.2915475947422646,
+          "bias": -0.14999999999999947,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.1999999999999993
+        },
+        "train/stable_ch_on/recorded": {
+          "n": 2,
+          "mae": 0.7575489044189503,
+          "rmse": 0.7582883737793382,
+          "bias": -0.7575489044189503,
+          "absolute_p50": 0.7240688323974993,
+          "absolute_p95": 0.7240688323974993
+        },
+        "train/stable_ch_on/persistence": {
+          "n": 2,
+          "mae": 0.6500000000000004,
+          "rmse": 0.6519202405202652,
+          "bias": -0.6500000000000004,
+          "absolute_p50": 0.6000000000000014,
+          "absolute_p95": 0.6000000000000014
+        },
+        "validation/dhw_interval/recorded": {
+          "n": 1,
+          "mae": 0.24326515197749998,
+          "rmse": 0.24326515197749998,
+          "bias": -0.24326515197749998,
+          "absolute_p50": 0.24326515197749998,
+          "absolute_p95": 0.24326515197749998
+        },
+        "validation/dhw_interval/persistence": {
+          "n": 1,
+          "mae": 0.10000000000000142,
+          "rmse": 0.10000000000000142,
+          "bias": 0.10000000000000142,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "validation/stable_ch_off/recorded": {
+          "n": 22,
+          "mae": 0.23470781499688717,
+          "rmse": 0.24398594118032932,
+          "bias": -0.23470781499688717,
+          "absolute_p50": 0.22777328491210014,
+          "absolute_p95": 0.3246818542480021
+        },
+        "validation/stable_ch_off/persistence": {
+          "n": 22,
+          "mae": 0.054545454545454515,
+          "rmse": 0.07977240352174648,
+          "bias": 0.009090909090908735,
+          "absolute_p50": 0.0,
+          "absolute_p95": 0.10000000000000142
+        },
+        "validation/ch_transition/recorded": {
+          "n": 2,
+          "mae": 0.21498546600339985,
+          "rmse": 0.22073193206518354,
+          "bias": -0.21498546600339985,
+          "absolute_p50": 0.16494712829589986,
+          "absolute_p95": 0.16494712829589986
+        },
+        "validation/ch_transition/persistence": {
+          "n": 2,
+          "mae": 0.049999999999998934,
+          "rmse": 0.07071067811865324,
+          "bias": 0.049999999999998934,
+          "absolute_p50": 0.0,
+          "absolute_p95": 0.0
+        },
+        "test/stable_ch_off/recorded": {
+          "n": 15,
+          "mae": 0.13045740763346672,
+          "rmse": 0.14309925192419715,
+          "bias": -0.12554473876953337,
+          "absolute_p50": 0.15371932983399716,
+          "absolute_p95": 0.17091445922850212
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 15,
+          "mae": 0.04666666666666662,
+          "rmse": 0.07745966692414821,
+          "bias": 0.0333333333333331,
+          "absolute_p50": 0.0,
+          "absolute_p95": 0.10000000000000142
+        },
+        "test/ch_transition/recorded": {
+          "n": 3,
+          "mae": 0.0562882741292654,
+          "rmse": 0.058388644910428326,
+          "bias": -0.03337008158366691,
+          "absolute_p50": 0.06613578796389774,
+          "absolute_p95": 0.06613578796389774
+        },
+        "test/ch_transition/persistence": {
+          "n": 3,
+          "mae": 0.13333333333333405,
+          "rmse": 0.14142135623730984,
+          "bias": 0.13333333333333405,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        }
+      },
+      "raw_ages": {
+        "n": 140,
+        "mean": 96.83596427270345,
+        "max": 288.7130000591278
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 154,
+        "reconstructed_live_held_state": 24719,
+        "age_diagnostic_gap_or_invalid": 2523,
+        "raw_unavailable": 5
+      }
+    },
+    "nick/30/hold300_gap30": {
+      "counts": {
+        "total": 838,
+        "invalid_forecast": 14,
+        "health_interval": 119,
+        "accepted_held_state": 36,
+        "raw_pair_missing_invalid_or_old": 627,
+        "split_embargo": 42
+      },
+      "metrics": {
+        "train/recorded": {
+          "n": 15,
+          "mae": 0.7988204701741466,
+          "rmse": 1.0043268654811925,
+          "bias": -0.6337854258219333,
+          "absolute_p50": 0.6956268310547031,
+          "absolute_p95": 1.8482055664062003
+        },
+        "train/persistence": {
+          "n": 15,
+          "mae": 0.42000000000000004,
+          "rmse": 0.5066228051190218,
+          "bias": -0.29999999999999927,
+          "absolute_p50": 0.3999999999999986,
+          "absolute_p95": 0.8000000000000007
+        },
+        "validation/recorded": {
+          "n": 6,
+          "mae": 0.46581395467123404,
+          "rmse": 0.4801195863965533,
+          "bias": -0.46581395467123404,
+          "absolute_p50": 0.3743301391602003,
+          "absolute_p95": 0.5117736816406016
+        },
+        "validation/persistence": {
+          "n": 6,
+          "mae": 0.06666666666666643,
+          "rmse": 0.08164965809277232,
+          "bias": 0.033333333333332625,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.10000000000000142
+        },
+        "test/recorded": {
+          "n": 15,
+          "mae": 0.2894140879313068,
+          "rmse": 0.33026080619301335,
+          "bias": -0.2815350087483601,
+          "absolute_p50": 0.32046051025389843,
+          "absolute_p95": 0.5080596923827976
+        },
+        "test/persistence": {
+          "n": 15,
+          "mae": 0.14000000000000032,
+          "rmse": 0.1843908891458582,
+          "bias": 0.02000000000000052,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.3000000000000007
+        }
+      },
+      "regimes": {
+        "train/unknown_operation/recorded": {
+          "n": 6,
+          "mae": 0.2192714691162164,
+          "rmse": 0.2938516675931861,
+          "bias": 0.193316141764317,
+          "absolute_p50": 0.0817916870117017,
+          "absolute_p95": 0.3214309692382997
+        },
+        "train/unknown_operation/persistence": {
+          "n": 6,
+          "mae": 0.5833333333333327,
+          "rmse": 0.6069047152011038,
+          "bias": -0.5833333333333327,
+          "absolute_p50": 0.5,
+          "absolute_p95": 0.6999999999999993
+        },
+        "train/ch_transition/recorded": {
+          "n": 3,
+          "mae": 1.055387878417933,
+          "rmse": 1.0734003951943234,
+          "bias": -1.055387878417933,
+          "absolute_p50": 1.0900424957274986,
+          "absolute_p95": 1.0900424957274986
+        },
+        "train/ch_transition/persistence": {
+          "n": 3,
+          "mae": 0.20000000000000048,
+          "rmse": 0.2581988897471611,
+          "bias": 0.20000000000000048,
+          "absolute_p50": 0.20000000000000284,
+          "absolute_p95": 0.20000000000000284
+        },
+        "train/valve_transition/recorded": {
+          "n": 3,
+          "mae": 1.7646008809407334,
+          "rmse": 1.7781611402554993,
+          "bias": -1.7646008809407334,
+          "absolute_p50": 1.8482055664062003,
+          "absolute_p95": 1.8482055664062003
+        },
+        "train/valve_transition/persistence": {
+          "n": 3,
+          "mae": 0.6333333333333329,
+          "rmse": 0.6806859285554038,
+          "bias": -0.6333333333333329,
+          "absolute_p50": 0.6999999999999993,
+          "absolute_p95": 0.6999999999999993
+        },
+        "train/stable_ch_off/recorded": {
+          "n": 2,
+          "mae": 0.7999753952026509,
+          "rmse": 0.8067522889768431,
+          "bias": -0.7999753952026509,
+          "absolute_p50": 0.6956268310547031,
+          "absolute_p95": 0.6956268310547031
+        },
+        "train/stable_ch_off/persistence": {
+          "n": 2,
+          "mae": 0.10000000000000142,
+          "rmse": 0.14142135623731153,
+          "bias": 0.10000000000000142,
+          "absolute_p50": 0.0,
+          "absolute_p95": 0.0
+        },
+        "train/dhw_interval/recorded": {
+          "n": 1,
+          "mae": 0.6067611694336001,
+          "rmse": 0.6067611694336001,
+          "bias": -0.6067611694336001,
+          "absolute_p50": 0.6067611694336001,
+          "absolute_p95": 0.6067611694336001
+        },
+        "train/dhw_interval/persistence": {
+          "n": 1,
+          "mae": 0.10000000000000142,
+          "rmse": 0.10000000000000142,
+          "bias": 0.10000000000000142,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "validation/dhw_interval/recorded": {
+          "n": 1,
+          "mae": 0.685615539550799,
+          "rmse": 0.685615539550799,
+          "bias": -0.685615539550799,
+          "absolute_p50": 0.685615539550799,
+          "absolute_p95": 0.685615539550799
+        },
+        "validation/dhw_interval/persistence": {
+          "n": 1,
+          "mae": 0.0,
+          "rmse": 0.0,
+          "bias": 0.0,
+          "absolute_p50": 0.0,
+          "absolute_p95": 0.0
+        },
+        "validation/stable_ch_off/recorded": {
+          "n": 5,
+          "mae": 0.421853637695321,
+          "rmse": 0.4273219478042407,
+          "bias": -0.421853637695321,
+          "absolute_p50": 0.3743301391602003,
+          "absolute_p95": 0.49735755920410085
+        },
+        "validation/stable_ch_off/persistence": {
+          "n": 5,
+          "mae": 0.07999999999999971,
+          "rmse": 0.08944271909999127,
+          "bias": 0.03999999999999915,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.10000000000000142
+        },
+        "test/stable_ch_off/recorded": {
+          "n": 12,
+          "mae": 0.33224306106566664,
+          "rmse": 0.360853939171951,
+          "bias": -0.33224306106566664,
+          "absolute_p50": 0.32228775024410083,
+          "absolute_p95": 0.5080596923827976
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 12,
+          "mae": 0.10833333333333368,
+          "rmse": 0.14433756729740665,
+          "bias": -0.024999999999999762,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.1999999999999993
+        },
+        "test/ch_transition/recorded": {
+          "n": 3,
+          "mae": 0.11809819539386741,
+          "rmse": 0.15652072984956064,
+          "bias": -0.07870279947913399,
+          "absolute_p50": 0.059093093872100155,
+          "absolute_p95": 0.059093093872100155
+        },
+        "test/ch_transition/persistence": {
+          "n": 3,
+          "mae": 0.2666666666666669,
+          "rmse": 0.29439202887759586,
+          "bias": 0.20000000000000165,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.3000000000000007
+        }
+      },
+      "raw_ages": {
+        "n": 72,
+        "mean": 113.53076388769679,
+        "max": 278.49399995803833
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 154,
+        "reconstructed_live_held_state": 24719,
+        "age_diagnostic_gap_or_invalid": 2523,
+        "raw_unavailable": 5
+      }
+    },
+    "nick/60/hold300_gap30": {
+      "counts": {
+        "total": 838,
+        "invalid_forecast": 14,
+        "health_interval": 119,
+        "raw_pair_missing_invalid_or_old": 657,
+        "accepted_held_state": 6,
+        "split_embargo": 42
+      },
+      "metrics": {
+        "train/recorded": {
+          "n": 2,
+          "mae": 1.7881988525391002,
+          "rmse": 2.0509911417982463,
+          "bias": -1.0044448852538999,
+          "absolute_p50": 0.7837539672852003,
+          "absolute_p95": 0.7837539672852003
+        },
+        "train/persistence": {
+          "n": 2,
+          "mae": 0.7999999999999989,
+          "rmse": 0.8544003745317518,
+          "bias": -0.7999999999999989,
+          "absolute_p50": 0.5,
+          "absolute_p95": 0.5
+        },
+        "test/recorded": {
+          "n": 4,
+          "mae": 0.6807064056396497,
+          "rmse": 0.7699385551601031,
+          "bias": -0.6807064056396497,
+          "absolute_p50": 0.8443077087401996,
+          "absolute_p95": 0.9047325134276996
+        },
+        "test/persistence": {
+          "n": 4,
+          "mae": 0.35000000000000053,
+          "rmse": 0.38078865529319617,
+          "bias": -0.04999999999999982,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.3000000000000007
+        }
+      },
+      "regimes": {
+        "train/unknown_operation/recorded": {
+          "n": 1,
+          "mae": 0.7837539672852003,
+          "rmse": 0.7837539672852003,
+          "bias": 0.7837539672852003,
+          "absolute_p50": 0.7837539672852003,
+          "absolute_p95": 0.7837539672852003
+        },
+        "train/unknown_operation/persistence": {
+          "n": 1,
+          "mae": 1.0999999999999979,
+          "rmse": 1.0999999999999979,
+          "bias": -1.0999999999999979,
+          "absolute_p50": 1.0999999999999979,
+          "absolute_p95": 1.0999999999999979
+        },
+        "train/ch_transition/recorded": {
+          "n": 1,
+          "mae": 2.792643737793,
+          "rmse": 2.792643737793,
+          "bias": -2.792643737793,
+          "absolute_p50": 2.792643737793,
+          "absolute_p95": 2.792643737793
+        },
+        "train/ch_transition/persistence": {
+          "n": 1,
+          "mae": 0.5,
+          "rmse": 0.5,
+          "bias": -0.5,
+          "absolute_p50": 0.5,
+          "absolute_p95": 0.5
+        },
+        "test/stable_ch_off/recorded": {
+          "n": 2,
+          "mae": 0.9096162796020497,
+          "rmse": 0.9096293900754967,
+          "bias": -0.9096162796020497,
+          "absolute_p50": 0.9047325134276996,
+          "absolute_p95": 0.9047325134276996
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 2,
+          "mae": 0.3000000000000007,
+          "rmse": 0.3000000000000007,
+          "bias": -0.3000000000000007,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.3000000000000007
+        },
+        "test/dhw_interval/recorded": {
+          "n": 1,
+          "mae": 0.8443077087401996,
+          "rmse": 0.8443077087401996,
+          "bias": -0.8443077087401996,
+          "absolute_p50": 0.8443077087401996,
+          "absolute_p95": 0.8443077087401996
+        },
+        "test/dhw_interval/persistence": {
+          "n": 1,
+          "mae": 0.1999999999999993,
+          "rmse": 0.1999999999999993,
+          "bias": -0.1999999999999993,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.1999999999999993
+        },
+        "test/ch_transition/recorded": {
+          "n": 1,
+          "mae": 0.059285354614299735,
+          "rmse": 0.059285354614299735,
+          "bias": -0.059285354614299735,
+          "absolute_p50": 0.059285354614299735,
+          "absolute_p95": 0.059285354614299735
+        },
+        "test/ch_transition/persistence": {
+          "n": 1,
+          "mae": 0.6000000000000014,
+          "rmse": 0.6000000000000014,
+          "bias": 0.6000000000000014,
+          "absolute_p50": 0.6000000000000014,
+          "absolute_p95": 0.6000000000000014
+        }
+      },
+      "raw_ages": {
+        "n": 12,
+        "mean": 110.31458330154419,
+        "max": 263.8510000705719
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 154,
+        "reconstructed_live_held_state": 24719,
+        "age_diagnostic_gap_or_invalid": 2523,
+        "raw_unavailable": 5
+      }
+    },
+    "nick/15/hold900_gap30": {
+      "counts": {
+        "total": 838,
+        "invalid_forecast": 14,
+        "accepted_held_state": 139,
+        "health_interval": 231,
+        "raw_pair_missing_invalid_or_old": 412,
+        "split_embargo": 42
+      },
+      "metrics": {
+        "train/recorded": {
+          "n": 49,
+          "mae": 0.4221011103415938,
+          "rmse": 0.4885555326759142,
+          "bias": -0.39558871522241024,
+          "absolute_p50": 0.4470809936522997,
+          "absolute_p95": 0.7910289764404013
+        },
+        "train/persistence": {
+          "n": 49,
+          "mae": 0.2367346938775512,
+          "rmse": 0.3557114170853925,
+          "bias": -0.08979591836734677,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.6999999999999993
+        },
+        "validation/recorded": {
+          "n": 41,
+          "mae": 0.2588927850490543,
+          "rmse": 0.2698223123621842,
+          "bias": -0.2588927850490543,
+          "absolute_p50": 0.24326515197749998,
+          "absolute_p95": 0.40376358032230186
+        },
+        "validation/persistence": {
+          "n": 41,
+          "mae": 0.05121951219512207,
+          "rmse": 0.0748983050379713,
+          "bias": 0.0024390243902436774,
+          "absolute_p50": 0.0,
+          "absolute_p95": 0.10000000000000142
+        },
+        "test/recorded": {
+          "n": 49,
+          "mae": 0.1289928047024528,
+          "rmse": 0.14686259029719154,
+          "bias": -0.11389424849529786,
+          "absolute_p50": 0.12720108032230115,
+          "absolute_p95": 0.2573940277099993
+        },
+        "test/persistence": {
+          "n": 49,
+          "mae": 0.07142857142857158,
+          "rmse": 0.1040015698468647,
+          "bias": 0.03469387755102046,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.1999999999999993
+        }
+      },
+      "regimes": {
+        "train/unknown_operation/recorded": {
+          "n": 20,
+          "mae": 0.3428066444396999,
+          "rmse": 0.4602113624068995,
+          "bias": -0.2778512763977,
+          "absolute_p50": 0.14910545349119886,
+          "absolute_p95": 0.8078956604004013
+        },
+        "train/unknown_operation/persistence": {
+          "n": 20,
+          "mae": 0.325,
+          "rmse": 0.47592016137163196,
+          "bias": -0.26500000000000024,
+          "absolute_p50": 0.29999999999999716,
+          "absolute_p95": 1.0999999999999979
+        },
+        "train/stable_ch_off/recorded": {
+          "n": 20,
+          "mae": 0.40994812011718,
+          "rmse": 0.41657114770574344,
+          "bias": -0.40994812011718,
+          "absolute_p50": 0.4470809936522997,
+          "absolute_p95": 0.4806949615479006
+        },
+        "train/stable_ch_off/persistence": {
+          "n": 20,
+          "mae": 0.10000000000000053,
+          "rmse": 0.11401754250991418,
+          "bias": 0.10000000000000053,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.1999999999999993
+        },
+        "train/ch_transition/recorded": {
+          "n": 3,
+          "mae": 0.3930231730143004,
+          "rmse": 0.3953158033978987,
+          "bias": -0.3930231730143004,
+          "absolute_p50": 0.3661331176757976,
+          "absolute_p95": 0.3661331176757976
+        },
+        "train/ch_transition/persistence": {
+          "n": 3,
+          "mae": 0.2666666666666669,
+          "rmse": 0.27080128015453236,
+          "bias": 0.2666666666666669,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.3000000000000007
+        },
+        "train/valve_transition/recorded": {
+          "n": 4,
+          "mae": 0.7334229469299247,
+          "rmse": 0.7697876759620087,
+          "bias": -0.7334229469299247,
+          "absolute_p50": 0.6928752899169979,
+          "absolute_p95": 0.7640113830566015
+        },
+        "train/valve_transition/persistence": {
+          "n": 4,
+          "mae": 0.2499999999999991,
+          "rmse": 0.2915475947422646,
+          "bias": -0.14999999999999947,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.1999999999999993
+        },
+        "train/stable_ch_on/recorded": {
+          "n": 2,
+          "mae": 0.7575489044189503,
+          "rmse": 0.7582883737793382,
+          "bias": -0.7575489044189503,
+          "absolute_p50": 0.7240688323974993,
+          "absolute_p95": 0.7240688323974993
+        },
+        "train/stable_ch_on/persistence": {
+          "n": 2,
+          "mae": 0.6500000000000004,
+          "rmse": 0.6519202405202652,
+          "bias": -0.6500000000000004,
+          "absolute_p50": 0.6000000000000014,
+          "absolute_p95": 0.6000000000000014
+        },
+        "validation/dhw_interval/recorded": {
+          "n": 3,
+          "mae": 0.2870072682698345,
+          "rmse": 0.3086874183932426,
+          "bias": -0.2870072682698345,
+          "absolute_p50": 0.24326515197749998,
+          "absolute_p95": 0.24326515197749998
+        },
+        "validation/dhw_interval/persistence": {
+          "n": 3,
+          "mae": 0.10000000000000142,
+          "rmse": 0.10000000000000142,
+          "bias": 0.033333333333333805,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "validation/stable_ch_off/recorded": {
+          "n": 36,
+          "mae": 0.25898920694985894,
+          "rmse": 0.26882761678661743,
+          "bias": -0.25898920694985894,
+          "absolute_p50": 0.23872299194339774,
+          "absolute_p95": 0.3623744964599993
+        },
+        "validation/stable_ch_off/persistence": {
+          "n": 36,
+          "mae": 0.047222222222222304,
+          "rmse": 0.07264831572567797,
+          "bias": -0.0027777777777780147,
+          "absolute_p50": 0.0,
+          "absolute_p95": 0.10000000000000142
+        },
+        "validation/ch_transition/recorded": {
+          "n": 2,
+          "mae": 0.21498546600339985,
+          "rmse": 0.22073193206518354,
+          "bias": -0.21498546600339985,
+          "absolute_p50": 0.16494712829589986,
+          "absolute_p95": 0.16494712829589986
+        },
+        "validation/ch_transition/persistence": {
+          "n": 2,
+          "mae": 0.049999999999998934,
+          "rmse": 0.07071067811865324,
+          "bias": 0.049999999999998934,
+          "absolute_p50": 0.0,
+          "absolute_p95": 0.0
+        },
+        "test/stable_ch_off/recorded": {
+          "n": 41,
+          "mae": 0.1414433083883195,
+          "rmse": 0.15734922466422094,
+          "bias": -0.1320092271013976,
+          "absolute_p50": 0.1560783386230007,
+          "absolute_p95": 0.2578742980957003
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 41,
+          "mae": 0.06097560975609765,
+          "rmse": 0.09239364353597965,
+          "bias": 0.0170731707317073,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.1999999999999993
+        },
+        "test/ch_transition/recorded": {
+          "n": 7,
+          "mae": 0.06582554408482721,
+          "rmse": 0.07374555177339077,
+          "bias": -0.015392412458142348,
+          "absolute_p50": 0.06613578796389774,
+          "absolute_p95": 0.083897018432598
+        },
+        "test/ch_transition/persistence": {
+          "n": 7,
+          "mae": 0.12857142857142886,
+          "rmse": 0.15583874449479618,
+          "bias": 0.12857142857142886,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.1999999999999993
+        },
+        "test/dhw_interval/recorded": {
+          "n": 1,
+          "mae": 0.060692977905297596,
+          "rmse": 0.060692977905297596,
+          "bias": -0.060692977905297596,
+          "absolute_p50": 0.060692977905297596,
+          "absolute_p95": 0.060692977905297596
+        },
+        "test/dhw_interval/persistence": {
+          "n": 1,
+          "mae": 0.10000000000000142,
+          "rmse": 0.10000000000000142,
+          "bias": 0.10000000000000142,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        }
+      },
+      "raw_ages": {
+        "n": 278,
+        "mean": 231.8596474755582,
+        "max": 884.2139999866486
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 154,
+        "reconstructed_live_held_state": 24719,
+        "age_diagnostic_gap_or_invalid": 2523,
+        "raw_unavailable": 5
+      }
+    },
+    "nick/30/hold900_gap30": {
+      "counts": {
+        "total": 838,
+        "invalid_forecast": 14,
+        "health_interval": 257,
+        "accepted_held_state": 69,
+        "raw_pair_missing_invalid_or_old": 456,
+        "split_embargo": 42
+      },
+      "metrics": {
+        "train/recorded": {
+          "n": 27,
+          "mae": 0.8101003717493036,
+          "rmse": 0.9501885788783051,
+          "bias": -0.7130338739465705,
+          "absolute_p50": 0.8322658538818004,
+          "absolute_p95": 1.4751987457275
+        },
+        "train/persistence": {
+          "n": 27,
+          "mae": 0.32962962962962983,
+          "rmse": 0.41231056256176596,
+          "bias": -0.09999999999999958,
+          "absolute_p50": 0.29999999999999716,
+          "absolute_p95": 0.6999999999999993
+        },
+        "validation/recorded": {
+          "n": 12,
+          "mae": 0.4909821192423589,
+          "rmse": 0.504226698758648,
+          "bias": -0.4909821192423589,
+          "absolute_p50": 0.47107086181640057,
+          "absolute_p95": 0.685615539550799
+        },
+        "validation/persistence": {
+          "n": 12,
+          "mae": 0.09166666666666679,
+          "rmse": 0.11902380714238103,
+          "bias": 0.00833333333333286,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.10000000000000142
+        },
+        "test/recorded": {
+          "n": 30,
+          "mae": 0.25209217071533,
+          "rmse": 0.30359492296715485,
+          "bias": -0.24424793243407653,
+          "absolute_p50": 0.22512931823730042,
+          "absolute_p95": 0.5077732086182003
+        },
+        "test/persistence": {
+          "n": 30,
+          "mae": 0.16333333333333375,
+          "rmse": 0.20248456731316633,
+          "bias": 0.06333333333333376,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.3000000000000007
+        }
+      },
+      "regimes": {
+        "train/unknown_operation/recorded": {
+          "n": 8,
+          "mae": 0.357932806015012,
+          "rmse": 0.5809023133873581,
+          "bias": -0.030333375930787554,
+          "absolute_p50": 0.0817916870117017,
+          "absolute_p95": 0.5916587829589979
+        },
+        "train/unknown_operation/persistence": {
+          "n": 8,
+          "mae": 0.4874999999999998,
+          "rmse": 0.5373546315051168,
+          "bias": -0.4874999999999998,
+          "absolute_p50": 0.5,
+          "absolute_p95": 0.6999999999999993
+        },
+        "train/ch_transition/recorded": {
+          "n": 4,
+          "mae": 0.9924174308776497,
+          "rmse": 1.0126928531242498,
+          "bias": -0.9924174308776497,
+          "absolute_p50": 0.8035060882567997,
+          "absolute_p95": 1.0900424957274986
+        },
+        "train/ch_transition/persistence": {
+          "n": 4,
+          "mae": 0.27500000000000036,
+          "rmse": 0.33541019662496846,
+          "bias": 0.27500000000000036,
+          "absolute_p50": 0.20000000000000284,
+          "absolute_p95": 0.3999999999999986
+        },
+        "train/valve_transition/recorded": {
+          "n": 3,
+          "mae": 1.7646008809407334,
+          "rmse": 1.7781611402554993,
+          "bias": -1.7646008809407334,
+          "absolute_p50": 1.8482055664062003,
+          "absolute_p95": 1.8482055664062003
+        },
+        "train/valve_transition/persistence": {
+          "n": 3,
+          "mae": 0.6333333333333329,
+          "rmse": 0.6806859285554038,
+          "bias": -0.6333333333333329,
+          "absolute_p50": 0.6999999999999993,
+          "absolute_p95": 0.6999999999999993
+        },
+        "train/stable_ch_off/recorded": {
+          "n": 10,
+          "mae": 0.8534087753295904,
+          "rmse": 0.8576562101796669,
+          "bias": -0.8534087753295904,
+          "absolute_p50": 0.8914150238036989,
+          "absolute_p95": 0.9215221405029013
+        },
+        "train/stable_ch_off/persistence": {
+          "n": 10,
+          "mae": 0.18000000000000044,
+          "rmse": 0.20493901531919229,
+          "bias": 0.18000000000000044,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.29999999999999716
+        },
+        "train/dhw_interval/recorded": {
+          "n": 2,
+          "mae": 0.6058437347411996,
+          "rmse": 0.6058444293806619,
+          "bias": -0.6058437347411996,
+          "absolute_p50": 0.604926300048799,
+          "absolute_p95": 0.604926300048799
+        },
+        "train/dhw_interval/persistence": {
+          "n": 2,
+          "mae": 0.10000000000000142,
+          "rmse": 0.10000000000000142,
+          "bias": 0.10000000000000142,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "validation/dhw_interval/recorded": {
+          "n": 3,
+          "mae": 0.5731103261312,
+          "rmse": 0.5813951945415263,
+          "bias": -0.5731103261312,
+          "absolute_p50": 0.5865306854248011,
+          "absolute_p95": 0.5865306854248011
+        },
+        "validation/dhw_interval/persistence": {
+          "n": 3,
+          "mae": 0.06666666666666761,
+          "rmse": 0.08164965809277376,
+          "bias": 0.06666666666666761,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "validation/stable_ch_off/recorded": {
+          "n": 9,
+          "mae": 0.4636060502794119,
+          "rmse": 0.47573027467540124,
+          "bias": -0.4636060502794119,
+          "absolute_p50": 0.47107086181640057,
+          "absolute_p95": 0.5125633239746001
+        },
+        "validation/stable_ch_off/persistence": {
+          "n": 9,
+          "mae": 0.09999999999999984,
+          "rmse": 0.12909944487358055,
+          "bias": -0.011111111111112059,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.10000000000000142
+        },
+        "test/stable_ch_off/recorded": {
+          "n": 19,
+          "mae": 0.3474084352192156,
+          "rmse": 0.37162775290511146,
+          "bias": -0.3474084352192156,
+          "absolute_p50": 0.3245361328125007,
+          "absolute_p95": 0.5080596923827976
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 19,
+          "mae": 0.11052631578947414,
+          "rmse": 0.13954814298487236,
+          "bias": -0.03684210526315767,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.1999999999999993
+        },
+        "test/ch_transition/recorded": {
+          "n": 10,
+          "mae": 0.08391361236571057,
+          "rmse": 0.11223325942392776,
+          "bias": -0.06038089752195006,
+          "absolute_p50": 0.03769874572749998,
+          "absolute_p95": 0.16813697814939843
+        },
+        "test/ch_transition/persistence": {
+          "n": 10,
+          "mae": 0.2600000000000005,
+          "rmse": 0.2863564212655279,
+          "bias": 0.24000000000000093,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.40000000000000213
+        },
+        "test/dhw_interval/recorded": {
+          "n": 1,
+          "mae": 0.12286872863769815,
+          "rmse": 0.12286872863769815,
+          "bias": -0.12286872863769815,
+          "absolute_p50": 0.12286872863769815,
+          "absolute_p95": 0.12286872863769815
+        },
+        "test/dhw_interval/persistence": {
+          "n": 1,
+          "mae": 0.1999999999999993,
+          "rmse": 0.1999999999999993,
+          "bias": 0.1999999999999993,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.1999999999999993
+        }
+      },
+      "raw_ages": {
+        "n": 138,
+        "mean": 237.07004347745922,
+        "max": 875.5389997959137
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 154,
+        "reconstructed_live_held_state": 24719,
+        "age_diagnostic_gap_or_invalid": 2523,
+        "raw_unavailable": 5
+      }
+    },
+    "nick/60/hold900_gap30": {
+      "counts": {
+        "total": 838,
+        "invalid_forecast": 14,
+        "health_interval": 272,
+        "accepted_held_state": 18,
+        "raw_pair_missing_invalid_or_old": 492,
+        "split_embargo": 42
+      },
+      "metrics": {
+        "train/recorded": {
+          "n": 6,
+          "mae": 2.016867891947433,
+          "rmse": 2.128331891740336,
+          "bias": -1.7556165695190333,
+          "absolute_p50": 1.7942184448241996,
+          "absolute_p95": 2.5571174621581996
+        },
+        "train/persistence": {
+          "n": 6,
+          "mae": 0.45000000000000046,
+          "rmse": 0.5612486080160908,
+          "bias": -0.14999999999999977,
+          "absolute_p50": 0.40000000000000213,
+          "absolute_p95": 0.5
+        },
+        "test/recorded": {
+          "n": 12,
+          "mae": 0.5863427480061837,
+          "rmse": 0.691800886265476,
+          "bias": -0.5863427480061837,
+          "absolute_p50": 0.8422592163086016,
+          "absolute_p95": 0.9047325134276996
+        },
+        "test/persistence": {
+          "n": 12,
+          "mae": 0.35000000000000053,
+          "rmse": 0.38944404818493145,
+          "bias": 0.05000000000000041,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.6000000000000014
+        }
+      },
+      "regimes": {
+        "train/unknown_operation/recorded": {
+          "n": 3,
+          "mae": 1.9380091349284,
+          "rmse": 2.1031421314213437,
+          "bias": -1.4155064900716,
+          "absolute_p50": 2.4731559753418004,
+          "absolute_p95": 2.4731559753418004
+        },
+        "train/unknown_operation/persistence": {
+          "n": 3,
+          "mae": 0.43333333333333357,
+          "rmse": 0.6403124237432838,
+          "bias": -0.43333333333333357,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "train/ch_transition/recorded": {
+          "n": 1,
+          "mae": 2.792643737793,
+          "rmse": 2.792643737793,
+          "bias": -2.792643737793,
+          "absolute_p50": 2.792643737793,
+          "absolute_p95": 2.792643737793
+        },
+        "train/ch_transition/persistence": {
+          "n": 1,
+          "mae": 0.5,
+          "rmse": 0.5,
+          "bias": -0.5,
+          "absolute_p50": 0.5,
+          "absolute_p95": 0.5
+        },
+        "train/stable_ch_off/recorded": {
+          "n": 2,
+          "mae": 1.7472681045532,
+          "rmse": 1.747898785296361,
+          "bias": -1.7472681045532,
+          "absolute_p50": 1.7003177642822003,
+          "absolute_p95": 1.7003177642822003
+        },
+        "train/stable_ch_off/persistence": {
+          "n": 2,
+          "mae": 0.45000000000000107,
+          "rmse": 0.45276925690687175,
+          "bias": 0.45000000000000107,
+          "absolute_p50": 0.40000000000000213,
+          "absolute_p95": 0.40000000000000213
+        },
+        "test/stable_ch_off/recorded": {
+          "n": 5,
+          "mae": 0.83236473083496,
+          "rmse": 0.8452985198949591,
+          "bias": -0.83236473083496,
+          "absolute_p50": 0.9031379699707003,
+          "absolute_p95": 0.9047325134276996
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 5,
+          "mae": 0.26000000000000084,
+          "rmse": 0.2720294101747096,
+          "bias": -0.22000000000000028,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.3000000000000007
+        },
+        "test/dhw_interval/recorded": {
+          "n": 4,
+          "mae": 0.6491059303283508,
+          "rmse": 0.7310619352610971,
+          "bias": -0.6491059303283508,
+          "absolute_p50": 0.8422592163086016,
+          "absolute_p95": 0.8432777404785021
+        },
+        "test/dhw_interval/persistence": {
+          "n": 4,
+          "mae": 0.2999999999999998,
+          "rmse": 0.3464101615137758,
+          "bias": 8.881784197001252e-16,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.1999999999999993
+        },
+        "test/ch_transition/recorded": {
+          "n": 3,
+          "mae": 0.09262186686200025,
+          "rmse": 0.10425520517546213,
+          "bias": -0.09262186686200025,
+          "absolute_p50": 0.059285354614299735,
+          "absolute_p95": 0.059285354614299735
+        },
+        "test/ch_transition/persistence": {
+          "n": 3,
+          "mae": 0.5666666666666677,
+          "rmse": 0.5686240703077337,
+          "bias": 0.5666666666666677,
+          "absolute_p50": 0.6000000000000014,
+          "absolute_p95": 0.6000000000000014
+        }
+      },
+      "raw_ages": {
+        "n": 36,
+        "mean": 336.5972499979867,
+        "max": 875.3099999427795
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 154,
+        "reconstructed_live_held_state": 24719,
+        "age_diagnostic_gap_or_invalid": 2523,
+        "raw_unavailable": 5
+      }
+    },
+    "nick/15/hold300_gap60": {
+      "counts": {
+        "total": 838,
+        "invalid_forecast": 14,
+        "accepted_held_state": 103,
+        "raw_pair_missing_invalid_or_old": 605,
+        "health_interval": 74,
+        "split_embargo": 42
+      },
+      "metrics": {
+        "train/recorded": {
+          "n": 39,
+          "mae": 0.38635849585899723,
+          "rmse": 0.4729937242395808,
+          "bias": -0.36050222347943833,
+          "absolute_p50": 0.40974922180179973,
+          "absolute_p95": 0.7910289764404013
+        },
+        "train/persistence": {
+          "n": 39,
+          "mae": 0.33333333333333354,
+          "rmse": 0.43677137127933535,
+          "bias": -0.16410256410256388,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.9000000000000021
+        },
+        "validation/recorded": {
+          "n": 39,
+          "mae": 0.24841967851686966,
+          "rmse": 0.27575883028168435,
+          "bias": -0.24841967851686966,
+          "absolute_p50": 0.23708686828610226,
+          "absolute_p95": 0.40376358032230186
+        },
+        "validation/persistence": {
+          "n": 39,
+          "mae": 0.07948717948717952,
+          "rmse": 0.1270977818604485,
+          "bias": 0.0025641025641024184,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.1999999999999993
+        },
+        "test/recorded": {
+          "n": 25,
+          "mae": 0.12071589660645216,
+          "rmse": 0.1373189817076575,
+          "bias": -0.11501811218262034,
+          "absolute_p50": 0.1534675598144979,
+          "absolute_p95": 0.17091445922850212
+        },
+        "test/persistence": {
+          "n": 25,
+          "mae": 0.05999999999999986,
+          "rmse": 0.08717797887081324,
+          "bias": 0.04399999999999963,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.10000000000000142
+        }
+      },
+      "regimes": {
+        "train/unknown_operation/recorded": {
+          "n": 21,
+          "mae": 0.2887437729608522,
+          "rmse": 0.40078850743466643,
+          "bias": -0.24072498139881424,
+          "absolute_p50": 0.1351234436035007,
+          "absolute_p95": 0.7655071258544979
+        },
+        "train/unknown_operation/persistence": {
+          "n": 21,
+          "mae": 0.4142857142857144,
+          "rmse": 0.5250850271282604,
+          "bias": -0.30952380952380953,
+          "absolute_p50": 0.3999999999999986,
+          "absolute_p95": 1.0999999999999979
+        },
+        "train/stable_ch_off/recorded": {
+          "n": 9,
+          "mae": 0.3983264499240329,
+          "rmse": 0.40442081095587346,
+          "bias": -0.3983264499240329,
+          "absolute_p50": 0.4119224548339986,
+          "absolute_p95": 0.46228218078610084
+        },
+        "train/stable_ch_off/persistence": {
+          "n": 9,
+          "mae": 0.14444444444444493,
+          "rmse": 0.17950549357115048,
+          "bias": 0.14444444444444493,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.3000000000000007
+        },
+        "train/ch_transition/recorded": {
+          "n": 3,
+          "mae": 0.3235448201497005,
+          "rmse": 0.3462364178937123,
+          "bias": -0.3235448201497005,
+          "absolute_p50": 0.35989837646480183,
+          "absolute_p95": 0.35989837646480183
+        },
+        "train/ch_transition/persistence": {
+          "n": 3,
+          "mae": 0.23333333333333428,
+          "rmse": 0.23804761428476257,
+          "bias": 0.23333333333333428,
+          "absolute_p50": 0.20000000000000284,
+          "absolute_p95": 0.20000000000000284
+        },
+        "train/valve_transition/recorded": {
+          "n": 4,
+          "mae": 0.7334229469299247,
+          "rmse": 0.7697876759620087,
+          "bias": -0.7334229469299247,
+          "absolute_p50": 0.6928752899169979,
+          "absolute_p95": 0.7640113830566015
+        },
+        "train/valve_transition/persistence": {
+          "n": 4,
+          "mae": 0.2499999999999991,
+          "rmse": 0.2915475947422646,
+          "bias": -0.14999999999999947,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.1999999999999993
+        },
+        "train/stable_ch_on/recorded": {
+          "n": 2,
+          "mae": 0.7575489044189503,
+          "rmse": 0.7582883737793382,
+          "bias": -0.7575489044189503,
+          "absolute_p50": 0.7240688323974993,
+          "absolute_p95": 0.7240688323974993
+        },
+        "train/stable_ch_on/persistence": {
+          "n": 2,
+          "mae": 0.6500000000000004,
+          "rmse": 0.6519202405202652,
+          "bias": -0.6500000000000004,
+          "absolute_p50": 0.6000000000000014,
+          "absolute_p95": 0.6000000000000014
+        },
+        "validation/dhw_interval/recorded": {
+          "n": 2,
+          "mae": 0.12398700714110156,
+          "rmse": 0.1720466616224227,
+          "bias": -0.12398700714110156,
+          "absolute_p50": 0.004708862304703132,
+          "absolute_p95": 0.004708862304703132
+        },
+        "validation/dhw_interval/persistence": {
+          "n": 2,
+          "mae": 0.15000000000000036,
+          "rmse": 0.15811388300841897,
+          "bias": 0.15000000000000036,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "validation/stable_ch_off/recorded": {
+          "n": 32,
+          "mae": 0.2671785593032786,
+          "rmse": 0.2905097336098243,
+          "bias": -0.2671785593032786,
+          "absolute_p50": 0.23708686828610226,
+          "absolute_p95": 0.40376358032230186
+        },
+        "validation/stable_ch_off/persistence": {
+          "n": 32,
+          "mae": 0.07812500000000011,
+          "rmse": 0.1286953767623376,
+          "bias": -0.01562500000000011,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.1999999999999993
+        },
+        "validation/ch_transition/recorded": {
+          "n": 3,
+          "mae": 0.23130950927733332,
+          "rmse": 0.23602173915431138,
+          "bias": -0.23130950927733332,
+          "absolute_p50": 0.2639575958252003,
+          "absolute_p95": 0.2639575958252003
+        },
+        "validation/ch_transition/persistence": {
+          "n": 3,
+          "mae": 0.033333333333332625,
+          "rmse": 0.057735026918961346,
+          "bias": 0.033333333333332625,
+          "absolute_p50": 0.0,
+          "absolute_p95": 0.0
+        },
+        "validation/stable_ch_on/recorded": {
+          "n": 2,
+          "mae": 0.09837551116939913,
+          "rmse": 0.13908002145857742,
+          "bias": -0.09837551116939913,
+          "absolute_p50": 6.217956540055525e-05,
+          "absolute_p95": 6.217956540055525e-05
+        },
+        "validation/stable_ch_on/persistence": {
+          "n": 2,
+          "mae": 0.09999999999999964,
+          "rmse": 0.141421356237309,
+          "bias": 0.09999999999999964,
+          "absolute_p50": 0.0,
+          "absolute_p95": 0.0
+        },
+        "test/stable_ch_off/recorded": {
+          "n": 20,
+          "mae": 0.13849271774292032,
+          "rmse": 0.1511855428905541,
+          "bias": -0.13480821609497032,
+          "absolute_p50": 0.15896797180180045,
+          "absolute_p95": 0.2539730072020987
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 20,
+          "mae": 0.04499999999999993,
+          "rmse": 0.07416198487095649,
+          "bias": 0.024999999999999644,
+          "absolute_p50": 0.0,
+          "absolute_p95": 0.10000000000000142
+        },
+        "test/ch_transition/recorded": {
+          "n": 3,
+          "mae": 0.0562882741292654,
+          "rmse": 0.058388644910428326,
+          "bias": -0.03337008158366691,
+          "absolute_p50": 0.06613578796389774,
+          "absolute_p95": 0.06613578796389774
+        },
+        "test/ch_transition/persistence": {
+          "n": 3,
+          "mae": 0.13333333333333405,
+          "rmse": 0.14142135623730984,
+          "bias": 0.13333333333333405,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "test/dhw_interval/recorded": {
+          "n": 1,
+          "mae": 0.06090698242190129,
+          "rmse": 0.06090698242190129,
+          "bias": -0.06090698242190129,
+          "absolute_p50": 0.06090698242190129,
+          "absolute_p95": 0.06090698242190129
+        },
+        "test/dhw_interval/persistence": {
+          "n": 1,
+          "mae": 0.09999999999999787,
+          "rmse": 0.09999999999999787,
+          "bias": 0.09999999999999787,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.09999999999999787
+        },
+        "test/stable_ch_on/recorded": {
+          "n": 1,
+          "mae": 0.0182712554932003,
+          "rmse": 0.0182712554932003,
+          "bias": -0.0182712554932003,
+          "absolute_p50": 0.0182712554932003,
+          "absolute_p95": 0.0182712554932003
+        },
+        "test/stable_ch_on/persistence": {
+          "n": 1,
+          "mae": 0.09999999999999787,
+          "rmse": 0.09999999999999787,
+          "bias": 0.09999999999999787,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.09999999999999787
+        }
+      },
+      "raw_ages": {
+        "n": 206,
+        "mean": 96.74919901889504,
+        "max": 289.23600006103516
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 154,
+        "reconstructed_live_held_state": 26275,
+        "age_diagnostic_gap_or_invalid": 967,
+        "raw_unavailable": 5
+      }
+    },
+    "nick/30/hold300_gap60": {
+      "counts": {
+        "total": 838,
+        "invalid_forecast": 14,
+        "accepted_held_state": 65,
+        "raw_pair_missing_invalid_or_old": 627,
+        "health_interval": 90,
+        "split_embargo": 42
+      },
+      "metrics": {
+        "train/recorded": {
+          "n": 28,
+          "mae": 0.7176971844264358,
+          "rmse": 0.9014317926703631,
+          "bias": -0.6065715653555642,
+          "absolute_p50": 0.6956268310547031,
+          "absolute_p95": 1.6376815795898025
+        },
+        "train/persistence": {
+          "n": 28,
+          "mae": 0.5642857142857143,
+          "rmse": 0.747854072854935,
+          "bias": -0.4214285714285712,
+          "absolute_p50": 0.3999999999999986,
+          "absolute_p95": 1.4000000000000021
+        },
+        "validation/recorded": {
+          "n": 17,
+          "mae": 0.47590729208554744,
+          "rmse": 0.4891941401292565,
+          "bias": -0.47590729208554744,
+          "absolute_p50": 0.49735755920410085,
+          "absolute_p95": 0.6272785186767997
+        },
+        "validation/persistence": {
+          "n": 17,
+          "mae": 0.06470588235294106,
+          "rmse": 0.08744746321952042,
+          "bias": 0.017647058823529453,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.10000000000000142
+        },
+        "test/recorded": {
+          "n": 20,
+          "mae": 0.258556232452395,
+          "rmse": 0.3009551447207708,
+          "bias": -0.252646923065185,
+          "absolute_p50": 0.22746810913089988,
+          "absolute_p95": 0.5080596923827976
+        },
+        "test/persistence": {
+          "n": 20,
+          "mae": 0.14000000000000004,
+          "rmse": 0.18165902124584954,
+          "bias": 0.040000000000000036,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.3000000000000007
+        }
+      },
+      "regimes": {
+        "train/unknown_operation/recorded": {
+          "n": 15,
+          "mae": 0.42245073954264023,
+          "rmse": 0.6183480482079772,
+          "bias": -0.21501625061034677,
+          "absolute_p50": 0.22742691040039986,
+          "absolute_p95": 0.9464347839355014
+        },
+        "train/unknown_operation/persistence": {
+          "n": 15,
+          "mae": 0.7933333333333332,
+          "rmse": 0.9518403227432637,
+          "bias": -0.7933333333333332,
+          "absolute_p50": 0.6999999999999993,
+          "absolute_p95": 1.6999999999999993
+        },
+        "train/ch_transition/recorded": {
+          "n": 3,
+          "mae": 1.055387878417933,
+          "rmse": 1.0734003951943234,
+          "bias": -1.055387878417933,
+          "absolute_p50": 1.0900424957274986,
+          "absolute_p95": 1.0900424957274986
+        },
+        "train/ch_transition/persistence": {
+          "n": 3,
+          "mae": 0.20000000000000048,
+          "rmse": 0.2581988897471611,
+          "bias": 0.20000000000000048,
+          "absolute_p50": 0.20000000000000284,
+          "absolute_p95": 0.20000000000000284
+        },
+        "train/valve_transition/recorded": {
+          "n": 3,
+          "mae": 1.7646008809407334,
+          "rmse": 1.7781611402554993,
+          "bias": -1.7646008809407334,
+          "absolute_p50": 1.8482055664062003,
+          "absolute_p95": 1.8482055664062003
+        },
+        "train/valve_transition/persistence": {
+          "n": 3,
+          "mae": 0.6333333333333329,
+          "rmse": 0.6806859285554038,
+          "bias": -0.6333333333333329,
+          "absolute_p50": 0.6999999999999993,
+          "absolute_p95": 0.6999999999999993
+        },
+        "train/stable_ch_off/recorded": {
+          "n": 6,
+          "mae": 0.7820054372151665,
+          "rmse": 0.7859823637236262,
+          "bias": -0.7820054372151665,
+          "absolute_p50": 0.7540584564208999,
+          "absolute_p95": 0.8452671051025007
+        },
+        "train/stable_ch_off/persistence": {
+          "n": 6,
+          "mae": 0.21666666666666679,
+          "rmse": 0.2798809270624444,
+          "bias": 0.21666666666666679,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.3999999999999986
+        },
+        "train/dhw_interval/recorded": {
+          "n": 1,
+          "mae": 0.6067611694336001,
+          "rmse": 0.6067611694336001,
+          "bias": -0.6067611694336001,
+          "absolute_p50": 0.6067611694336001,
+          "absolute_p95": 0.6067611694336001
+        },
+        "train/dhw_interval/persistence": {
+          "n": 1,
+          "mae": 0.10000000000000142,
+          "rmse": 0.10000000000000142,
+          "bias": 0.10000000000000142,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.10000000000000142
+        },
+        "validation/dhw_interval/recorded": {
+          "n": 4,
+          "mae": 0.5004624366760249,
+          "rmse": 0.5134007670852939,
+          "bias": -0.5004624366760249,
+          "absolute_p50": 0.40608482360839915,
+          "absolute_p95": 0.5058776855468992
+        },
+        "validation/dhw_interval/persistence": {
+          "n": 4,
+          "mae": 0.024999999999999467,
+          "rmse": 0.049999999999998934,
+          "bias": -0.024999999999999467,
+          "absolute_p50": 0.0,
+          "absolute_p95": 0.0
+        },
+        "validation/stable_ch_off/recorded": {
+          "n": 11,
+          "mae": 0.4785947279496735,
+          "rmse": 0.4844653724744471,
+          "bias": -0.4785947279496735,
+          "absolute_p50": 0.49735755920410085,
+          "absolute_p95": 0.5698078155518012
+        },
+        "validation/stable_ch_off/persistence": {
+          "n": 11,
+          "mae": 0.0636363636363639,
+          "rmse": 0.07977240352174689,
+          "bias": 0.027272727272727015,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.10000000000000142
+        },
+        "validation/ch_transition/recorded": {
+          "n": 1,
+          "mae": 0.6272785186767997,
+          "rmse": 0.6272785186767997,
+          "bias": -0.6272785186767997,
+          "absolute_p50": 0.6272785186767997,
+          "absolute_p95": 0.6272785186767997
+        },
+        "validation/ch_transition/persistence": {
+          "n": 1,
+          "mae": 0.09999999999999787,
+          "rmse": 0.09999999999999787,
+          "bias": -0.09999999999999787,
+          "absolute_p50": 0.09999999999999787,
+          "absolute_p95": 0.09999999999999787
+        },
+        "validation/stable_ch_on/recorded": {
+          "n": 1,
+          "mae": 0.1967536926269986,
+          "rmse": 0.1967536926269986,
+          "bias": -0.1967536926269986,
+          "absolute_p50": 0.1967536926269986,
+          "absolute_p95": 0.1967536926269986
+        },
+        "validation/stable_ch_on/persistence": {
+          "n": 1,
+          "mae": 0.1999999999999993,
+          "rmse": 0.1999999999999993,
+          "bias": 0.1999999999999993,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.1999999999999993
+        },
+        "test/stable_ch_off/recorded": {
+          "n": 14,
+          "mae": 0.31501641954694265,
+          "rmse": 0.3435823671385209,
+          "bias": -0.31501641954694265,
+          "absolute_p50": 0.32046051025389843,
+          "absolute_p95": 0.5080596923827976
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 14,
+          "mae": 0.10000000000000016,
+          "rmse": 0.13627702877384945,
+          "bias": -0.014285714285714235,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.1999999999999993
+        },
+        "test/ch_transition/recorded": {
+          "n": 4,
+          "mae": 0.15512914657592525,
+          "rmse": 0.18998050555710194,
+          "bias": -0.12558259963987517,
+          "absolute_p50": 0.059093093872100155,
+          "absolute_p95": 0.26256217956539984
+        },
+        "test/ch_transition/persistence": {
+          "n": 4,
+          "mae": 0.22500000000000053,
+          "rmse": 0.2598076211353325,
+          "bias": 0.1250000000000009,
+          "absolute_p50": 0.10000000000000142,
+          "absolute_p95": 0.3000000000000007
+        },
+        "test/dhw_interval/recorded": {
+          "n": 2,
+          "mae": 0.07018909454350108,
+          "rmse": 0.08492882488278823,
+          "bias": -0.07018909454350108,
+          "absolute_p50": 0.02237281799320101,
+          "absolute_p95": 0.02237281799320101
+        },
+        "test/dhw_interval/persistence": {
+          "n": 2,
+          "mae": 0.24999999999999822,
+          "rmse": 0.25495097567963726,
+          "bias": 0.24999999999999822,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.1999999999999993
+        }
+      },
+      "raw_ages": {
+        "n": 130,
+        "mean": 110.27615383404952,
+        "max": 292.72199988365173
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 154,
+        "reconstructed_live_held_state": 26275,
+        "age_diagnostic_gap_or_invalid": 967,
+        "raw_unavailable": 5
+      }
+    },
+    "nick/60/hold300_gap60": {
+      "counts": {
+        "total": 838,
+        "invalid_forecast": 14,
+        "accepted_held_state": 35,
+        "raw_pair_missing_invalid_or_old": 657,
+        "health_interval": 90,
+        "split_embargo": 42
+      },
+      "metrics": {
+        "train/recorded": {
+          "n": 17,
+          "mae": 1.0715300167308182,
+          "rmse": 1.3737262301922766,
+          "bias": -0.8167785195743353,
+          "absolute_p50": 0.7837539672852003,
+          "absolute_p95": 2.3793888092041016
+        },
+        "train/persistence": {
+          "n": 17,
+          "mae": 0.9058823529411768,
+          "rmse": 1.223783910183301,
+          "bias": -0.7294117647058823,
+          "absolute_p50": 0.6000000000000014,
+          "absolute_p95": 2.3999999999999986
+        },
+        "validation/recorded": {
+          "n": 8,
+          "mae": 1.1836337566375872,
+          "rmse": 1.194949305136871,
+          "bias": -1.1836337566375872,
+          "absolute_p50": 1.1802196502686009,
+          "absolute_p95": 1.2957168579102003
+        },
+        "validation/persistence": {
+          "n": 8,
+          "mae": 0.2750000000000008,
+          "rmse": 0.3535533905932742,
+          "bias": -0.2250000000000001,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.5
+        },
+        "test/recorded": {
+          "n": 10,
+          "mae": 0.4619175720214795,
+          "rmse": 0.5720668452013457,
+          "bias": -0.45503044128418,
+          "absolute_p50": 0.3303276062012017,
+          "absolute_p95": 0.9047325134276996
+        },
+        "test/persistence": {
+          "n": 10,
+          "mae": 0.35999999999999976,
+          "rmse": 0.40249223594996203,
+          "bias": 0.18000000000000008,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.6000000000000014
+        }
+      },
+      "regimes": {
+        "train/unknown_operation/recorded": {
+          "n": 12,
+          "mae": 0.7379468917846758,
+          "rmse": 1.060310240713315,
+          "bias": -0.37704893747965834,
+          "absolute_p50": 0.38588104248050215,
+          "absolute_p95": 2.2906589508056996
+        },
+        "train/unknown_operation/persistence": {
+          "n": 12,
+          "mae": 1.116666666666667,
+          "rmse": 1.4271183085738433,
+          "bias": -1.116666666666667,
+          "absolute_p50": 0.8999999999999986,
+          "absolute_p95": 2.3999999999999986
+        },
+        "train/ch_transition/recorded": {
+          "n": 1,
+          "mae": 2.792643737793,
+          "rmse": 2.792643737793,
+          "bias": -2.792643737793,
+          "absolute_p50": 2.792643737793,
+          "absolute_p95": 2.792643737793
+        },
+        "train/ch_transition/persistence": {
+          "n": 1,
+          "mae": 0.5,
+          "rmse": 0.5,
+          "bias": -0.5,
+          "absolute_p50": 0.5,
+          "absolute_p95": 0.5
+        },
+        "train/stable_ch_off/recorded": {
+          "n": 4,
+          "mae": 1.6420009613037,
+          "rmse": 1.6424943773753098,
+          "bias": -1.6420009613037,
+          "absolute_p50": 1.6211685180663977,
+          "absolute_p95": 1.6573123931885014
+        },
+        "train/stable_ch_off/persistence": {
+          "n": 4,
+          "mae": 0.3750000000000009,
+          "rmse": 0.43874821936960706,
+          "bias": 0.3750000000000009,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.6000000000000014
+        },
+        "validation/dhw_interval/recorded": {
+          "n": 5,
+          "mae": 1.211343231201179,
+          "rmse": 1.226330639930316,
+          "bias": -1.211343231201179,
+          "absolute_p50": 1.2730617523193004,
+          "absolute_p95": 1.2957168579102003
+        },
+        "validation/dhw_interval/persistence": {
+          "n": 5,
+          "mae": 0.3200000000000003,
+          "rmse": 0.39999999999999986,
+          "bias": -0.23999999999999916,
+          "absolute_p50": 0.1999999999999993,
+          "absolute_p95": 0.5
+        },
+        "validation/stable_ch_off/recorded": {
+          "n": 3,
+          "mae": 1.137451299031601,
+          "rmse": 1.140730254795473,
+          "bias": -1.137451299031601,
+          "absolute_p50": 1.1802196502686009,
+          "absolute_p95": 1.1802196502686009
+        },
+        "validation/stable_ch_off/persistence": {
+          "n": 3,
+          "mae": 0.20000000000000165,
+          "rmse": 0.25819888974716293,
+          "bias": -0.20000000000000165,
+          "absolute_p50": 0.20000000000000284,
+          "absolute_p95": 0.20000000000000284
+        },
+        "test/stable_ch_off/recorded": {
+          "n": 3,
+          "mae": 0.7449824015299326,
+          "rmse": 0.7805275824650907,
+          "bias": -0.7449824015299326,
+          "absolute_p50": 0.9047325134276996,
+          "absolute_p95": 0.9047325134276996
+        },
+        "test/stable_ch_off/persistence": {
+          "n": 3,
+          "mae": 0.2666666666666681,
+          "rmse": 0.27080128015453325,
+          "bias": -0.13333333333333286,
+          "absolute_p50": 0.3000000000000007,
+          "absolute_p95": 0.3000000000000007
+        },
+        "test/dhw_interval/recorded": {
+          "n": 6,
+          "mae": 0.38749052683511626,
+          "rmse": 0.4901394494678808,
+          "bias": -0.37601197560628385,
+          "absolute_p50": 0.22934913635249998,
+          "absolute_p95": 0.7371150970458977
+        },
+        "test/dhw_interval/persistence": {
+          "n": 6,
+          "mae": 0.36666666666666536,
+          "rmse": 0.41633319989322565,
+          "bias": 0.26666666666666633,
+          "absolute_p50": 0.29999999999999716,
+          "absolute_p95": 0.5
+        },
+        "test/ch_transition/recorded": {
+          "n": 1,
+          "mae": 0.059285354614299735,
+          "rmse": 0.059285354614299735,
+          "bias": -0.059285354614299735,
+          "absolute_p50": 0.059285354614299735,
+          "absolute_p95": 0.059285354614299735
+        },
+        "test/ch_transition/persistence": {
+          "n": 1,
+          "mae": 0.6000000000000014,
+          "rmse": 0.6000000000000014,
+          "bias": 0.6000000000000014,
+          "absolute_p50": 0.6000000000000014,
+          "absolute_p95": 0.6000000000000014
+        }
+      },
+      "raw_ages": {
+        "n": 70,
+        "mean": 107.37691428320748,
+        "max": 288.739000082016
+      },
+      "health_checkpoints": {
+        "explicit_or_unknown_input_status": 154,
+        "reconstructed_live_held_state": 26275,
+        "age_diagnostic_gap_or_invalid": 967,
+        "raw_unavailable": 5
+      }
+    }
+  },
+  "timing": {
+    "stijn": {
+      "finite_publications": 713,
+      "consecutive_gaps": 712,
+      "within_2s_of_300": 670,
+      "training_counter_event_within_2s": 713,
+      "interpretation": "HA receipt/change times consistent with cycles, not exact device issue timestamps"
+    },
+    "nick": {
+      "finite_publications": 824,
+      "consecutive_gaps": 823,
+      "within_2s_of_300": 812,
+      "training_counter_event_within_2s": 824,
+      "interpretation": "HA receipt/change times consistent with cycles, not exact device issue timestamps"
+    }
+  }
+}

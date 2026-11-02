@@ -1,5 +1,18 @@
 # Signal mapping and export instructions
 
+## Current availability (supersedes initial missing-data notes below)
+
+`history (8).csv` now supplies both raw room sensors, both master climates with
+attributes, original window contacts, actual boiler signals and uptime. Confirmed
+boiler entity IDs are `sensor.thermostaat_heating_temperature`,
+`binary_sensor.thermostaat_heating_active`, `binary_sensor.thermostaat_hot_water_active`
+and `binary_sensor.thermostaat_flame_on`. The water target is
+`sensor.thermostaat_target_water_temperature`; uptime is
+`sensor.diyless_thermostat_uptime` (legacy device identity should be checked).
+Do not request these histories again. Remaining evidence gaps concern physical
+sample times, exact device issue times, initial estimator state and unrecorded
+connection events—not absent raw/boiler history. See EVENT_HEALTH.md.
+
 ## What is verified
 
 Sources inspected: `Thermostat/ClimatePID/ClimateDevice.yaml`,
@@ -15,14 +28,14 @@ Thermostat.yaml substitutions are not evidence of your deployed bindings.
 
 | Signal | Package identity / semantics | HA export mapping |
 |---|---|---|
-| Supply | OpenTherm `t_boiler`, ID `ch_temperature`, name **Heating Temperature** | Resolve on thermostat device; absent in supplied CSV |
-| Actual CH | OpenTherm `ch_active`, ID `${boiler_active}`, name **Heating Active** | Resolve on thermostat device; absent |
-| DHW | OpenTherm `dhw_active`, ID `dhw_active`, name **Hot Water Active** | Resolve on thermostat device; absent |
-| Flame | OpenTherm `flame_on`, name **Flame On** | Resolve on thermostat device; export separately, not a replacement for CH |
-| Raw room Stijn/Nick | `climate_stijn_temperature` / `climate_nick_temperature` | User-confirmed `sensor.temp_sensor_kamer_stijn_temperature` / `sensor.temp_sensor_kamer_nick_temperature`; both absent |
+| Supply | OpenTherm `t_boiler`, ID `ch_temperature`, name **Heating Temperature** | `sensor.thermostaat_heating_temperature`, available |
+| Actual CH | OpenTherm `ch_active`, ID `${boiler_active}`, name **Heating Active** | `binary_sensor.thermostaat_heating_active`, available |
+| DHW | OpenTherm `dhw_active`, ID `dhw_active`, name **Hot Water Active** | `binary_sensor.thermostaat_hot_water_active`, available |
+| Flame | OpenTherm `flame_on`, name **Flame On** | `binary_sensor.thermostaat_flame_on`, available; not a replacement for CH |
+| Raw room Stijn/Nick | `climate_stijn_temperature` / `climate_nick_temperature` | `sensor.temp_sensor_kamer_stijn_temperature` / `sensor.temp_sensor_kamer_nick_temperature`; both available |
 | EMA diagnostic | `${device.id}_temperature_temp`, alpha 0.1, periodic template | `sensor.climate_stijn_temp`, `sensor.climate_nick_temp` confirmed present; NOT raw targets |
 | Local PID climate | User-confirmed IDs `verwarming_stijn` / `verwarming_nick`, PID temperature input `${device.id}_temperature` | Nick `climate.climate_nick_verwarming_nick` present; Stijn HA entity unresolved/absent |
-| HA master climate | `${master}` supplies mode and target to local climate | User-confirmed `climate.verwarming_stijn_master` / `climate.verwarming_nick_master`; export both along with local climates |
+| HA master climate | `${master}` supplies mode and target to local climate | `climate.verwarming_stijn_master` / `climate.verwarming_nick_master`; both available with attributes |
 | Effective commands | `${device.id}_valve_opening_degree`, percent | `sensor.climate_stijn_valve_opening_degree`, `sensor.climate_nick_valve_opening_degree` present |
 | Window | `${device.id}_window`, imported from `${sensor.window}` | `binary_sensor.climate_stijn_window`, `binary_sensor.climate_nick_window` present; user-confirmed sources `binary_sensor.raam_sensor_kamer_stijn_contact` / `binary_sensor.raam_sensor_kamer_nick_contact` |
 

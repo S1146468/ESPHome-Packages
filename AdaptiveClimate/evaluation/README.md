@@ -1,5 +1,9 @@
 # Initial measurement audit — 2026-11-02
 
+Newest increment: [event-driven health reconstruction and sensitivity results](EVENT_HEALTH.md).
+The event-only status heartbeat assumption is corrected in a separate, explicitly
+labelled held-state analysis. Original strict scoring remains available.
+
 Latest follow-up: [raw-temperature results and coverage](RAW_RESULTS.md).
 The missing raw/boiler exports have now been supplied; earlier missing-file
 statements below describe the initial audit only.
