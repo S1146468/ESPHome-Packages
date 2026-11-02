@@ -1,0 +1,18 @@
+# MERGE PATCH ONLY. Not a complete, independently flashable configuration.
+# Pending real thermostaat.yaml and deployed thermostat_package revision evidence.
+# In the existing external_components Adaptive Climate source, replace ONLY ref:
+#   ref: a7c299c4684b3cf7405bf04f37d721a3fba3eac8
+# In the existing packages.observer source, replace ONLY ref with the same SHA.
+# Preserve all existing source URL/path/components/files/vars and other packages.
+# Do not pin thermostat_package to this SHA: its thermostat snapshot is older.
+# Resolve thermostat_package.ref separately from the last successful build cache.
+# Merge into an existing adaptive_climate list if one already exists.
+adaptive_climate:
+  - id: !extend stijn_thermal_model
+    cycle_record:
+      name: "Stijn Observation Cycle"
+      device_id: adaptive_climate_stijn
+  - id: !extend nick_thermal_model
+    cycle_record:
+      name: "Nick Observation Cycle"
+      device_id: adaptive_climate_nick
