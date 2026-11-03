@@ -1,5 +1,6 @@
 #include "adaptive_climate.h"
 #include "esphome/core/log.h"
+#include "runtime_platform.h"
 #include <cstring>
 #include <cstdio>
 #include <cinttypes>
@@ -25,6 +26,12 @@ void AdaptiveClimate::setup() {
   if (shadow_enabled_)
     for (auto *flag : flags_)
       flag->add_on_state_callback([this](bool) { feed_shadow_(millis_64(), false); });
+  if (runtime_record_) {
+    if (pid_tick_source_)
+      pid_tick_source_->add_on_state_callback([this](float) { runtime_.pid_input.note(millis(), 5000); });
+    if (writer_tick_source_)
+      writer_tick_source_->add_on_raw_state_callback([this](float) { runtime_.writer_target.note(millis(), 5000); });
+  }
   publish_status_("waiting_for_inputs");
 }
 bool AdaptiveClimate::api_available_() const {
@@ -88,6 +95,7 @@ void AdaptiveClimate::invalidate_(const char *reason) {
 }
 void AdaptiveClimate::loop() {
   uint32_t now = millis();
+  if (runtime_record_) runtime_.loop.note(now);
   if (uint32_t(now - last_guard_) < 1000) return;
   last_guard_ = now;
   const uint64_t clock = millis_64();
@@ -96,7 +104,9 @@ void AdaptiveClimate::loop() {
   if (const char *reason = input_fault_(clock)) invalidate_(reason);
 }
 void AdaptiveClimate::update() {
+  RuntimeScope update_scope(runtime_record_ ? &runtime_.update_us : nullptr);
   uint64_t now = millis_64();
+  if (runtime_record_) runtime_.cycle(now);
   ++cycle_sequence_;
   publish_inputs_(now);
   feed_shadow_(now, false);
@@ -104,20 +114,24 @@ void AdaptiveClimate::update() {
     invalidate_(reason);
     publish_cycle_(now, "suspended", reason, nullptr);
     publish_models_(now);
+    publish_input_record_(now);
+    publish_runtime_(now);
     return;
   }
   Observation o{values_[0].value, values_[1].value, values_[2].value, values_[3].value,
                 flags_[0]->state, flags_[1]->state, flags_[2]->state};
   const auto before = observer_.model.samples();
-  const char *reason = observer_.observe(o, now);
+  uint32_t original_us = 0;
+  const char *reason = runtime_sum(runtime_record_ ? &original_us : nullptr, [&]() { return observer_.observe(o, now); });
   publish_status_(reason);
   const unsigned horizons[3] = {15, 30, 60};
   float forecasts[3] = {NAN, NAN, NAN};
   for (unsigned i = 0; i < 3; ++i) {
     if (observer_.ready() && (diagnostics_[i] || cycle_record_))
-      forecasts[i] = observer_.forecast(o, horizons[i]);
+      forecasts[i] = runtime_sum(runtime_record_ ? &original_us : nullptr, [&]() { return observer_.forecast(o, horizons[i]); });
     if (diagnostics_[i]) diagnostics_[i]->publish_state(forecasts[i]);
   }
+  if (runtime_record_) runtime_.original_us = std::max(runtime_.original_us, original_us);
   if (diagnostics_[3]) diagnostics_[3]->publish_state(observer_.model.rmse());
   if (diagnostics_[4]) diagnostics_[4]->publish_state(observer_.model.samples());
   if (diagnostics_[5]) diagnostics_[5]->publish_state(observer_.model.heat_span());
@@ -126,9 +140,12 @@ void AdaptiveClimate::update() {
       (std::strcmp(reason, "disturbance_rejected") == 0 ? "rejected" : "baseline");
   publish_cycle_(now, outcome, reason, forecasts);
   publish_models_(now);
+  publish_input_record_(now);
+  publish_runtime_(now);
 }
 void AdaptiveClimate::feed_shadow_(uint64_t now, bool room_publication) {
   if (!shadow_enabled_) return;
+  RuntimeScope feed_scope(runtime_record_ ? &runtime_.shadow_feed_us : nullptr);
   const char *fault = input_fault_(now);
   if (fault && std::strcmp(fault, "window_open") != 0 && std::strcmp(fault, "domestic_hot_water") != 0) {
     shadow_.invalidate(now); return;
@@ -164,12 +181,16 @@ void AdaptiveClimate::publish_models_(uint64_t now) {
   if (!shadow_forecasts_) return;
   char predictions[3][16];
   bool uncertain = false;
+  uint32_t forecast_us = 0;
   for (unsigned i = 0; i < 3; ++i) {
     float width;
-    float forecast = shadow_.forecast(now, i == 0 ? 15 : (i == 1 ? 30 : 60), &width);
+    float forecast = runtime_sum(runtime_record_ ? &forecast_us : nullptr, [&]() {
+      return shadow_.forecast(now, i == 0 ? 15 : (i == 1 ? 30 : 60), &width);
+    });
     uncertain |= !std::isfinite(forecast);
     std::snprintf(predictions[i], sizeof(predictions[i]), std::isfinite(forecast) ? "%.6f" : "null", double(forecast));
   }
+  if (runtime_record_) runtime_.shadow_forecast_us = std::max(runtime_.shadow_forecast_us, forecast_us);
   char record[256];
   const char *reason = shadow_.forecast_status(now);
   if (uncertain && std::strcmp(reason, "conditional_unvalidated") == 0) reason = "uncertainty";
@@ -177,6 +198,39 @@ void AdaptiveClimate::publish_models_(uint64_t now) {
       "{\"v\":1,\"q\":%" PRIu64 ",\"t\":%" PRIu64 ",\"s\":\"%s\",\"l\":\"%s\",\"f\":[%s,%s,%s]}",
       cycle_sequence_, now, reason, shadow_.status(), predictions[0], predictions[1], predictions[2]);
   if (length > 0 && length < int(sizeof(record))) shadow_forecasts_->publish_state(record);
+}
+void AdaptiveClimate::publish_input_record_(uint64_t now) {
+  if (!input_record_) return;
+  char value[4][16], age[4][24], states[5], flags[4];
+  for (unsigned i = 0; i < 4; ++i) {
+    std::snprintf(value[i], sizeof(value[i]), std::isfinite(values_[i].value) ? "%.7g" : "null", double(values_[i].value));
+    if (values_[i].seen) std::snprintf(age[i], sizeof(age[i]), "%" PRIu64, now - values_[i].timestamp);
+    else std::snprintf(age[i], sizeof(age[i]), "null");
+    states[i] = '0' + static_cast<unsigned>(input_state_(i, now));
+  }
+  states[4] = '\0';
+  for (unsigned i = 0; i < 3; ++i) flags[i] = flags_[i]->has_state() ? (flags_[i]->state ? '1' : '0') : '?';
+  flags[3] = '\0';
+  char record[256];
+  const int length = std::snprintf(record, sizeof(record),
+      "i1|%08" PRIx32 "|%" PRIu64 "|%" PRIu64 "|%s,%s,%s,%s|%s,%s,%s,%s|%s|%s|%u",
+      runtime_boot_id(), cycle_sequence_, now, value[0], value[1], value[2], value[3],
+      age[0], age[1], age[2], age[3], states, flags, unsigned(api_available_()));
+  if (length > 0 && length < int(sizeof(record))) input_record_->publish_state(record);
+}
+void AdaptiveClimate::publish_runtime_(uint64_t now) {
+  if (!runtime_record_) return;
+  const auto memory = runtime_memory();
+  char record[256];
+  const int length = std::snprintf(record, sizeof(record),
+      "r1|%08" PRIx32 "|%" PRIu64 "|%" PRIu64 "|%u,%u,%u,%u|%u,%u,%u,%u|%u,%u|%u,%u,%u|%u,%u",
+      runtime_boot_id(), cycle_sequence_, now, unsigned(memory.free), unsigned(memory.minimum),
+      unsigned(memory.largest), unsigned(memory.stack), unsigned(runtime_.original_us),
+      unsigned(runtime_.shadow_feed_us), unsigned(runtime_.shadow_forecast_us), unsigned(runtime_.update_us),
+      unsigned(runtime_.cycle_gap_ms), unsigned(runtime_.cycle_jitter_ms), unsigned(runtime_.loop.maximum),
+      unsigned(runtime_.pid_input.maximum), unsigned(runtime_.writer_target.maximum),
+      unsigned(runtime_.pid_input.late), unsigned(runtime_.writer_target.late));
+  if (length > 0 && length < int(sizeof(record))) runtime_record_->publish_state(record);
 }
 void AdaptiveClimate::publish_cycle_(uint64_t now, const char *outcome, const char *reason,
                                     const float *forecasts) {

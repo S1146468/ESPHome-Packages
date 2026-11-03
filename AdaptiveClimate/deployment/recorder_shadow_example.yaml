@@ -1,0 +1,51 @@
+# Documentation fragment, not an ESPHome package. MERGE into the one existing
+# Home Assistant recorder: block. Do not replace existing history filters.
+# With default Recorder configuration, all these entities are already recorded;
+# use the list to remove exclusions/extend an existing restrictive include list.
+# Verify actual entity IDs in the HA entity registry after approved installation.
+recorder:
+  purge_keep_days: 35
+  include:
+    entities:
+      - sensor.temp_sensor_kamer_stijn_temperature
+      - sensor.temp_sensor_kamer_nick_temperature
+      - sensor.temperature
+      - sensor.thermostaat_heating_temperature
+      - sensor.thermostaat_target_water_temperature
+      - binary_sensor.thermostaat_heating_active
+      - binary_sensor.thermostaat_hot_water_active
+      - binary_sensor.thermostaat_flame_on
+      - sensor.climate_stijn_valve_opening_degree
+      - sensor.climate_nick_valve_opening_degree
+      - climate.verwarming_stijn_master
+      - climate.verwarming_nick_master
+      - binary_sensor.raam_sensor_kamer_stijn_contact
+      - binary_sensor.raam_sensor_kamer_nick_contact
+      - sensor.diyless_thermostat_uptime
+    entity_globs:
+      - sensor.*stijn*observation_cycle
+      - sensor.*nick*observation_cycle
+      - sensor.*stijn*reference_model_details
+      - sensor.*nick*reference_model_details
+      - sensor.*stijn*shadow_model_details
+      - sensor.*nick*shadow_model_details
+      - sensor.*stijn*shadow_conditional_forecasts
+      - sensor.*nick*shadow_conditional_forecasts
+      - sensor.*stijn*input_snapshot
+      - sensor.*nick*input_snapshot
+      - sensor.*stijn*runtime_benchmark
+      - sensor.*nick*runtime_benchmark
+      - sensor.*stijn*forecast_*min
+      - sensor.*nick*forecast_*min
+      - sensor.*stijn*input_freshness_status
+      - sensor.*nick*input_freshness_status
+      - sensor.*stijn*input_age
+      - sensor.*nick*input_age
+      - sensor.*stijn*model_status
+      - sensor.*nick*model_status
+      - sensor.*stijn*model_training_samples
+      - sensor.*nick*model_training_samples
+      - climate.*stijn*verwarming_stijn
+      - climate.*nick*verwarming_nick
+# Include/exclude precedence matters. Explicit exclusions may still defeat
+# globs; remove those exclusions or add the verified exact IDs to include.entities.

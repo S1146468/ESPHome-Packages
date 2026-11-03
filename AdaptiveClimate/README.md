@@ -1,5 +1,8 @@
 # Adaptive Climate
 
+[Parallel ESP32 trial preparation: final configuration, runtime measurements,
+Recorder setup and rollback checklist](deployment/SHADOW_INSTALLATION.md).
+
 [November 3: implemented shadow learner, root causes and development comparison](docs/thermal_fix_20261103.md).
 The numerical reference is preserved; the candidate is opt-in and read-only.
 [Compact diagnostic schema](docs/shadow_diagnostics.md).

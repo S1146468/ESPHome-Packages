@@ -1,5 +1,10 @@
 # Optional thermal model details and shadow forecasts
 
+For the optional `input_record` and `runtime_record`, exact configuration,
+measurement scopes and Recorder-first installation procedure, see
+[the runtime preparation checklist](../deployment/SHADOW_INSTALLATION.md).
+These additions do not change either learner or the original records below.
+
 All entities are diagnostic/read-only and publish only on the existing
 five-minute observation cycle, including suspended cycles. No flash persistence
 or new high-frequency telemetry is added. Existing `cycle_record` v1 remains

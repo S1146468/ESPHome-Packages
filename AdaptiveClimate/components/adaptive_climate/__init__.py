@@ -28,6 +28,8 @@ def api_requirement(value):
 def validate_shadow(config):
     if not config["shadow_model"] and any(key in config for key in ("shadow_record", "shadow_forecasts")):
         raise cv.Invalid("shadow_record/shadow_forecasts require shadow_model: true")
+    if "runtime_record" not in config and any(key in config for key in ("pid_tick_source", "writer_tick_source")):
+        raise cv.Invalid("Scheduling probes require runtime_record")
     return config
 
 
@@ -53,6 +55,10 @@ CONFIG_SCHEMA = cv.All(cv.Schema({
     cv.Optional("shadow_model", default=False): cv.boolean,
     cv.Optional("shadow_record"): text_sensor.text_sensor_schema(entity_category="diagnostic"),
     cv.Optional("shadow_forecasts"): text_sensor.text_sensor_schema(entity_category="diagnostic"),
+    cv.Optional("input_record"): text_sensor.text_sensor_schema(entity_category="diagnostic"),
+    cv.Optional("runtime_record"): text_sensor.text_sensor_schema(entity_category="diagnostic"),
+    cv.Optional("pid_tick_source"): cv.use_id(sensor.Sensor),
+    cv.Optional("writer_tick_source"): cv.use_id(sensor.Sensor),
     cv.Optional("input_status"): text_sensor.text_sensor_schema(entity_category="diagnostic"),
     **{cv.Optional(key + "_age"): sensor.sensor_schema(
         accuracy_decimals=0, unit_of_measurement="s", device_class="duration",
@@ -84,8 +90,11 @@ async def to_code(config):
         cg.add(var.set_status(await text_sensor.new_text_sensor(config["status"])))
     if "cycle_record" in config:
         cg.add(var.set_cycle_record(await text_sensor.new_text_sensor(config["cycle_record"])))
-    for key in ("model_record", "shadow_record", "shadow_forecasts"):
+    for key in ("model_record", "shadow_record", "shadow_forecasts", "input_record", "runtime_record"):
         if key in config:
             cg.add(getattr(var, "set_" + key)(await text_sensor.new_text_sensor(config[key])))
+    for key in ("pid_tick_source", "writer_tick_source"):
+        if key in config:
+            cg.add(getattr(var, "set_" + key)(await cg.get_variable(config[key])))
     if "input_status" in config:
         cg.add(var.set_input_status(await text_sensor.new_text_sensor(config["input_status"])))

@@ -31,6 +31,7 @@ esp32:
   board: esp32dev
   framework:
     type: esp-idf
+    version: 5.5.6
     advanced:
       minimum_chip_revision: "3.0"
       sram1_as_iram: true
@@ -393,6 +394,14 @@ packages:
 adaptive_climate:
   - id: !extend stijn_thermal_model
     shadow_model: true
+    input_record:
+      name: Stijn Input Snapshot
+      device_id: adaptive_climate_stijn
+    runtime_record:
+      name: Stijn Runtime Benchmark
+      device_id: adaptive_climate_stijn
+    pid_tick_source: climate_stijn_temperature
+    writer_tick_source: target_water_temperature
     model_record:
       name: Stijn Reference Model Details
       device_id: adaptive_climate_stijn
@@ -407,6 +416,14 @@ adaptive_climate:
       device_id: adaptive_climate_stijn
   - id: !extend nick_thermal_model
     shadow_model: true
+    input_record:
+      name: Nick Input Snapshot
+      device_id: adaptive_climate_nick
+    runtime_record:
+      name: Nick Runtime Benchmark
+      device_id: adaptive_climate_nick
+    pid_tick_source: climate_nick_temperature
+    writer_tick_source: target_water_temperature
     model_record:
       name: Nick Reference Model Details
       device_id: adaptive_climate_nick

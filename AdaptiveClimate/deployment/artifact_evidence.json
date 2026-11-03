@@ -1,0 +1,74 @@
+[
+  {
+    "file": "thermostaat.factory.bin",
+    "bytes": 1020096,
+    "sha256": "5fcb604aaf017a0888e9fbb78017154edce493ce0e2325169e78242dbaedf784",
+    "applications": [
+      {
+        "image_offset": 65536,
+        "project": "thermostaat",
+        "version": "2025.3.3",
+        "compile_time": "19:14:56",
+        "compile_date": "Apr 10 2025",
+        "idf": "5.1.5",
+        "elf_sha256": "dcd7901614fc2cb7fc57335c01b3a74fffefaaf4712032e6f43214b3908299dd"
+      }
+    ],
+    "installed_identity_verified": false,
+    "git_package_revision_recovered": false
+  },
+  {
+    "file": "thermostaat.factory (1).bin",
+    "bytes": 1606896,
+    "sha256": "8072891f34b9338dad89ee675128022bd2d3b50555fa4358c31f6fbcf6a148c6",
+    "applications": [
+      {
+        "image_offset": 65536,
+        "project": "thermostaat",
+        "version": "2025.12.0",
+        "compile_time": "18:53:47",
+        "compile_date": "Dec 19 2025",
+        "idf": "5.5.1",
+        "elf_sha256": "3b33fccea6391cb62a6151d5c31e9b9ee59309e3809b1936a446ee43ea40588b"
+      }
+    ],
+    "installed_identity_verified": false,
+    "git_package_revision_recovered": false
+  },
+  {
+    "file": "firmware.bin",
+    "bytes": 1557600,
+    "sha256": "45d73c0d9f3df218c9b19ec2eeb443523c191bff89e6ecaf6ffada0078627e81",
+    "applications": [
+      {
+        "image_offset": 0,
+        "project": "esp32-arduino-lib-builder",
+        "version": "b86ba2b-dirty",
+        "compile_time": "01:05:21",
+        "compile_date": "Jan 12 2021",
+        "idf": "v3.3.4-402-gcd59d107b",
+        "elf_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      }
+    ],
+    "installed_identity_verified": false,
+    "git_package_revision_recovered": false
+  },
+  {
+    "file": "firmware (1).bin",
+    "bytes": 1557600,
+    "sha256": "45d73c0d9f3df218c9b19ec2eeb443523c191bff89e6ecaf6ffada0078627e81",
+    "applications": [
+      {
+        "image_offset": 0,
+        "project": "esp32-arduino-lib-builder",
+        "version": "b86ba2b-dirty",
+        "compile_time": "01:05:21",
+        "compile_date": "Jan 12 2021",
+        "idf": "v3.3.4-402-gcd59d107b",
+        "elf_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      }
+    ],
+    "installed_identity_verified": false,
+    "git_package_revision_recovered": false
+  }
+]

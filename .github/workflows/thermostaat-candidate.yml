@@ -18,6 +18,8 @@ jobs:
       - run: pip install -r AdaptiveClimate/requirements-test.txt
       - name: Supply non-production compile credentials
         run: cp AdaptiveClimate/deployment/secrets.compile-only.yaml AdaptiveClimate/deployment/secrets.yaml
+      - name: Prove unchanged controls and frozen learners
+        run: python AdaptiveClimate/deployment/validate_candidate.py --output-dir "$RUNNER_TEMP/shadow-install-validation"
       - name: Validate complete supplied configuration
         run: esphome config AdaptiveClimate/deployment/thermostaat.yaml
       - name: Compile complete supplied configuration without upload

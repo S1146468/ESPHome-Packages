@@ -1,5 +1,12 @@
 # Complete thermostat diagnostic candidate
 
+Current preparation: [shadow installation checklist and source/rollback evidence](SHADOW_INSTALLATION.md),
+[runtime build results](RUNTIME_BUILD_RESULTS.md), [Recorder fragment](recorder_shadow_example.yaml)
+and [independent validation protocol](VALIDATION_PROTOCOL.md). Both learners remain
+frozen to a96e05d; this step adds only optional input/runtime records. The user has
+now supplied a current YAML explicitly pinning the controls to 7d925a7; the actual
+running image and its rollback binary are still not independently verified.
+
 The separate `thermostaat_shadow.yaml` uses the local reviewed observer and
 enables both experimental shadow models plus compact model diagnostics. It
 preserves the complete candidate's thermostat package pin and control domains.

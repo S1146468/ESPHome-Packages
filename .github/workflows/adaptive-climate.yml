@@ -24,6 +24,7 @@ jobs:
       - run: g++ -std=c++17 -O2 -Wall -Wextra -pedantic AdaptiveClimate/tests/test_thermal_model.cpp -o /tmp/thermal-tests && /tmp/thermal-tests
       - run: g++ -std=c++17 -O2 -Wall -Wextra -pedantic AdaptiveClimate/tests/test_shadow_model.cpp -o /tmp/shadow-tests && /tmp/shadow-tests
       - run: g++ -std=c++17 -O2 -Wall -Wextra -pedantic -DUSE_API -IAdaptiveClimate/tests/stubs AdaptiveClimate/tests/test_shadow_component.cpp AdaptiveClimate/components/adaptive_climate/adaptive_climate.cpp -o /tmp/shadow-component-tests && /tmp/shadow-component-tests
+      - run: g++ -std=c++17 -O2 -Wall -Wextra -pedantic -DUSE_API -IAdaptiveClimate/tests/stubs AdaptiveClimate/tests/test_runtime.cpp AdaptiveClimate/components/adaptive_climate/adaptive_climate.cpp -o /tmp/runtime-tests && /tmp/runtime-tests
       - run: g++ -std=c++17 -O2 -Wall -Wextra -pedantic -DUSE_API -IAdaptiveClimate/tests/stubs AdaptiveClimate/tests/test_input_handling.cpp AdaptiveClimate/components/adaptive_climate/adaptive_climate.cpp -o /tmp/input-tests && /tmp/input-tests
       - run: g++ -std=c++17 -O2 -Wall -Wextra -pedantic -DUSE_API -IAdaptiveClimate/tests/stubs AdaptiveClimate/tests/test_cycle_record.cpp AdaptiveClimate/components/adaptive_climate/adaptive_climate.cpp -o /tmp/cycle-tests && /tmp/cycle-tests
       - run: esphome compile AdaptiveClimate/examples/cycle_diagnostics.yaml

@@ -4,6 +4,14 @@ packages:
 adaptive_climate:
   - id: !extend room_model
     shadow_model: true
+    input_record:
+      name: Room Input Snapshot
+      device_id: adaptive_room
+    runtime_record:
+      name: Room Runtime Benchmark
+      device_id: adaptive_room
+    pid_tick_source: room_measurement
+    writer_tick_source: water_measurement
     model_record:
       name: Reference Model Details
       device_id: adaptive_room
