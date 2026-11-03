@@ -2,7 +2,7 @@ name: Complete thermostat candidate (build only)
 on:
   push:
     branches: [feature/adaptive-climate-prediction-evaluation]
-    paths: ['AdaptiveClimate/deployment/**', '.github/workflows/thermostaat-candidate.yml']
+    paths: ['AdaptiveClimate/deployment/**', 'AdaptiveClimate/components/**', '.github/workflows/thermostaat-candidate.yml']
   workflow_dispatch:
 permissions:
   contents: read
@@ -22,3 +22,5 @@ jobs:
         run: esphome config AdaptiveClimate/deployment/thermostaat.yaml
       - name: Compile complete supplied configuration without upload
         run: esphome compile AdaptiveClimate/deployment/thermostaat.yaml
+      - name: Compile opt-in two-room shadow candidate without upload
+        run: esphome compile AdaptiveClimate/deployment/thermostaat_shadow.yaml

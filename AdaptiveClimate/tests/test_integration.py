@@ -76,7 +76,7 @@ def test_extraction_provenance_and_unchanged_thermal_model():
         # The manifest records the extraction, not later input-handling changes.
         # The complete numerical model still must match the original byte for byte.
         if name == "thermal_model.h":
-            source = (ROOT / "components/adaptive_climate" / name).read_text(encoding="utf-8")
+            source = (ROOT / "tests/reference" / name).read_text(encoding="utf-8")
         else:
             source = subprocess.check_output(["git", "show",
                 "4982bcb738e94444ac305adaf6278f61e637e5c1:AdaptiveClimate/components/adaptive_climate/" + name],

@@ -81,7 +81,9 @@ def test_existing_thermostat_configuration_unchanged(configs, tmp_path):
                    "text_sensor", "button", "script", "interval", "globals"):
         assert observed[domain] == baseline[domain], domain
     # Check the source and numerical test did not change at all from the reviewed commit.
-    for relative in ("Thermostat", "Thermostat.yaml", "AdaptiveClimate/components/adaptive_climate/thermal_model.h", "AdaptiveClimate/tests/test_thermal_model.cpp"):
+    # Numerical reference is frozen in tests/reference and checked by digest and
+    # executable parity tests. Production header now adds telemetry only.
+    for relative in ("Thermostat", "Thermostat.yaml", "AdaptiveClimate/tests/test_thermal_model.cpp"):
         diff = subprocess.check_output(["git", "diff", "c9b98da68d882c1f12a2bafd5714ce67ed4a7096", "--", relative], cwd=ROOT.parent)
         assert not diff, relative
 

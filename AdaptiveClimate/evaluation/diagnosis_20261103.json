@@ -1,0 +1,157 @@
+{
+  "file": "history(1).csv",
+  "sha256": "afda57e10e9d3e6bd34e2cd3f3e6ad2d0bf322260c72485ccecc2f1e57894226",
+  "rows": 50142,
+  "entities": 74,
+  "rooms": {
+    "stijn": {
+      "unique_cycles": 149,
+      "duplicate_publications": 1,
+      "invalid_states": 1,
+      "outcomes": {
+        "rejected": 42,
+        "accepted": 97,
+        "suspended": 6,
+        "baseline": 4
+      },
+      "statuses": {
+        "disturbance_rejected": 42,
+        "collecting_data": 87,
+        "low_excitation": 14,
+        "domestic_hot_water": 5,
+        "window_open": 1
+      },
+      "forecast_cycles": 14,
+      "resets": [
+        {
+          "local_time": "2026-11-03T00:03:17.942000+01:00",
+          "q": 17,
+          "before": 9,
+          "after": 0,
+          "reason": "disturbance_rejected",
+          "previous_is_export_boundary": true
+        },
+        {
+          "local_time": "2026-11-03T02:23:18.581000+01:00",
+          "q": 45,
+          "before": 22,
+          "after": 0,
+          "reason": "disturbance_rejected",
+          "previous_is_export_boundary": false
+        },
+        {
+          "local_time": "2026-11-03T03:43:19.906000+01:00",
+          "q": 61,
+          "before": 10,
+          "after": 0,
+          "reason": "disturbance_rejected",
+          "previous_is_export_boundary": false
+        },
+        {
+          "local_time": "2026-11-03T04:38:20.282000+01:00",
+          "q": 72,
+          "before": 5,
+          "after": 0,
+          "reason": "disturbance_rejected",
+          "previous_is_export_boundary": false
+        },
+        {
+          "local_time": "2026-11-03T08:38:22.511000+01:00",
+          "q": 120,
+          "before": 33,
+          "after": 0,
+          "reason": "disturbance_rejected",
+          "previous_is_export_boundary": false
+        },
+        {
+          "local_time": "2026-11-03T12:23:23.903000+01:00",
+          "q": 165,
+          "before": 27,
+          "after": 0,
+          "reason": "disturbance_rejected",
+          "previous_is_export_boundary": false
+        }
+      ],
+      "age_counts": {
+        "rejected/recent": 27,
+        "accepted/recent": 70,
+        "accepted/held_over_15min": 27,
+        "rejected/held_over_15min": 15,
+        "suspended/held_over_15min": 1,
+        "suspended/recent": 5,
+        "baseline/recent": 4
+      },
+      "proven_zero_change_residual_rejection_cycles": [
+        17,
+        40,
+        41,
+        42,
+        45,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        86,
+        87,
+        116,
+        132,
+        134,
+        136,
+        139,
+        141,
+        143
+      ]
+    },
+    "nick": {
+      "unique_cycles": 149,
+      "duplicate_publications": 1,
+      "invalid_states": 1,
+      "outcomes": {
+        "accepted": 141,
+        "suspended": 5,
+        "baseline": 3
+      },
+      "statuses": {
+        "collecting_data": 12,
+        "learning_unvalidated": 132,
+        "domestic_hot_water": 5
+      },
+      "forecast_cycles": 132,
+      "resets": [],
+      "age_counts": {
+        "accepted/recent": 76,
+        "accepted/held_over_15min": 65,
+        "suspended/recent": 4,
+        "baseline/held_over_15min": 1,
+        "suspended/held_over_15min": 1,
+        "baseline/recent": 2
+      },
+      "proven_zero_change_residual_rejection_cycles": [],
+      "last_forecast": {
+        "local_time": "2026-11-03T12:23:26.013000+01:00",
+        "q": 165,
+        "forecasts": [
+          15.217697,
+          13.827486,
+          12.04238
+        ],
+        "inferred_loss_per_minute": 0.019999979242134258,
+        "inferred_equilibrium": 9.899992543793616,
+        "inferred_origin": 17.099999621812096,
+        "inference": "zero delivered proxy/lag; coefficients not directly exported; offset and outdoor not separately identifiable"
+      }
+    }
+  },
+  "raw_room_histories_present": {
+    "stijn": false,
+    "nick": false
+  }
+}

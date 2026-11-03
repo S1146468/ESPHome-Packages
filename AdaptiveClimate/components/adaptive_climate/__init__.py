@@ -25,7 +25,13 @@ def api_requirement(value):
         cv.requires_component("api")(value)
     return value
 
-CONFIG_SCHEMA = cv.Schema({
+def validate_shadow(config):
+    if not config["shadow_model"] and any(key in config for key in ("shadow_record", "shadow_forecasts")):
+        raise cv.Invalid("shadow_record/shadow_forecasts require shadow_model: true")
+    return config
+
+
+CONFIG_SCHEMA = cv.All(cv.Schema({
     cv.GenerateID(): cv.declare_id(AdaptiveClimate),
     cv.Optional("mode", default="observe"): cv.one_of("observe", lower=True),
     cv.Optional("input_freshness", default={}): cv.Schema({cv.Optional(key): POLICY for key in INPUTS}),
@@ -43,11 +49,15 @@ CONFIG_SCHEMA = cv.Schema({
     ) for key in OUTPUTS},
     cv.Optional("status"): text_sensor.text_sensor_schema(entity_category="diagnostic"),
     cv.Optional("cycle_record"): text_sensor.text_sensor_schema(entity_category="diagnostic"),
+    cv.Optional("model_record"): text_sensor.text_sensor_schema(entity_category="diagnostic"),
+    cv.Optional("shadow_model", default=False): cv.boolean,
+    cv.Optional("shadow_record"): text_sensor.text_sensor_schema(entity_category="diagnostic"),
+    cv.Optional("shadow_forecasts"): text_sensor.text_sensor_schema(entity_category="diagnostic"),
     cv.Optional("input_status"): text_sensor.text_sensor_schema(entity_category="diagnostic"),
     **{cv.Optional(key + "_age"): sensor.sensor_schema(
         accuracy_decimals=0, unit_of_measurement="s", device_class="duration",
         entity_category="diagnostic", icon="mdi:timer-outline") for key in INPUTS},
-}).extend(cv.COMPONENT_SCHEMA)
+}).extend(cv.COMPONENT_SCHEMA), validate_shadow)
 
 async def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
@@ -55,6 +65,7 @@ async def to_code(config):
     cg.add(var.set_stale_after(config["stale_after"].total_milliseconds))
     cg.add(var.set_require_api_connection(config["require_api_connection"]))
     cg.add(var.set_valve_command_scale(config["valve_command_scale"]))
+    cg.add(var.set_shadow_model(config["shadow_model"]))
     for index, key in enumerate(INPUTS):
         cg.add(var.set_input(index, await cg.get_variable(config[key])))
         policy = config["input_freshness"].get(key, {})
@@ -73,5 +84,8 @@ async def to_code(config):
         cg.add(var.set_status(await text_sensor.new_text_sensor(config["status"])))
     if "cycle_record" in config:
         cg.add(var.set_cycle_record(await text_sensor.new_text_sensor(config["cycle_record"])))
+    for key in ("model_record", "shadow_record", "shadow_forecasts"):
+        if key in config:
+            cg.add(getattr(var, "set_" + key)(await text_sensor.new_text_sensor(config[key])))
     if "input_status" in config:
         cg.add(var.set_input_status(await text_sensor.new_text_sensor(config["input_status"])))

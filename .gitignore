@@ -4,3 +4,8 @@
 /.esphome/
 /secrets.yaml
 /TestDevice.yaml
+/.venv/
+/.build/
+**/.esphome/
+**/__pycache__/
+/.pytest_cache/

@@ -1,0 +1,15 @@
+# Build-only fixture. No outputs or thermostat control interfaces.
+packages:
+  fixture: !include cycle_diagnostics.yaml
+adaptive_climate:
+  - id: !extend room_model
+    shadow_model: true
+    model_record:
+      name: Reference Model Details
+      device_id: adaptive_room
+    shadow_record:
+      name: Shadow Model Details
+      device_id: adaptive_room
+    shadow_forecasts:
+      name: Shadow Conditional Forecasts
+      device_id: adaptive_room

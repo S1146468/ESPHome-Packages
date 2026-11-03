@@ -110,6 +110,9 @@ def test_pinned_esphome_raw_and_ha_contract():
     output = filters.split('void Filter::output', 1)[1].split('void Filter::', 1)[0]
     assert 'internal_send_state_to_frontend' in output
     source = (ROOT / 'components/adaptive_climate/adaptive_climate.cpp').read_text()
-    assert 'add_on_raw_state_callback' in source and 'add_on_state_callback' not in source
-    assert source.count('.receive(') == 1
+    assert 'inputs_[i]->add_on_raw_state_callback' in source
+    assert 'inputs_[i]->add_on_state_callback' not in source
+    # Binary flag callbacks capture CH/DHW changes for the optional shadow.
+    assert 'flag->add_on_state_callback' in source
+    assert source.count('values_[i].receive(') == 1
     assert 'is_connected_with_state_subscription()' in source

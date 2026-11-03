@@ -4,11 +4,13 @@ on:
     paths:
       - 'AdaptiveClimate/evaluation/**'
       - 'AdaptiveClimate/components/adaptive_climate/thermal_model.h'
+      - 'AdaptiveClimate/components/adaptive_climate/shadow_model.h'
       - '.github/workflows/adaptive-evaluation.yml'
   pull_request:
     paths:
       - 'AdaptiveClimate/evaluation/**'
       - 'AdaptiveClimate/components/adaptive_climate/thermal_model.h'
+      - 'AdaptiveClimate/components/adaptive_climate/shadow_model.h'
       - '.github/workflows/adaptive-evaluation.yml'
 permissions:
   contents: read
@@ -22,6 +24,8 @@ jobs:
           python-version: '3.13'
       - name: Compile unchanged production observer replay
         run: g++ -std=c++17 -O2 AdaptiveClimate/evaluation/replay.cpp -o "$RUNNER_TEMP/adaptive-replay"
+      - name: Compile actual reference and shadow learners
+        run: g++ -std=c++17 -O2 -Wall -Wextra -pedantic AdaptiveClimate/evaluation/shadow_replay.cpp -o "$RUNNER_TEMP/shadow-replay"
       - name: Run scoring and replay tests
         env:
           ADAPTIVE_REPLAY_EXE: ${{ runner.temp }}/adaptive-replay

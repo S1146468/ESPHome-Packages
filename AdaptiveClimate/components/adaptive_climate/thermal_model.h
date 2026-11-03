@@ -7,6 +7,16 @@
 namespace esphome {
 namespace adaptive_climate {
 
+// Telemetry only. The frozen, uninstrumented reference is in tests/reference.
+struct LearningTrace {
+  float change{NAN}, predicted{NAN}, residual{NAN}, heat{NAN};
+  const char *reason{"baseline"};
+  const char *reset_reason{"none"};
+  uint32_t resets{0};
+  uint32_t attempts{0};
+  uint8_t consecutive{0}, saturation{0};
+};
+
 // Three-parameter empirical model. Minutes and degrees Celsius throughout.
 // No actuator interfaces or dynamically sized storage.
 class ThermalModel {
@@ -18,12 +28,18 @@ class ThermalModel {
       for (int j = 0; j < 3; ++j) p_[i][j] = i == j ? 10.0f : 0.0f;
     samples_ = 0; mse_ = NAN; heat_min_ = 1.0f; heat_max_ = 0.0f;
     failures_ = 0;
+    trace_.saturation = 0;
   }
   static float heat_proxy(float room, float supply, float valve, bool heating) {
     return heating ? std::clamp(valve / 100.0f, 0.0f, 1.0f) *
                          std::clamp((supply - room) / 50.0f, 0.0f, 1.5f) : 0.0f;
   }
   bool learn(float room, float outdoor, float heat, float next_room, float minutes) {
+    ++trace_.attempts;
+    trace_.consecutive = failures_;
+    trace_.change = trace_.predicted = trace_.residual = NAN;
+    trace_.heat = heat;
+    trace_.reason = "invalid";
     if (!std::isfinite(room) || !std::isfinite(outdoor) || !std::isfinite(heat) ||
         !std::isfinite(next_room) || !std::isfinite(minutes) || minutes < 1.0f ||
         minutes > 10.0f || heat < 0.0f || heat > 1.5f) return false;
@@ -32,19 +48,23 @@ class ThermalModel {
     float predicted = 0;
     for (int i = 0; i < 3; ++i) predicted += theta_[i] * x[i];
     const float residual = change - predicted;
+    trace_.change = change; trace_.predicted = predicted; trace_.residual = residual;
     // Reject disturbances rather than teaching the model an implausible heat gain.
     if (std::fabs(change) / minutes > 0.15f || std::fabs(residual) > 1.0f) {
-      if (++failures_ >= 6) reset();
+      trace_.reason = std::fabs(change) / minutes > 0.15f ? "rate" : "residual";
+      trace_.consecutive = failures_ + 1;
+      if (++failures_ >= 6) { ++trace_.resets; trace_.reset_reason = trace_.reason; reset(); }
       return false;
     }
     failures_ = 0;
+    trace_.consecutive = 0;
     const float forgetting = 0.999f;
     float prior[3][3], px[3] = {}, gain[3], denom = 1.0f;
     for (int i = 0; i < 3; ++i) {
       for (int j = 0; j < 3; ++j) { prior[i][j] = p_[i][j] / forgetting; px[i] += prior[i][j] * x[j]; }
       denom += x[i] * px[i];
     }
-    if (!std::isfinite(denom) || denom <= 0) { reset(); return false; }
+    if (!std::isfinite(denom) || denom <= 0) { numerical_reset_(); return false; }
     for (int i = 0; i < 3; ++i) gain[i] = px[i] / denom;
     // Joseph covariance update: (I-Kx) P (I-Kx)' + KK'.
     float a[3][3], ap[3][3] = {}, next[3][3] = {};
@@ -57,17 +77,20 @@ class ThermalModel {
       for (int j = 0; j < 3; ++j) {
         next[i][j] = gain[i] * gain[j];
         for (int k = 0; k < 3; ++k) next[i][j] += ap[i][k] * a[j][k];
-        if (!std::isfinite(next[i][j]) || std::fabs(next[i][j]) > 10000) { reset(); return false; }
+        if (!std::isfinite(next[i][j]) || std::fabs(next[i][j]) > 10000) { numerical_reset_(); return false; }
       }
     const float lower[3] = {0.0f, 0.0f, -0.03f};
     const float upper[3] = {0.02f, 0.30f, 0.03f};
+    trace_.saturation = 0;
     for (int i = 0; i < 3; ++i) {
       theta_[i] = std::clamp(theta_[i] + gain[i] * residual, lower[i], upper[i]);
+      if (theta_[i] == lower[i] || theta_[i] == upper[i]) trace_.saturation |= 1U << i;
       for (int j = 0; j < 3; ++j) p_[i][j] = (next[i][j] + next[j][i]) * 0.5f;
     }
     mse_ = samples_ ? 0.95f * mse_ + 0.05f * residual * residual : residual * residual;
     if (samples_ < 1000000000U) ++samples_;
     heat_min_ = std::min(heat_min_, heat); heat_max_ = std::max(heat_max_, heat);
+    trace_.reason = "accepted";
     return true;
   }
   float forecast(float room, float outdoor, float heat, unsigned minutes) const {
@@ -83,8 +106,14 @@ class ThermalModel {
   float rmse() const { return std::sqrt(mse_); }
   float heat_span() const { return std::max(0.0f, heat_max_ - heat_min_); }
   float coefficient(unsigned i) const { return i < 3 ? theta_[i] : NAN; }
+  const LearningTrace &trace() const { return trace_; }
 
  private:
+  friend struct ThermalModelTestAccess;
+  void numerical_reset_() {
+    trace_.reason = trace_.reset_reason = "numerical"; ++trace_.resets; reset();
+  }
+  LearningTrace trace_;
   float theta_[3], p_[3][3], mse_, heat_min_, heat_max_;
   uint32_t samples_;
   uint8_t failures_;

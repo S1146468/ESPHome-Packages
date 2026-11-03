@@ -1,5 +1,13 @@
 # Complete thermostat diagnostic candidate
 
+The separate `thermostaat_shadow.yaml` uses the local reviewed observer and
+enables both experimental shadow models plus compact model diagnostics. It
+preserves the complete candidate's thermostat package pin and control domains.
+It does not establish equivalence to the actually flashed control revision.
+See [November 3 findings and deployment gate](../docs/thermal_fix_20261103.md)
+and [build evidence](../docs/firmware_validation_20261103.md). Neither configuration
+has been uploaded by this development increment.
+
 thermostaat.yaml is the complete supplied real configuration, with only three
 source-ref replacements and the two optional cycle_record entries appended.
 PID gains, limits, timing, GPIO21/22 OpenTherm pins, firmware options, sensor

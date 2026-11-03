@@ -1,0 +1,421 @@
+esphome:
+  name: "thermostaat"
+  friendly_name: Thermostaat
+  name_add_mac_suffix: false
+
+  devices:
+    - id: climate_stijn
+      name: "Climate Stijn"
+      area_id: kamer_stijn
+
+    - id: adaptive_climate_stijn
+      name: "Adaptive Climate Stijn"
+      area_id: kamer_stijn
+
+    - id: climate_nick
+      name: "Climate Nick"
+      area_id: kamer_nick
+
+    - id: adaptive_climate_nick
+      name: "Adaptive Climate Nick"
+      area_id: kamer_nick
+
+  areas:
+    - id: kamer_stijn
+      name: "Kamer Stijn"
+
+    - id: kamer_nick
+      name: "Kamer Nick"
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+    advanced:
+      minimum_chip_revision: "3.0"
+      sram1_as_iram: true
+      flash_chip: generic
+
+
+
+# Enable logging
+logger:
+  level: WARN
+
+# Example configuration entry
+ota:
+  - platform: esphome
+    # password: !secret ota_password
+
+api:
+  encryption:
+    key: !secret thermostaat_KEY
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  # power_save_mode: none
+  manual_ip:
+    static_ip: !secret thermostat_IP
+    gateway: !secret gateway_IP
+    subnet: !secret subnet
+  domain: .local
+
+
+
+
+substitutions:
+  update_interval: 5s
+
+# Build-only shadow candidate, derived from thermostaat.yaml.
+# All thermostat package pins and controls are preserved; local observer source.
+external_components:
+  - source:
+      type: local
+      path: ../components
+    components: [adaptive_climate]
+
+packages:
+  observer:
+    url: https://github.com/S1146468/ESPHome-Packages
+    ref: a7c299c4684b3cf7405bf04f37d721a3fba3eac8
+    refresh: always
+    files:
+      # Adaptive Climate Stijn
+      - path: AdaptiveClimate/ObserveRoom.yaml
+        vars:
+          device:
+            id: adaptive_climate_stijn
+            name: "Adaptive Climate Stijn"
+
+          observer_id: stijn_thermal_model
+          observer_name: Stijn
+
+          room_temperature_id: climate_stijn_temperature
+          outdoor_temperature_id: outside_temperature_sensor
+
+          # Rounded Heat output, already in percent
+          valve_command_id: climate_stijn_valve_opening_degree
+          observer_valve_command_scale: "1.0"
+
+          supply_temperature_id: ch_temperature
+          heating_active_id: boiler_active
+          window_open_id: climate_stijn_window
+          dhw_active_id: dhw_active
+
+          observer_stale_after: 15min
+          observer_require_api_connection: "true"
+
+          observer_input_freshness:
+            room_temperature:
+              mode: event_driven
+              stale_after: 15min
+
+            outdoor_temperature:
+              mode: event_driven
+              stale_after: 15min
+
+            valve_command:
+              mode: strict
+              stale_after: 1min
+
+            supply_temperature:
+              mode: strict
+              stale_after: 15min
+
+      # Adaptive Climate Nick
+      - path: AdaptiveClimate/ObserveRoom.yaml
+        vars:
+          device:
+            id: adaptive_climate_nick
+            name: "Adaptive Climate Nick"
+
+          observer_id: nick_thermal_model
+          observer_name: Nick
+
+          room_temperature_id: climate_nick_temperature
+          outdoor_temperature_id: outside_temperature_sensor
+
+          # Rounded Heat output, already in percent
+          valve_command_id: climate_nick_valve_opening_degree
+          observer_valve_command_scale: "1.0"
+
+          supply_temperature_id: ch_temperature
+          heating_active_id: boiler_active
+          window_open_id: climate_nick_window
+          dhw_active_id: dhw_active
+
+          observer_stale_after: 15min
+          observer_require_api_connection: "true"
+
+          observer_input_freshness:
+            room_temperature:
+              mode: event_driven
+              stale_after: 15min
+
+            outdoor_temperature:
+              mode: event_driven
+              stale_after: 15min
+
+            valve_command:
+              mode: strict
+              stale_after: 1min
+
+            supply_temperature:
+              mode: strict
+              stale_after: 15min
+
+
+  thermostat_package:
+    url: https://github.com/S1146468/ESPHome-Packages
+    ref: 7d925a7eccb6747a0ce5dbbcc0007c6fdf1bafc0
+    refresh: always
+    files:
+  ########################################################################################
+  # Opentherm
+  ########################################################################################
+      - path: Thermostat/OpenTherm.yaml
+        vars:
+          outputId: t_set
+          boiler_enable: boiler_enable
+          boiler_active: boiler_active
+          openthermPin:
+            ot_in: 21
+            ot_out: 22
+
+  ########################################################################################
+  # Output Calculation
+  ########################################################################################
+      - path: Thermostat/ThermostatOutputCalculation.yaml
+        vars:
+          water_temp:
+            min_temp: "40"
+            max_temp: "70"
+          opentherm_update_interval: ${update_interval}
+          output_entity_name: t_set
+          boiler_enable: boiler_enable
+          outside_temp_sensor: sensor.temperature
+          pid_output:
+            room_1: pid_output_stijn
+            room_2: pid_output_nick
+
+
+  ########################################################################################
+  # Room Climate Devices
+  ########################################################################################
+      - path: Thermostat/ClimatePID/ClimateDevice.yaml
+        vars:
+          device:
+            id: climate_stijn
+            name: "Climate Stijn"
+          climate:
+            id: verwarming_stijn
+            name: "Verwarming Stijn"
+            pid_output: pid_output_stijn
+            boiler_active: boiler_active
+            interval: ${update_interval}
+          control:
+            pid:
+              kp: 0.8
+              ki: 0.00012
+              kd: 0.0
+
+            clamp:
+              i_min: 0.0
+              i_max: 0.15
+
+            averaging:
+              derivative: 1
+              output: 3
+
+            deadband:
+              threshold:
+                low: "-0.2°C"
+                high: "0.2°C"
+
+              multiplier:
+                kp: 0.3
+                ki: 0.25
+                kd: 0.0
+
+              averaging:
+                output: 12
+
+            autotune:
+              noiseband: 1.0
+              positive_output: 0.6
+              negative_output: 0.0
+          sensor:
+            temperature: sensor.temp_sensor_kamer_stijn_temperature
+            humidity: sensor.temp_sensor_kamer_stijn_humidity
+            window: binary_sensor.raam_sensor_kamer_stijn_contact
+          master: climate.verwarming_stijn_master
+
+
+
+
+      - path: Thermostat/ClimatePID/ClimateDevice.yaml
+        vars:
+          device:
+            id: climate_nick
+            name: "Climate Nick"
+          climate:
+            id: verwarming_nick
+            name: "Verwarming Nick"
+            pid_output: pid_output_nick
+            boiler_active: boiler_active
+            interval: ${update_interval}
+          control:
+            pid:
+              kp: 0.8
+              ki: 0.00012
+              kd: 0.0
+
+            clamp:
+              i_min: 0.0
+              i_max: 0.15
+
+            averaging:
+              derivative: 1
+              output: 3
+
+            deadband:
+              threshold:
+                low: "-0.2°C"
+                high: "0.2°C"
+
+              multiplier:
+                kp: 0.3
+                ki: 0.25
+                kd: 0.0
+
+              averaging:
+                output: 12
+
+            autotune:
+              noiseband: 1.0
+              positive_output: 0.6
+              negative_output: 0.0
+          sensor:
+            temperature: sensor.temp_sensor_kamer_nick_temperature
+            humidity: sensor.temp_sensor_kamer_nick_humidity
+            window: binary_sensor.raam_sensor_kamer_nick_contact
+          master: climate.verwarming_nick_master
+
+
+  ########################################################################################
+  # Debug Sensors
+  ########################################################################################
+      - path: Thermostat/ClimatePID/ClimateDebugSensors.yaml
+        vars:
+          device:
+            id: climate_stijn
+            name: "Climate Stijn"
+          climateId: verwarming_stijn
+          disabled:
+            error: "false"
+            multiplier: "false"
+            heatOutput: "false"
+            coolOutput: "true"
+          updateInterval: ${update_interval}
+
+
+      - path: Thermostat/ClimatePID/ClimateDebugSensors.yaml
+        vars:
+          device:
+            id: climate_nick
+            name: "Climate Nick"
+          climateId: verwarming_nick
+          disabled:
+            error: "false"
+            multiplier: "false"
+            heatOutput: "false"
+            coolOutput: "true"
+          updateInterval: ${update_interval}
+
+
+
+
+
+# globals:
+#   - id: ot_scan_id
+#     type: int
+#     restore_value: no
+#     initial_value: '0'
+
+# opentherm:
+#   in_pin: GPIO21
+#   out_pin: GPIO22
+#   controller_product_type: 0
+#   controller_product_version: 1
+#   opentherm_version_controller: 4.0
+#   controller_configuration: 0
+#   controller_id: 1
+
+#   before_send:
+#     then:
+#       - lambda: |-
+#           // Vraag READ_DATA voor huidige scan-ID
+#           x.id = id(ot_scan_id);
+#           x.type = esphome::opentherm::MessageType::READ_DATA;
+#           ESP_LOGD("ot-scan", ">>> Request ID %d (READ_DATA)", id(ot_scan_id));
+#           id(ot_scan_id)++;
+#           if (id(ot_scan_id) > 127) id(ot_scan_id) = 0;
+
+#   before_process_response:
+#     then:
+#       - lambda: |-
+#           // Maak zelf een 16-bit raw en (optioneel) 8.8 fixed-point float
+#           uint16_t raw = (uint16_t(x.valueHB) << 8) | uint16_t(x.valueLB);
+#           float fx88 = int16_t(raw) / 256.0f;  // veel OT-waarden zijn signed 8.8
+#           ESP_LOGD("ot-scan",
+#                    "<<< Response ID %d, type=%d, HB=%u LB=%u, raw=0x%04X, fx8.8=%.2f",
+#                    x.id, (int) x.type, x.valueHB, x.valueLB, raw, fx88);
+
+
+# # Optioneel: t_set sturen zodat er vraag kan zijn (handig voor sommige IDs)
+# output:
+#   - platform: opentherm
+#     t_set:
+#       id: t_set_out
+#       min_value: 0
+#       max_value: 100
+
+# interval:
+#   - interval: 10s
+#     then:
+#       - lambda: |-
+#           id(t_set_out).set_level(0.5);  // ~50°C target
+
+
+
+
+adaptive_climate:
+  - id: !extend stijn_thermal_model
+    shadow_model: true
+    model_record:
+      name: Stijn Reference Model Details
+      device_id: adaptive_climate_stijn
+    shadow_record:
+      name: Stijn Shadow Model Details
+      device_id: adaptive_climate_stijn
+    shadow_forecasts:
+      name: Stijn Shadow Conditional Forecasts
+      device_id: adaptive_climate_stijn
+    cycle_record:
+      name: "Stijn Observation Cycle"
+      device_id: adaptive_climate_stijn
+  - id: !extend nick_thermal_model
+    shadow_model: true
+    model_record:
+      name: Nick Reference Model Details
+      device_id: adaptive_climate_nick
+    shadow_record:
+      name: Nick Shadow Model Details
+      device_id: adaptive_climate_nick
+    shadow_forecasts:
+      name: Nick Shadow Conditional Forecasts
+      device_id: adaptive_climate_nick
+    cycle_record:
+      name: "Nick Observation Cycle"
+      device_id: adaptive_climate_nick
