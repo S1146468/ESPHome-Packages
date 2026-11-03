@@ -3,6 +3,10 @@
 This is an ESP32-target compile, not a measurement on a physical ESP32. No
 installation, flash access or device reset was performed. Dummy credentials are
 used only inside the ignored validation directory; never install these binaries.
+The final single-file YAML pins the exact instrumentation implementation to
+`e8411b9814bc7b7d8333be3c37ea188188d8ca93`; control/observer packages retain
+`7d925a7`/`a7c299c`. The final configuration is also revalidated and compiled using
+that remote pin, so a mutable local component folder is not an installation input.
 
 | Build | Link-time RAM | Flash |
 |---|---:|---:|

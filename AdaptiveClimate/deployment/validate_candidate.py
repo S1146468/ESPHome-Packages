@@ -78,6 +78,12 @@ def prepare(output_dir):
             raise RuntimeError(result.stderr + result.stdout)
         configs.append(yaml.load(result.stdout, Loader=Loader))
     report = compare(*configs)
+    source = configs[1]["external_components"][0]["source"]
+    expected_instrumentation = "e8411b9814bc7b7d8333be3c37ea188188d8ca93"
+    if (source.get("type") != "git" or source.get("ref") != expected_instrumentation or
+            source.get("url") != "https://github.com/S1146468/ESPHome-Packages" or
+            source.get("path") != "AdaptiveClimate/components"):
+        raise ValueError("Instrumentation source is not the approved immutable pin")
     seal = json.loads((DEPLOY / "learner_freeze.json").read_text(encoding="utf-8"))
     for name, expected in seal["sha256_normalized_utf8"].items():
         actual = hashlib.sha256((ROOT / "AdaptiveClimate/components/adaptive_climate" / name).read_text(encoding="utf-8").encode()).hexdigest()
@@ -86,6 +92,7 @@ def prepare(output_dir):
     report["unchanged_learners"] = seal
     report["control_package"] = "7d925a7eccb6747a0ce5dbbcc0007c6fdf1bafc0"
     report["observer_package"] = "a7c299c4684b3cf7405bf04f37d721a3fba3eac8"
+    report["instrumentation_source"] = source["ref"]
     report["framework"] = configs[1]["esp32"]["framework"]["version"]
     report["source_commit_at_check"] = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     report["working_tree_dirty"] = bool(subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True).strip())

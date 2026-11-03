@@ -69,11 +69,13 @@ substitutions:
   update_interval: 5s
 
 # Build-only shadow candidate, derived from thermostaat.yaml.
-# All thermostat package pins and controls are preserved; local observer source.
+# All control pins are preserved; observer runtime instrumentation is immutable.
 external_components:
   - source:
-      type: local
-      path: ../components
+      type: git
+      url: https://github.com/S1146468/ESPHome-Packages
+      ref: e8411b9814bc7b7d8333be3c37ea188188d8ca93
+      path: AdaptiveClimate/components
     components: [adaptive_climate]
 
 packages:

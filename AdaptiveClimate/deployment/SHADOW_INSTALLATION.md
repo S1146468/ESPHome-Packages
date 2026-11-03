@@ -4,8 +4,9 @@ No firmware upload, flash read, device reset, Home Assistant configuration chang
 or live heating command was performed. Installation still requires explicit
 approval. `thermostaat_shadow.yaml` is the complete candidate based on the
 thermostat YAML supplied by the user, including the same secret references.
-Use the checkout containing this file and its sibling `components` directory;
-copying only the YAML without that reviewed component would not reproduce it.
+The single YAML fetches the reviewed component by an immutable Git revision; it
+can be copied into ESPHome alongside the existing private secrets without copying
+local component folders. It still must not be installed before the gates below.
 
 ## Exact changes and verified sources
 
@@ -14,11 +15,11 @@ copying only the YAML without that reviewed component would not reproduce it.
 | Thermostat control packages | `7d925a7eccb6747a0ce5dbbcc0007c6fdf1bafc0`, explicitly present in the user's current YAML; preserved |
 | Original observer package/config bindings | `a7c299c4684b3cf7405bf04f37d721a3fba3eac8`; preserved |
 | Original and shadow learner mathematics | byte-for-byte normalized UTF-8 match to `a96e05df132a7baf06d6c6dbb22b8e3a4a8201a8`; sealed in `learner_freeze.json` |
-| Observer integration/diagnostics | local `../components`, from this reviewed development checkout; only optional instrumentation changed |
+| Observer integration/diagnostics | `e8411b9814bc7b7d8333be3c37ea188188d8ca93`, immutable external-component source; only optional instrumentation changed |
 | Build versions | ESPHome `2026.10.0`, explicit ESP-IDF `5.5.6`, `esp32dev`, Xtensa `esp-14.2.0_20260121` |
 | Actual flashed binary/control revision | **not recovered or independently verified** |
 
-Relative to the supplied original YAML, the candidate loads the reviewed local
+Relative to the supplied original YAML, the candidate loads the reviewed pinned
 observer component, explicitly pins the already resolved ESP-IDF version, enables
 `shadow_model: true` on the two existing observer IDs, and adds optional diagnostic
 text records. Existing numeric forecasts, original model behavior, input bindings,
@@ -178,6 +179,8 @@ learning); three requested shadow rollouts; and whole completed observation
 callbacks including publication/instrumentation. The currently publishing whole
 callback finishes after its record, so its total first appears in the next
 record. These are measured maxima, not proven hard real-time WCET bounds.
+Zero timing/gap fields can mean no relevant callback has occurred yet or a probe
+was not configured; they are not evidence of zero cost or perfect scheduling.
 
 Cycle delta/jitter and loop/PID-input/water-target maximum gaps are milliseconds.
 Jitter is absolute deviation from 300,000 ms. The PID probe watches existing

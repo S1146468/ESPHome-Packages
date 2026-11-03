@@ -7,7 +7,8 @@ frozen to a96e05d; this step adds only optional input/runtime records. The user 
 now supplied a current YAML explicitly pinning the controls to 7d925a7; the actual
 running image and its rollback binary are still not independently verified.
 
-The separate `thermostaat_shadow.yaml` uses the local reviewed observer and
+The separate `thermostaat_shadow.yaml` pins the reviewed observer/runtime source at
+`e8411b9814bc7b7d8333be3c37ea188188d8ca93` and
 enables both experimental shadow models plus compact model diagnostics. It
 preserves the complete candidate's thermostat package pin and control domains.
 It does not establish equivalence to the actually flashed control revision.
