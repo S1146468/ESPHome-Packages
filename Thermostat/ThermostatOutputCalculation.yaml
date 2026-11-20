@@ -1,16 +1,57 @@
+
 substitutions:
   water_temp:
-    min_temp: "40" 
+    min_temp: "40"
     max_temp: "70"
+
   opentherm_update_interval: 15s
   output_entity_name: T_set
   boiler_enable: boiler_enable
   outside_temp_sensor: sensor.outside_temp
+
   pid_output:
     room_1: esphome_entity
     room_2: esphome_entity
 
-# --- Outside temperature from HA
+
+# ==========================================
+# MANUAL OVERRIDE SWITCH
+# ==========================================
+
+switch:
+  - platform: template
+    id: manual_water_temp_override
+    name: "Manual Water Temperature Override"
+    icon: mdi:hand-back-right
+    optimistic: true
+    restore_mode: ALWAYS_OFF
+
+
+# ==========================================
+# MANUAL TEMPERATURE INPUT
+# ==========================================
+
+number:
+  - platform: template
+    id: manual_water_temperature
+    name: "Manual Water Temperature"
+    icon: mdi:thermometer-water
+    unit_of_measurement: "°C"
+    mode: slider
+
+    min_value: ${water_temp.min_temp}
+    max_value: ${water_temp.max_temp}
+    step: 1
+
+    optimistic: true
+    restore_value: true
+    initial_value: 60
+
+
+# ==========================================
+# OUTSIDE TEMPERATURE
+# ==========================================
+
 sensor:
   - platform: homeassistant
     id: outside_temperature_sensor
@@ -26,8 +67,12 @@ sensor:
     time_constant: 5min
     time_weighting: previous
     restore: true
-    
-   # Final target exposed for writer
+
+
+  # ==========================================
+  # FINAL TARGET WATER TEMPERATURE
+  # ==========================================
+
   - platform: template
     id: target_water_temperature
     name: "Target Water Temperature"
@@ -43,21 +88,42 @@ sensor:
 
     lambda: |-
       // ==========================================
-      // Weather compensation configuration
+      // Configuration
       // ==========================================
 
-      // Outside temperature reference points
-      const float T_OUT_COLD = 0.0f;
-      const float T_OUT_WARM = 15.0f;
-
-      // Flow temperature limits
       const float T_SUPPLY_MIN = ${water_temp.min_temp};
       const float T_SUPPLY_MAX = ${water_temp.max_temp};
 
-      // Fallback flow temperature
+      // ==========================================
+      // Manual override takes priority
+      // ==========================================
+
+      if (id(manual_water_temp_override).state) {
+
+        float manual =
+            id(manual_water_temperature).state;
+
+        // Reject invalid manual input
+        if (!std::isfinite(manual)) {
+          manual = T_SUPPLY_MIN;
+        }
+
+        return clamp(
+            manual,
+            T_SUPPLY_MIN,
+            T_SUPPLY_MAX
+        );
+      }
+
+      // ==========================================
+      // Weather compensation configuration
+      // ==========================================
+
+      const float T_OUT_COLD = 0.0f;
+      const float T_OUT_WARM = 15.0f;
+
       const float T_FALLBACK = 60.0f;
 
-      // Plausible outside temperature range
       const float T_OUT_MIN_VALID = -30.0f;
       const float T_OUT_MAX_VALID = 45.0f;
 
@@ -69,7 +135,7 @@ sensor:
           id(outside_temperature_smoothed).state;
 
       // ==========================================
-      // Validate sensor
+      // Validate outside sensor
       // ==========================================
 
       if (!id(outside_temperature_smoothed).has_state() ||
@@ -77,16 +143,11 @@ sensor:
           outdoor < T_OUT_MIN_VALID ||
           outdoor > T_OUT_MAX_VALID) {
 
-        // Clamp fallback to configured limits
-        float fallback = T_FALLBACK;
-
-        if (fallback < T_SUPPLY_MIN)
-          fallback = T_SUPPLY_MIN;
-
-        if (fallback > T_SUPPLY_MAX)
-          fallback = T_SUPPLY_MAX;
-
-        return fallback;
+        return clamp(
+            T_FALLBACK,
+            T_SUPPLY_MIN,
+            T_SUPPLY_MAX
+        );
       }
 
       // ==========================================
@@ -97,59 +158,71 @@ sensor:
           (T_SUPPLY_MIN - T_SUPPLY_MAX) /
           (T_OUT_WARM - T_OUT_COLD);
 
-      float target =
+      const float target =
           T_SUPPLY_MAX +
           slope * (outdoor - T_OUT_COLD);
 
       // ==========================================
-      // Clamp target flow temperature
+      // Clamp temperature
       // ==========================================
 
-      if (target < T_SUPPLY_MIN)
-        target = T_SUPPLY_MIN;
-
-      if (target > T_SUPPLY_MAX)
-        target = T_SUPPLY_MAX;
-
-      return target;
+      return clamp(
+          target,
+          T_SUPPLY_MIN,
+          T_SUPPLY_MAX
+      );
 
 
-
-
+# ==========================================
+# BOILER ENABLE LOGIC
+# ==========================================
 
 binary_sensor:
-# --- Any valve open?
+
+  # Any valve open?
   - platform: template
     id: any_valve_open
     lambda: |-
-      return (id(${pid_output.room_1}).state >= 1.0f) || (id(${pid_output.room_2}).state >= 1.0f);
- 
-# --- CH enable logic
+      return
+        (id(${pid_output.room_1}).state >= 1.0f) ||
+        (id(${pid_output.room_2}).state >= 1.0f);
+
+
+  # Central heating enable logic
   - platform: template
     id: ch_should_enable
     lambda: |-
-      if(id(any_valve_open).state)
-      {
+      if (id(any_valve_open).state) {
         id(${boiler_enable}).turn_on();
         return true;
       } else {
         id(${boiler_enable}).turn_off();
         return false;
       }
-      return false;
 
-# --- Writer
+
+# ==========================================
+# OPENTHERM WRITER
+# ==========================================
+
 interval:
   - interval: ${opentherm_update_interval}
     then:
       - lambda: |-
-          float target = id(target_water_temperature).state;
-          bool enable  = id(ch_should_enable).state;
+          const float target =
+              id(target_water_temperature).state;
 
-          if (!isnan(target)) {
-            if (enable) {
-              id(${output_entity_name}).set_level(target / 70.0f);
-            } else {
-              id(${output_entity_name}).set_level(0.0f);
-            }
+          const bool enable =
+              id(ch_should_enable).state;
+
+          if (!std::isfinite(target)) {
+            return;
+          }
+
+          if (enable) {
+            id(${output_entity_name}).set_level(
+                target / ${water_temp.max_temp}
+            );
+          } else {
+            id(${output_entity_name}).set_level(0.0f);
           }
