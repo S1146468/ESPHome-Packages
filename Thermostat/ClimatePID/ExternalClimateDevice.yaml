@@ -160,8 +160,7 @@ script:
 
           if (id(${device.id}_virtual_valve_position).state
               != demand) {
-            id(${device.id}_virtual_valve_position)
-              .publish_state(demand);
+            id(${device.id}_virtual_valve_position)->publish_state(demand);
           }
 
       - component.update: ${climate.pid_output}
