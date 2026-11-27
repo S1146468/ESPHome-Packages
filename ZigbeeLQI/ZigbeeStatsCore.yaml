@@ -23,13 +23,19 @@ interval:
           v.reserve(64);
 
           for (auto *s : App.get_sensors()) {
-            const string oid = s->get_object_id();
+            char oid_buf[esphome::OBJECT_ID_MAX_LEN];
+            const string oid = s->get_object_id_to(oid_buf);
+
             if (!has_prefix(oid, "lqi_")) continue;
 
             bool excluded = false;
             for (const auto &ex : exclude_ids) {
-              if (oid == ex) { excluded = true; break; }
+              if (oid == ex) {
+                excluded = true;
+                break;
+              }
             }
+
             if (excluded) continue;
 
             float x = s->state;

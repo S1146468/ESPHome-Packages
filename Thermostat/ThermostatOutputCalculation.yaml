@@ -1,104 +1,228 @@
+
 substitutions:
   water_temp:
-    min_temp: "40" 
+    min_temp: "40"
     max_temp: "70"
+
   opentherm_update_interval: 15s
   output_entity_name: T_set
   boiler_enable: boiler_enable
   outside_temp_sensor: sensor.outside_temp
+
   pid_output:
     room_1: esphome_entity
     room_2: esphome_entity
 
-# --- Outside temperature from HA
+
+# ==========================================
+# MANUAL OVERRIDE SWITCH
+# ==========================================
+
+switch:
+  - platform: template
+    id: manual_water_temp_override
+    name: "Manual Water Temperature Override"
+    icon: mdi:hand-back-right
+    optimistic: true
+    restore_mode: ALWAYS_OFF
+
+
+# ==========================================
+# MANUAL TEMPERATURE INPUT
+# ==========================================
+
+number:
+  - platform: template
+    id: manual_water_temperature
+    name: "Manual Water Temperature"
+    icon: mdi:thermometer-water
+    unit_of_measurement: "°C"
+    mode: slider
+
+    min_value: ${water_temp.min_temp}
+    max_value: ${water_temp.max_temp}
+    step: 1
+
+    optimistic: true
+    restore_value: true
+    initial_value: 60
+
+
+# ==========================================
+# OUTSIDE TEMPERATURE
+# ==========================================
+
 sensor:
   - platform: homeassistant
     id: outside_temperature_sensor
     entity_id: ${outside_temp_sensor}
     internal: false
 
-   # Final target exposed for writer
+  - platform: exponential_moving_average
+    id: outside_temperature_smoothed
+    name: "Outside Temperature Smoothed"
+    sensor: outside_temperature_sensor
+    unit_of_measurement: "°C"
+    icon: mdi:coolant-temperature
+    time_constant: 5min
+    time_weighting: previous
+    restore: true
+
+
+  # ==========================================
+  # FINAL TARGET WATER TEMPERATURE
+  # ==========================================
+
   - platform: template
     id: target_water_temperature
     name: "Target Water Temperature"
+
     unit_of_measurement: "°C"
     accuracy_decimals: 1
     icon: mdi:coolant-temperature
+
     update_interval: ${opentherm_update_interval}
+
     filters:
       - round: 0
+
     lambda: |-
-      // When it's VERY cold outside:
-      const float t_out_cold    = 0.0; // °C outside
-      const float t_supply_max  = ${water_temp.max_temp};  // °C CV flow target
+      // ==========================================
+      // Configuration
+      // ==========================================
 
-      // When it's mild outside:
-      const float t_out_warm    = 15.0;  // °C outside
-      const float t_supply_min  = ${water_temp.min_temp};  // °C CV flow target
+      const float T_SUPPLY_MIN = ${water_temp.min_temp};
+      const float T_SUPPLY_MAX = ${water_temp.max_temp};
 
-      // Hard safety clamp so we never request insane values
-      const float t_supply_floor   = t_supply_min; // don't go below this
-      const float t_supply_ceiling = t_supply_max; // don't go above this
+      // ==========================================
+      // Manual override takes priority
+      // ==========================================
 
-      // --- READ OUTDOOR SENSOR ---
-      float outdoor = id(outside_temperature_sensor).state;
+      if (id(manual_water_temp_override).state) {
 
-      // Fallback if sensor is not valid
-      if (isnan(outdoor)) {
-        // safe middle value
-        return 60.0;
+        float manual =
+            id(manual_water_temperature).state;
+
+        // Reject invalid manual input
+        if (!std::isfinite(manual)) {
+          manual = T_SUPPLY_MIN;
+        }
+
+        return clamp(
+            manual,
+            T_SUPPLY_MIN,
+            T_SUPPLY_MAX
+        );
       }
 
-      // --- LINEAR INTERPOLATION ---
-      // slope = (min - max) / (warm - cold)
-      float slope = (t_supply_min - t_supply_max) / (t_out_warm - t_out_cold);
+      // ==========================================
+      // Weather compensation configuration
+      // ==========================================
 
-      // target = max + slope * (Toutdoor - Tcold)
-      float target = t_supply_max + slope * (outdoor - t_out_cold);
+      const float T_OUT_COLD = 0.0f;
+      const float T_OUT_WARM = 15.0f;
 
-      // --- CLAMP RESULT ---
-      if (target < t_supply_floor)   target = t_supply_floor;
-      if (target > t_supply_ceiling) target = t_supply_ceiling;
+      const float T_FALLBACK = 60.0f;
 
-      return target;
+      const float T_OUT_MIN_VALID = -30.0f;
+      const float T_OUT_MAX_VALID = 45.0f;
+
+      // ==========================================
+      // Read outside temperature
+      // ==========================================
+
+      const float outdoor =
+          id(outside_temperature_smoothed).state;
+
+      // ==========================================
+      // Validate outside sensor
+      // ==========================================
+
+      if (!id(outside_temperature_smoothed).has_state() ||
+          !std::isfinite(outdoor) ||
+          outdoor < T_OUT_MIN_VALID ||
+          outdoor > T_OUT_MAX_VALID) {
+
+        return clamp(
+            T_FALLBACK,
+            T_SUPPLY_MIN,
+            T_SUPPLY_MAX
+        );
+      }
+
+      // ==========================================
+      // Linear weather compensation
+      // ==========================================
+
+      const float slope =
+          (T_SUPPLY_MIN - T_SUPPLY_MAX) /
+          (T_OUT_WARM - T_OUT_COLD);
+
+      const float target =
+          T_SUPPLY_MAX +
+          slope * (outdoor - T_OUT_COLD);
+
+      // ==========================================
+      // Clamp temperature
+      // ==========================================
+
+      return clamp(
+          target,
+          T_SUPPLY_MIN,
+          T_SUPPLY_MAX
+      );
 
 
-
-
+# ==========================================
+# BOILER ENABLE LOGIC
+# ==========================================
 
 binary_sensor:
-# --- Any valve open?
+
+  # Any valve open?
   - platform: template
     id: any_valve_open
     lambda: |-
-      return (id(${pid_output.room_1}).state >= 1.0f) || (id(${pid_output.room_2}).state >= 1.0f);
- 
-# --- CH enable logic
+      return
+        (id(${pid_output.room_1}).state >= 1.0f) ||
+        (id(${pid_output.room_2}).state >= 1.0f);
+
+
+  # Central heating enable logic
   - platform: template
     id: ch_should_enable
     lambda: |-
-      if(id(any_valve_open).state)
-      {
+      if (id(any_valve_open).state) {
         id(${boiler_enable}).turn_on();
         return true;
       } else {
         id(${boiler_enable}).turn_off();
         return false;
       }
-      return false;
 
-# --- Writer
+
+# ==========================================
+# OPENTHERM WRITER
+# ==========================================
+
 interval:
   - interval: ${opentherm_update_interval}
     then:
       - lambda: |-
-          float target = id(target_water_temperature).state;
-          bool enable  = id(ch_should_enable).state;
+          const float target =
+              id(target_water_temperature).state;
 
-          if (!isnan(target)) {
-            if (enable) {
-              id(${output_entity_name}).set_level(target);
-            } else {
-              id(${output_entity_name}).set_level(0.0f);
-            }
+          const bool enable =
+              id(ch_should_enable).state;
+
+          if (!std::isfinite(target)) {
+            return;
+          }
+
+          if (enable) {
+            id(${output_entity_name}).set_level(
+                target / ${water_temp.max_temp}
+            );
+          } else {
+            id(${output_entity_name}).set_level(0.0f);
           }
