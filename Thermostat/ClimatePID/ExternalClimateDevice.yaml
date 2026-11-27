@@ -16,6 +16,7 @@ substitutions:
     window: binary_sensor.window
 
   master: climate.name
+  better_thermostat: climate.better_thermostat
 
 
 ################################################################################
@@ -107,6 +108,58 @@ script:
           }
 
           call.perform();
+      # Synchronize Better Thermostat HVAC mode
+      - if:
+          condition:
+            lambda: |-
+              const auto &master_mode =
+                id(${device.id}_ha_hvac_mode).state;
+
+              const auto &bt_mode =
+                id(${device.id}_bt_hvac_mode).state;
+
+              return
+                (master_mode == "heat" || master_mode == "off") &&
+                (bt_mode == "heat" || bt_mode == "off") &&
+                master_mode != bt_mode;
+
+          then:
+            - homeassistant.action:
+                action: climate.set_hvac_mode
+                data:
+                  entity_id: ${better_thermostat}
+                data_template:
+                  hvac_mode: "{{ mode }}"
+                variables:
+                  mode: !lambda |-
+                    return id(${device.id}_ha_hvac_mode).state;
+
+
+      # Synchronize Better Thermostat target temperature
+      - if:
+          condition:
+            lambda: |-
+              float master_target =
+                id(${device.id}_ha_target_temp).state;
+
+              float bt_target =
+                id(${device.id}_bt_target_temp).state;
+
+              return
+                std::isfinite(master_target) &&
+                std::isfinite(bt_target) &&
+                fabsf(master_target - bt_target) > 0.01f;
+
+          then:
+            - homeassistant.action:
+                action: climate.set_temperature
+                data:
+                  entity_id: ${better_thermostat}o
+                data_template:
+                  temperature: "{{ target | float }}"
+                variables:
+                  target: !lambda |-
+                    return id(${device.id}_ha_target_temp).state;
 
 
   # Apply external heat demand to existing output.
@@ -393,6 +446,11 @@ text_sensor:
         - script.execute: ${device.id}_sync_target_and_hvac
         - script.execute: ${device.id}_apply_heat_output
 
+  - platform: homeassistant
+    id: ${device.id}_bt_hvac_mode
+    entity_id: ${better_thermostat}
+    internal: true
+
 
 ################################################################################
 # Sensors
@@ -525,3 +583,10 @@ sensor:
       float x = id(${climate.pid_output}).state;
       if (isnan(x)) return 0.0f;
       return x;
+
+  - platform: homeassistant
+    id: ${device.id}_bt_target_temp
+    entity_id: ${better_thermostat}
+    attribute: temperature
+    internal: true
+    accuracy_decimals: 1
