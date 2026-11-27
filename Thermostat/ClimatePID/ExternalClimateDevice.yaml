@@ -1,0 +1,528 @@
+substitutions:
+  device:
+    id: climateDevice
+    name: "Climate Device"
+
+  climate:
+    id: climate
+    name: "climate"
+    pid_output: pid_output
+    boiler_active: ch_active
+    interval: 15s
+
+  sensor:
+    temperature: sensor.temperature
+    humidity: sensor.humidity
+    window: binary_sensor.window
+
+  master: climate.name
+
+
+################################################################################
+# Globals
+################################################################################
+
+globals:
+  - id: ${device.id}_heat_output_level
+    type: float
+    restore_value: false
+    initial_value: "0.0"
+
+  - id: ${device.id}_external_heat_demand
+    type: float
+    restore_value: false
+    initial_value: "0.0"
+
+
+################################################################################
+# Virtual TRV - Valve Position
+################################################################################
+
+number:
+  - platform: template
+    id: ${device.id}_virtual_valve_position
+    name: "Valve Position"
+    device_id: ${device.id}
+    unit_of_measurement: "%"
+    icon: "mdi:valve"
+
+    min_value: 0
+    max_value: 100
+    step: 1
+    mode: slider
+
+    optimistic: false
+    restore_value: false
+    initial_value: 0
+
+    set_action:
+      - lambda: |-
+          id(${device.id}_external_heat_demand) =
+            std::isfinite(x)
+              ? clamp(x, 0.0f, 100.0f)
+              : 0.0f;
+
+      - script.execute: ${device.id}_apply_heat_output
+
+
+################################################################################
+# Scripts
+################################################################################
+
+script:
+
+  # Synchronize existing climate entity with master thermostat.
+  - id: ${device.id}_sync_target_and_hvac
+    then:
+      - lambda: |-
+          auto room = id(${climate.id});
+
+          auto climateMode = climate::CLIMATE_MODE_OFF;
+          float target = NAN;
+
+          if (id(${device.id}_ha_hvac_mode).state == "heat") {
+            climateMode = climate::CLIMATE_MODE_HEAT;
+          }
+
+          if (id(${device.id}_ha_target_temp).has_state()) {
+            target = id(${device.id}_ha_target_temp).state;
+          }
+
+          if (id(${device.id}_window).state) {
+            climateMode = climate::CLIMATE_MODE_OFF;
+            target = 4.0f;
+          }
+
+          if (room->mode == climateMode &&
+              (!std::isfinite(target) ||
+               room->target_temperature == target)) {
+            return;
+          }
+
+          auto call = room->make_call();
+          call.set_mode(climateMode);
+
+          if (std::isfinite(target)) {
+            call.set_target_temperature(target);
+          }
+
+          call.perform();
+
+
+  # Apply external heat demand to existing output.
+  - id: ${device.id}_apply_heat_output
+    then:
+      - if:
+          condition:
+            and:
+              - api.connected:
+                  state_subscription_only: true
+
+              - lambda: |-
+                  bool master_heat =
+                    id(${device.id}_ha_hvac_mode).state == "heat";
+
+                  bool virtual_trv_heat =
+                    id(${device.id}_virtual_trv).mode ==
+                    climate::CLIMATE_MODE_HEAT;
+
+                  bool window_closed =
+                    id(${device.id}_window).has_state() &&
+                    !id(${device.id}_window).state;
+
+                  bool temperature_valid =
+                    std::isfinite(
+                      id(${device.id}_temperature).state
+                    );
+
+                  return master_heat &&
+                         virtual_trv_heat &&
+                         window_closed &&
+                         temperature_valid;
+
+          then:
+            - lambda: |-
+                float demand =
+                  id(${device.id}_external_heat_demand);
+
+                id(${device.id}_heat_output).set_level(
+                  clamp(demand / 100.0f, 0.0f, 1.0f)
+                );
+
+          else:
+            - lambda: |-
+                id(${device.id}_external_heat_demand) = 0.0f;
+                id(${device.id}_heat_output).set_level(0.0f);
+
+      - lambda: |-
+          float demand =
+            id(${device.id}_external_heat_demand);
+
+          if (id(${device.id}_virtual_valve_position).state
+              != demand) {
+            id(${device.id}_virtual_valve_position)
+              .publish_state(demand);
+          }
+
+      - component.update: ${climate.pid_output}
+
+
+################################################################################
+# Heat Output Switch
+################################################################################
+
+switch:
+  - platform: template
+    id: ${device.id}_heat_output_switch
+    name: "Heat Output Switch"
+    device_id: ${device.id}
+    entity_category: config
+
+    turn_on_action:
+      - switch.template.publish:
+          id: ${device.id}_heat_output_switch
+          state: ON
+
+    turn_off_action:
+      - switch.template.publish:
+          id: ${device.id}_heat_output_switch
+          state: OFF
+
+
+################################################################################
+# Heat Output
+################################################################################
+
+output:
+  - platform: template
+    id: ${device.id}_heat_output
+    type: float
+
+    write_action:
+      lambda: |-
+        // Window protection
+        if (!id(${device.id}_window).has_state() ||
+             id(${device.id}_window).state) {
+          id(${device.id}_heat_output_level) = 0.0f;
+          return;
+        }
+
+        id(${device.id}_heat_output_level) =
+          clamp(state, 0.0f, 1.0f);
+
+
+################################################################################
+# Interval
+################################################################################
+
+interval:
+  - interval: ${climate.interval}
+    then:
+      - script.execute: ${device.id}_apply_heat_output
+
+      - lambda: |-
+          bool heat_requested =
+            id(${climate.pid_output}).state > 0.0f;
+
+          bool boiler_on =
+            id(${climate.boiler_active}).state;
+
+          bool heating = heat_requested && boiler_on;
+
+          // Existing visual heating state
+          if (heating) {
+            id(${device.id}_heat_output_switch).turn_on();
+          } else {
+            id(${device.id}_heat_output_switch).turn_off();
+          }
+
+          // Existing climate action
+          auto room = id(${climate.id});
+
+          auto room_action = climate::CLIMATE_ACTION_IDLE;
+
+          if (room->mode == climate::CLIMATE_MODE_OFF) {
+            room_action = climate::CLIMATE_ACTION_OFF;
+          } else if (heating) {
+            room_action = climate::CLIMATE_ACTION_HEATING;
+          }
+
+          if (room->action != room_action) {
+            room->action = room_action;
+            room->publish_state();
+          }
+
+          // Virtual TRV climate action
+          auto trv = id(${device.id}_virtual_trv);
+
+          auto trv_action = climate::CLIMATE_ACTION_IDLE;
+
+          if (trv->mode == climate::CLIMATE_MODE_OFF) {
+            trv_action = climate::CLIMATE_ACTION_OFF;
+          } else if (heating) {
+            trv_action = climate::CLIMATE_ACTION_HEATING;
+          }
+
+          if (trv->action != trv_action) {
+            trv->action = trv_action;
+            trv->publish_state();
+          }
+
+  - interval: 1min
+    then:
+      - script.execute: ${device.id}_sync_target_and_hvac
+
+
+################################################################################
+# Climate Devices
+################################################################################
+
+climate:
+
+  # Existing climate entity.
+  # Retained for compatibility with existing HA automations.
+  - platform: template
+    id: ${climate.id}
+    name: ${climate.name}
+    device_id: ${device.id}
+
+    sensor: ${device.id}_temperature
+    humidity_sensor: ${device.id}_humidity
+
+    optimistic: true
+    supports_action: true
+
+    supported_modes:
+      - "OFF"
+      - HEAT
+
+    restore_mode: NO_RESTORE
+
+    initial_state:
+      mode: "OFF"
+      target_temperature: 5°C
+
+    visual:
+      min_temperature: 4
+      max_temperature: 35
+      temperature_step:
+        target_temperature: 0.5
+        current_temperature: 0.1
+
+
+  # Virtual TRV.
+  # Controlled exclusively by Better Thermostat.
+  - platform: template
+    id: ${device.id}_virtual_trv
+    name: "Virtual TRV"
+    device_id: ${device.id}
+
+    sensor: ${device.id}_temperature
+    humidity_sensor: ${device.id}_humidity
+
+    optimistic: true
+    supports_action: true
+
+    supported_modes:
+      - "OFF"
+      - HEAT
+
+    restore_mode: NO_RESTORE
+
+    initial_state:
+      mode: "OFF"
+      target_temperature: 5°C
+
+    visual:
+      min_temperature: 4
+      max_temperature: 35
+      temperature_step:
+        target_temperature: 0.5
+        current_temperature: 0.1
+
+    set_mode_action:
+      - lambda: |-
+          if (x == climate::CLIMATE_MODE_OFF) {
+            id(${device.id}_external_heat_demand) = 0.0f;
+            id(${device.id}_heat_output).set_level(0.0f);
+          }
+
+      - if:
+          condition:
+            lambda: |-
+              return x == climate::CLIMATE_MODE_OFF;
+          then:
+            - script.execute: ${device.id}_apply_heat_output
+
+
+################################################################################
+# Binary Sensors
+################################################################################
+
+binary_sensor:
+  - platform: homeassistant
+    entity_id: ${sensor.window}
+    id: ${device.id}_window
+
+    on_state:
+      then:
+        - script.execute: ${device.id}_sync_target_and_hvac
+        - script.execute: ${device.id}_apply_heat_output
+
+  - platform: template
+    name: "Window"
+    id: ${device.id}_window_kamer_template
+    device_id: ${device.id}
+    device_class: window
+
+    lambda: |-
+      if (!id(${device.id}_window).has_state()) return {};
+      return id(${device.id}_window).state;
+
+
+################################################################################
+# Master HVAC Mode
+################################################################################
+
+text_sensor:
+  - platform: homeassistant
+    id: ${device.id}_ha_hvac_mode
+    entity_id: ${master}
+
+    on_value:
+      then:
+        - script.execute: ${device.id}_sync_target_and_hvac
+        - script.execute: ${device.id}_apply_heat_output
+
+
+################################################################################
+# Sensors
+################################################################################
+
+sensor:
+
+  # Master target temperature
+  - platform: homeassistant
+    id: ${device.id}_ha_target_temp
+    entity_id: ${master}
+    attribute: temperature
+    accuracy_decimals: 1
+
+    on_value:
+      then:
+        - script.execute: ${device.id}_sync_target_and_hvac
+
+
+  # Room temperature
+  - platform: homeassistant
+    entity_id: ${sensor.temperature}
+    id: ${device.id}_temperature
+    unit_of_measurement: "°C"
+
+    filters:
+      - heartbeat: ${climate.interval}
+
+
+  # Room humidity
+  - platform: homeassistant
+    entity_id: ${sensor.humidity}
+    id: ${device.id}_humidity
+
+    filters:
+      - heartbeat: ${climate.interval}
+
+
+  # Filtered temperature
+  - platform: template
+    name: "temp"
+    id: ${device.id}_temperature_temp
+    device_id: ${device.id}
+    accuracy_decimals: 5
+    device_class: temperature
+    unit_of_measurement: "°C"
+    update_interval: ${climate.interval}
+
+    lambda: |-
+      float v = id(${device.id}_temperature).state;
+      if (isnan(v)) return {};
+      return v;
+
+    filters:
+      - exponential_moving_average:
+          alpha: 0.1
+          send_every: 1
+
+
+  # Heat output - original ID retained
+  - platform: template
+    name: "Heat output"
+    id: ${climate.pid_output}
+    device_id: ${device.id}
+    unit_of_measurement: "%"
+    accuracy_decimals: 0
+    state_class: measurement
+    icon: "mdi:heat-wave"
+
+    filters:
+      - multiply: 100.0
+      - clamp:
+          max_value: 100.0
+          min_value: 0.0
+          ignore_out_of_range: false
+      - lambda: return roundf(x / 5.0f) * 5.0f;
+
+    update_interval: ${climate.interval}
+
+    lambda: |-
+      return id(${device.id}_heat_output_level);
+
+    on_value:
+      then:
+        - component.update: ${device.id}_valve_opening_degree
+        - component.update: ${device.id}_valve_closing_degree
+
+
+  # Valve opening degree
+  - platform: template
+    name: "Valve Opening Degree"
+    id: ${device.id}_valve_opening_degree
+    device_id: ${device.id}
+    unit_of_measurement: "%"
+    state_class: measurement
+    icon: "mdi:heat-wave"
+
+    filters:
+      - clamp:
+          max_value: 100.0
+          min_value: 0.0
+          ignore_out_of_range: false
+      - round: 0
+
+    lambda: |-
+      float x = id(${climate.pid_output}).state;
+      if (isnan(x)) return 0.0f;
+      return x;
+
+
+  # Valve closing degree
+  - platform: template
+    name: "Valve Closing Degree"
+    id: ${device.id}_valve_closing_degree
+    device_id: ${device.id}
+    unit_of_measurement: "%"
+    state_class: measurement
+    icon: "mdi:heat-wave"
+
+    filters:
+      - clamp:
+          max_value: 100.0
+          min_value: 0.0
+          ignore_out_of_range: false
+      - round: 0
+      - multiply: -1.0
+      - offset: 100.0
+
+    lambda: |-
+      float x = id(${climate.pid_output}).state;
+      if (isnan(x)) return 0.0f;
+      return x;
