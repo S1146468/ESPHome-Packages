@@ -154,7 +154,7 @@ script:
             - homeassistant.action:
                 action: climate.set_temperature
                 data:
-                  entity_id: ${better_thermostat}o
+                  entity_id: ${better_thermostat}
                 data_template:
                   temperature: "{{ target | float }}"
                 variables:
